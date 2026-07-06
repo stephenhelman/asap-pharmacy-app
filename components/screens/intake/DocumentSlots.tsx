@@ -167,7 +167,7 @@ function DocAction({
       className={cn(
         "inline-flex items-center gap-1 rounded-control border px-2.5 py-1 text-label-strong transition-colors active:bg-fill-control",
         danger
-          ? "border-[#F3C6C6] text-red"
+          ? "border-border-danger text-red"
           : "border-border-strong text-text-secondary",
       )}
     >

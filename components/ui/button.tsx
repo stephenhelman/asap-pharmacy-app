@@ -75,7 +75,7 @@ export function Button({
     "dashed-add":
       "h-10 border border-dashed border-border-strong bg-card text-text-secondary text-body-strong active:bg-fill-control",
     "danger-outline":
-      "h-[46px] border border-[#F3C6C6] bg-card text-red text-title-card active:bg-red-light",
+      "h-11 border border-border-danger bg-card text-red text-title-card active:bg-red-light",
   };
 
   const iconTone =

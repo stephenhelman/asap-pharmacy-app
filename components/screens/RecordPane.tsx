@@ -53,7 +53,7 @@ export function RecordPane({
           flex column: fixed header + internally-scrolling body (app-shell pattern) */}
       <div className="fixed right-0 top-0 z-50 flex h-[100dvh] w-full max-w-[480px] flex-col bg-page shadow-pane animate-pane-in xl:border-l xl:border-border-strong">
         <div className="flex shrink-0 items-center justify-between border-b border-border bg-card px-3 py-2.5">
-          <span className="pl-1 text-label uppercase tracking-wide text-text-muted">
+          <span className="pl-1 text-section uppercase text-text-muted">
             Patient record
           </span>
           <div className="flex items-center gap-1">

@@ -183,7 +183,7 @@ function Stage1({
         openBleeds.map((b) => (
           <div
             key={b.id}
-            className="mb-2 rounded-card border border-[#F3C6C6] bg-red-light p-3.5"
+            className="mb-2 rounded-card border border-border-danger bg-red-light p-3.5"
           >
             <div className="mb-2.5 flex items-center gap-2">
               <Icon name="ti-droplet" size={16} className="text-red" />

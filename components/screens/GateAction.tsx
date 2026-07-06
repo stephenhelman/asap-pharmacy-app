@@ -205,7 +205,7 @@ function RecordedState({
     <div
       className={cn(
         "rounded-card border p-4 text-center",
-        positive ? "border-border bg-teal-light" : transfer ? "border-[#F3C6C6] bg-red-light" : "border-border bg-amber-light",
+        positive ? "border-border bg-teal-light" : transfer ? "border-border-danger bg-red-light" : "border-border bg-amber-light",
       )}
     >
       <Icon

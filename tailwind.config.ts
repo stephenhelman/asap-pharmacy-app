@@ -43,11 +43,14 @@ const config: Config = {
         border: {
           DEFAULT: "#E2E8F0",
           strong: "#CBD5E0",
+          danger: "#F3C6C6",
         },
         text: {
           primary: "#1B3A5C",
           secondary: "#4A5568",
-          muted: "#A0AEC0",
+          // Muted meta must clear WCAG AA (4.5:1) on white — DESIGN.md rule.
+          // #64748B ≈ 4.8:1, still clearly the quietest ink in the ramp.
+          muted: "#64748B",
         },
         "fill-control": "#EDF2F7",
         accent: "#1B3A5C",
