@@ -90,7 +90,7 @@ export function TechPack({ orderId }: { orderId: string }) {
         title="Pack & ship"
         onDismiss={() => router.back()}
         right={
-          <StatusPill tone={isShipped ? "success" : "neutral"} icon={isShipped ? "ti-circle-check-filled" : "ti-package"}>
+          <StatusPill tone={isShipped ? "success" : "neutral"} icon={isShipped ? "ti-circle-check" : "ti-package"}>
             {isShipped ? "Shipped" : "Processing"}
           </StatusPill>
         }
@@ -238,7 +238,7 @@ function DoseCard({
         {recipe.map((iu, i) => (
           <div key={i} className="flex items-center gap-2 text-micro">
             <Icon
-              name={state === "packed" ? "ti-circle-check-filled" : "ti-circle-dashed"}
+              name={state === "packed" ? "ti-circle-check" : "ti-circle-dashed"}
               size={13}
               className={state === "packed" ? "text-teal" : "text-text-muted"}
             />

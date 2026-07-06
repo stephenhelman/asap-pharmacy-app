@@ -71,7 +71,7 @@ export function PatientRecordContent({ patientId }: { patientId: string }) {
         <div className="mt-3 flex flex-wrap gap-1.5">
           <StatusPill
             tone={p.lifecycle === "ACTIVE" ? "success" : "neutral"}
-            icon={p.lifecycle === "ACTIVE" ? "ti-circle-check-filled" : "ti-progress"}
+            icon={p.lifecycle === "ACTIVE" ? "ti-circle-check" : "ti-progress"}
           >
             {p.lifecycle === "ACTIVE"
               ? "Active"
@@ -216,7 +216,7 @@ export function PatientRecordContent({ patientId }: { patientId: string }) {
                 .filter((b) => !b.closedAt)
                 .map((b) => (
                   <div key={b.id} className="flex items-center gap-3 px-3.5 py-3">
-                    <Icon name="ti-droplet-filled" size={18} className="text-red" />
+                    <Icon name="ti-droplet" size={18} className="text-red" />
                     <div className="flex-1">
                       <p className="text-title-card text-text-primary">{b.site}</p>
                       <p className="text-micro text-text-muted">

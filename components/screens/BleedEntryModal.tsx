@@ -96,7 +96,7 @@ export function BleedEntryModal({
       <Modal title="Log a bleed" onClose={onClose}>
         <div className="flex flex-col items-center gap-3 py-12 text-center">
           <div className="flex h-14 w-14 items-center justify-center rounded-full bg-teal-light">
-            <Icon name="ti-circle-check-filled" size={30} className="text-teal" />
+            <Icon name="ti-circle-check" size={30} className="text-teal" />
           </div>
           <p className="text-h2 text-navy">Bleed logged</p>
           <p className="max-w-[260px] text-body text-text-secondary">
@@ -196,7 +196,7 @@ export function BleedEntryModal({
           className="flex w-full items-center gap-3 text-left"
         >
           <Icon
-            name={alsoLogDose ? "ti-square-check-filled" : "ti-square"}
+            name={alsoLogDose ? "ti-square-check" : "ti-square"}
             size={20}
             className={alsoLogDose ? "text-teal" : "text-border-strong"}
           />

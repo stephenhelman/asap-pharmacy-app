@@ -49,9 +49,14 @@ export interface AddedNote {
   createdAt: string;
 }
 
+export interface DeliveryConfirmation {
+  method: "scan" | "manual";
+  exceptionNote: string | null;
+}
+
 interface MutationState {
   submittedOrders: Record<string, string>; // orderId → signedByName
-  confirmedDeliveries: Record<string, "scan" | "manual">;
+  confirmedDeliveries: Record<string, DeliveryConfirmation>;
   gateOutcomes: Record<string, { outcome: string; note?: string }>;
   clinicalDecisions: Record<string, { decision: ClinicalDecision; reason?: string }>;
   shippedOrders: Record<string, { trackingNumber: string }>;
@@ -79,7 +84,11 @@ const EMPTY: MutationState = {
 
 interface MutationContextValue extends MutationState {
   submitOrder: (orderId: string, signedByName: string) => void;
-  confirmDelivery: (orderId: string, method: "scan" | "manual") => void;
+  confirmDelivery: (
+    orderId: string,
+    method: "scan" | "manual",
+    exceptionNote?: string | null,
+  ) => void;
   recordGate: (gateId: string, outcome: string, note?: string) => void;
   decideClinical: (orderId: string, decision: ClinicalDecision, reason?: string) => void;
   shipOrder: (orderId: string, trackingNumber: string) => void;
@@ -105,10 +114,13 @@ export function MutationProvider({ children }: { children: React.ReactNode }) {
           ...s,
           submittedOrders: { ...s.submittedOrders, [orderId]: signedByName },
         })),
-      confirmDelivery: (orderId, method) =>
+      confirmDelivery: (orderId, method, exceptionNote = null) =>
         setState((s) => ({
           ...s,
-          confirmedDeliveries: { ...s.confirmedDeliveries, [orderId]: method },
+          confirmedDeliveries: {
+            ...s.confirmedDeliveries,
+            [orderId]: { method, exceptionNote },
+          },
         })),
       recordGate: (gateId, outcome, note) =>
         setState((s) => ({

@@ -186,7 +186,7 @@ function Stage1({
             className="mb-2 rounded-card border border-[#F3C6C6] bg-red-light p-3.5"
           >
             <div className="mb-2.5 flex items-center gap-2">
-              <Icon name="ti-droplet-filled" size={16} className="text-red" />
+              <Icon name="ti-droplet" size={16} className="text-red" />
               <span className="text-title-card text-navy">{b.site}</span>
               <span className="text-micro text-text-muted">
                 onset {fmtDate(b.onsetAt)}
@@ -446,7 +446,7 @@ function Stage3({
           ))}
           {cycleBleeds.map((b) => (
             <div key={b.id} className="flex items-center gap-2.5">
-              <Icon name="ti-droplet-filled" size={16} className="text-red" />
+              <Icon name="ti-droplet" size={16} className="text-red" />
               <span className="flex-1 text-body text-text-primary">
                 Bleed · {b.site}
               </span>
@@ -502,7 +502,7 @@ function SubmittedView({
   return (
     <div className="flex flex-col items-center gap-4 py-14 text-center">
       <div className="flex h-16 w-16 items-center justify-center rounded-full bg-teal-light">
-        <Icon name="ti-circle-check-filled" size={36} className="text-teal" />
+        <Icon name="ti-circle-check" size={36} className="text-teal" />
       </div>
       <div>
         <p className="text-h2 text-navy">Order submitted</p>

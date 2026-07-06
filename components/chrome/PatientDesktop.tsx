@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { getPatient, getPatientThreads } from "@/lib/dataProvider";
 import { Avatar, Icon, cn } from "@/components/ui";
 import { NotificationsBell } from "@/components/screens/NotificationsBell";
-import { PATIENT_NAV } from "@/components/screens/nav-config";
+import { PATIENT_SPINE_NAV } from "@/components/screens/nav-config";
 
 const ROLE_ICON: Record<string, string> = {
   NURSE: "ti-stethoscope",
@@ -70,9 +70,9 @@ export function PatientSpine({ patientId }: { patientId: string }) {
         </Link>
       </div>
 
-      {/* nav list */}
+      {/* nav list — full unrolled navigation */}
       <nav className="overflow-hidden rounded-card border border-border bg-card shadow-card">
-        {PATIENT_NAV.map((it) => {
+        {PATIENT_SPINE_NAV.map((it) => {
           const active =
             it.href === "/" ? pathname === "/" : pathname.startsWith(it.href);
           return (

@@ -70,7 +70,7 @@ export function StaffRoster() {
       </header>
 
       {/* Rows — full-width list on mobile, card grid on desktop */}
-      <main className="flex-1 overflow-y-auto lg:grid lg:grid-cols-2 lg:content-start lg:gap-3 lg:p-6 xl:grid-cols-3">
+      <main className="flex-1 overflow-y-auto max-lg:pb-24 lg:grid lg:grid-cols-2 lg:content-start lg:gap-3 lg:p-6 xl:grid-cols-3">
         {visible.map((r) => (
           <RosterRowItem key={r.patient.id} row={r} onOpen={() => setSelected(r.patient.id)} />
         ))}

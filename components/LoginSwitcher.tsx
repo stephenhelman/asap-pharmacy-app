@@ -16,6 +16,7 @@ export function LoginSwitcher() {
   const { session, loginAsPatient, loginAsStaff } = useSession();
   const router = useRouter();
   const [open, setOpen] = useState(false);
+  const [collapsed, setCollapsed] = useState(true);
   const [step, setStep] = useState<"type" | "list">("type");
   const [type, setType] = useState<"patient" | "staff" | null>(null);
   const [choice, setChoice] = useState<string | null>(null);
@@ -40,22 +41,46 @@ export function LoginSwitcher() {
 
   return (
     <>
-      {/* Floating pill showing current identity */}
-      <button
-        onClick={start}
-        className="fixed bottom-4 left-1/2 z-40 flex -translate-x-1/2 items-center gap-2 rounded-pill border border-navy-light/40 bg-navy-dark py-2 pl-2 pr-3.5 text-white shadow-float"
-      >
-        <Avatar name={session.user.name} size={26} tone="teal" />
-        <span className="flex flex-col items-start leading-tight">
-          <span className="text-label-strong">{session.user.name}</span>
-          <span className="text-[10px] text-teal-mid">
-            {session.kind === "patient"
-              ? "Patient"
-              : roleSummary(session.roles)}
-          </span>
-        </span>
-        <Icon name="ti-switch-horizontal" size={16} className="ml-1 text-teal-mid" />
-      </button>
+      {/* Dev identity switcher — docked top-right below the header, collapsible,
+          so it never overlaps the bottom nav or primary actions at any breakpoint. */}
+      <div className="fixed right-2 top-[66px] z-50 lg:top-3">
+        {collapsed ? (
+          <button
+            onClick={() => setCollapsed(false)}
+            title="Switch identity (dev)"
+            className="flex items-center gap-1 rounded-pill bg-navy-dark/95 py-1 pl-1 pr-1.5 text-white shadow-float ring-1 ring-white/15 backdrop-blur"
+          >
+            <Avatar name={session.user.name} size={26} tone="teal" />
+            <Icon name="ti-chevron-left" size={14} className="text-teal-mid" />
+          </button>
+        ) : (
+          <div className="flex items-center gap-0.5 rounded-pill bg-navy-dark/95 py-1 pl-1 pr-1 text-white shadow-float ring-1 ring-white/15 backdrop-blur">
+            <span className="ml-1 rounded-pill bg-white/10 px-1.5 py-0.5 text-[9px] font-semibold uppercase tracking-wide text-teal-mid">
+              Dev
+            </span>
+            <button
+              onClick={start}
+              className="flex items-center gap-2 rounded-pill py-0.5 pl-1.5 pr-2 transition-colors hover:bg-white/10"
+            >
+              <Avatar name={session.user.name} size={26} tone="teal" />
+              <span className="flex flex-col items-start leading-tight text-left">
+                <span className="text-label-strong">{session.user.name}</span>
+                <span className="text-[10px] text-teal-mid">
+                  {session.kind === "patient" ? "Patient" : roleSummary(session.roles)}
+                </span>
+              </span>
+              <Icon name="ti-switch-horizontal" size={15} className="text-teal-mid" />
+            </button>
+            <button
+              onClick={() => setCollapsed(true)}
+              title="Collapse"
+              className="flex h-7 w-7 items-center justify-center rounded-full transition-colors hover:bg-white/10"
+            >
+              <Icon name="ti-chevron-right" size={14} className="text-teal-mid" />
+            </button>
+          </div>
+        )}
+      </div>
 
       {!open ? null : (
         <div className="fixed inset-0 z-50 flex items-end justify-center sm:items-center">
@@ -229,7 +254,7 @@ function IdentityRow({
           </span>
         )}
         <Icon
-          name={selected ? "ti-circle-check-filled" : "ti-circle"}
+          name={selected ? "ti-circle-check" : "ti-circle"}
           size={20}
           className={selected ? "text-teal" : "text-border-strong"}
         />

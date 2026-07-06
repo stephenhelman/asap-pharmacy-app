@@ -22,7 +22,7 @@ export function BottomNav({
   activeKey: string;
 }) {
   return (
-    <nav className="flex items-stretch justify-around border-t border-border bg-card px-2 pb-3 pt-2.5 lg:hidden">
+    <nav className="fixed inset-x-0 bottom-0 z-40 mx-auto flex w-full items-stretch justify-around border-t border-border bg-card px-2 pb-3 pt-2.5 md:max-w-phone lg:hidden">
       {items.map((it) => {
         const active = it.key === activeKey;
         return (

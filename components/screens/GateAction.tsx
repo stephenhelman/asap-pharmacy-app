@@ -74,7 +74,7 @@ export function GateAction({ gateId }: { gateId: string }) {
         title={GATE_LABELS[gate.type]}
         onDismiss={() => router.back()}
         right={
-          <StatusPill tone={recorded ? "success" : "warning"} icon={recorded ? "ti-circle-check-filled" : "ti-alert-circle"}>
+          <StatusPill tone={recorded ? "success" : "warning"} icon={recorded ? "ti-circle-check" : "ti-alert-circle"}>
             {recorded ? "Decided" : "Needs decision"}
           </StatusPill>
         }
@@ -209,7 +209,7 @@ function RecordedState({
       )}
     >
       <Icon
-        name={positive ? "ti-circle-check-filled" : transfer ? "ti-arrow-right-circle" : "ti-bulb"}
+        name={positive ? "ti-circle-check" : transfer ? "ti-arrow-right-circle" : "ti-bulb"}
         size={26}
         className={cn("mb-1", positive ? "text-teal" : transfer ? "text-red" : "text-amber")}
       />

@@ -47,13 +47,13 @@ export function PatientDashboard({ patientId }: { patientId: string }) {
         </div>
       </header>
 
-      <main className="flex-1 overflow-y-auto px-4 pb-6 pt-3">
+      <main className="flex-1 overflow-y-auto px-4 pb-6 pt-3 max-lg:pb-24">
         {p.lifecycle === "ACTIVE" ? (
           <ActiveDashboard patientId={patientId} />
         ) : p.lifecycle === "ONBOARDING" ? (
           <OnboardingDashboard patientId={patientId} />
         ) : (
-          <InactiveDashboard patientId={patientId} />
+          <InactiveDashboard />
         )}
       </main>
 
@@ -74,7 +74,7 @@ function ActiveDashboard({ patientId }: { patientId: string }) {
     <>
       {/* Status pills */}
       <div className="mb-3.5 flex flex-wrap gap-1.5">
-        <StatusPill tone="success" icon="ti-circle-check-filled">
+        <StatusPill tone="success" icon="ti-circle-check">
           Active
         </StatusPill>
         <StatusPill
@@ -333,15 +333,14 @@ function OnboardingDashboard({ patientId }: { patientId: string }) {
   );
 }
 
-function InactiveDashboard({ patientId }: { patientId: string }) {
-  const p = getPatient(patientId)!;
+function InactiveDashboard() {
   return (
     <div className="flex flex-col items-center gap-3 py-16 text-center">
       <Icon name="ti-arrow-right-circle" size={40} className="text-text-muted" />
       <p className="text-title-name text-navy">Care transferred</p>
-      <p className="max-w-[260px] text-body text-text-secondary">
-        {p.firstName}'s care has been transferred to a specialty partner. This
-        account is no longer active.
+      <p className="max-w-[280px] text-body text-text-secondary">
+        Your care has been transferred to a specialty partner. This account is no
+        longer active — reach out if you need anything.
       </p>
     </div>
   );

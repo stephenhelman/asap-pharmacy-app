@@ -41,7 +41,7 @@ export function PatientCommsHub({ patientId }: { patientId: string }) {
           Message history — reply anytime by text or call
         </p>
       </header>
-      <main className="flex-1 overflow-y-auto">
+      <main className="flex-1 overflow-y-auto max-lg:pb-24">
         {threads.length === 0 ? (
           <Empty />
         ) : (

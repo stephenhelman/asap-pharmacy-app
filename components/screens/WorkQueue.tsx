@@ -95,7 +95,7 @@ export function WorkQueue() {
         </div>
       </header>
 
-      <main className="flex-1 overflow-y-auto">
+      <main className="flex-1 overflow-y-auto max-lg:pb-24">
         {visible.length === 0 ? (
           <div className="flex flex-col items-center gap-2 py-16 text-center">
             <Icon name="ti-checks" size={34} className="text-teal" />

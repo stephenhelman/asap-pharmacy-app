@@ -6,7 +6,7 @@ export function Icon({
   size = 18,
   className,
 }: {
-  name: string; // e.g. "ti-home-filled"
+  name: string; // e.g. "ti-home"
   size?: number;
   className?: string;
 }) {

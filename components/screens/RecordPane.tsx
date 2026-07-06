@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import { Icon } from "@/components/ui";
+import { useSession } from "@/lib/session";
 import { PatientRecordContent } from "./PatientRecordContent";
 
 /**
@@ -17,6 +18,16 @@ export function RecordPane({
   patientId: string | null;
   onClose: () => void;
 }) {
+  const { session } = useSession();
+
+  function openFullProfile() {
+    if (!patientId) return;
+    // Encode the acting identity in the URL so the new tab boots as this staff
+    // user viewing this patient. Script-opened → its Close can window.close().
+    const as = session.staffId ? `?as=${session.staffId}` : "";
+    window.open(`/patients/${patientId}${as}`, "_blank");
+  }
+
   useEffect(() => {
     if (!patientId) return;
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
@@ -42,15 +53,13 @@ export function RecordPane({
             Patient record
           </span>
           <div className="flex items-center gap-1">
-            <a
-              href={`/patients/${patientId}`}
-              target="_blank"
-              rel="noreferrer"
+            <button
+              onClick={openFullProfile}
               className="flex h-9 w-9 items-center justify-center rounded-control text-navy active:bg-fill-control"
-              title="Open full profile"
+              title="Open full profile in new tab"
             >
               <Icon name="ti-arrows-diagonal" size={18} />
-            </a>
+            </button>
             <button
               onClick={onClose}
               className="flex h-9 w-9 items-center justify-center rounded-control text-navy active:bg-fill-control"

@@ -146,7 +146,7 @@ export function LogsScreen() {
       </div>
 
       {/* Timeline */}
-      <main className="flex-1 overflow-y-auto px-4 pb-28 pt-3.5">
+      <main className="flex-1 overflow-y-auto px-4 pb-32 pt-3.5">
         {rows.length === 0 ? (
           <div className="flex flex-col items-center gap-2 py-16 text-center">
             <Icon name="ti-mood-smile" size={32} className="text-teal" />
@@ -171,8 +171,8 @@ export function LogsScreen() {
         )}
       </main>
 
-      {/* Floating context-aware create */}
-      <div className="pointer-events-none absolute inset-x-0 bottom-[72px] flex justify-center px-4">
+      {/* Floating context-aware create — fixed above the pinned nav */}
+      <div className="pointer-events-none fixed inset-x-0 bottom-[76px] z-30 mx-auto flex w-full max-w-[500px] justify-center px-4 lg:bottom-6">
         <button
           onClick={() =>
             setModal(tab === "infusions" ? "infusion" : tab === "bleeds" ? "bleed" : "choose")
@@ -252,7 +252,7 @@ function LogRowItem({
   return (
     <div className="flex items-center gap-3 rounded-card border border-border bg-card p-3.5 shadow-card">
       <div className="flex h-9 w-9 items-center justify-center rounded-tile bg-red-light">
-        <Icon name="ti-droplet-filled" size={18} className="text-red" />
+        <Icon name="ti-droplet" size={18} className="text-red" />
       </div>
       <div className="min-w-0 flex-1">
         <p className="truncate text-title-card text-text-primary">Bleed · {row.site}</p>

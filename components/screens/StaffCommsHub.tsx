@@ -16,7 +16,6 @@ import {
   Icon,
   BottomNav,
   TopBarNav,
-  ChipFilter,
   cn,
 } from "@/components/ui";
 import { STAFF_NAV } from "./nav-config";
@@ -24,6 +23,35 @@ import { MessageBubble, DayDivider, NoteCard, computeDayDividers } from "./comms
 
 const preview = (iso: string) =>
   new Date(iso).toLocaleDateString("en-US", { month: "short", day: "numeric", timeZone: "UTC" });
+
+// Role tint for the thread switcher — reads as navigation, not filter pills.
+const ROLE_ICON: Partial<Record<StaffRole, string>> = {
+  NURSE: "ti-stethoscope",
+  PHARMACIST: "ti-prescription",
+  REP: "ti-user-star",
+  SOCIAL_WORKER: "ti-heart-handshake",
+  VERIFICATION: "ti-shield-check",
+  TECH: "ti-package",
+  MANAGEMENT: "ti-briefcase",
+};
+const ROLE_TINT: Record<string, { active: string; idle: string }> = {
+  NURSE: {
+    active: "bg-teal text-white",
+    idle: "border border-teal-mid bg-teal-light text-teal-dark",
+  },
+  PHARMACIST: {
+    active: "bg-navy text-white",
+    idle: "border border-border-strong bg-fill-control text-navy",
+  },
+  REP: {
+    active: "bg-navy-light text-white",
+    idle: "border border-border-strong bg-card text-text-secondary",
+  },
+  DEFAULT: {
+    active: "bg-navy text-white",
+    idle: "border border-border-strong bg-card text-text-secondary",
+  },
+};
 
 export function StaffCommsHub() {
   const [openPatient, setOpenPatient] = useState<string | null>(null);
@@ -38,7 +66,7 @@ export function StaffCommsHub() {
         <h1 className="text-display text-navy">Messages</h1>
         <p className="text-micro text-text-muted">{convos.length} conversations</p>
       </header>
-      <main className="flex-1 overflow-y-auto">
+      <main className="flex-1 overflow-y-auto max-lg:pb-24">
         {convos.map((c) => (
           <button
             key={c.patient.id}
@@ -197,26 +225,58 @@ function Conversation({
         }
       />
 
-      {/* role-thread selector */}
-      <div className="scroll-x flex gap-1.5 border-b border-border bg-card px-4 py-2">
-        {threads.map((t) => (
-          <ChipFilter
-            key={t.id}
-            active={threadId === t.id}
-            onClick={() => setThreadId(t.id)}
-          >
-            {t.roleLabel}
-          </ChipFilter>
-        ))}
+      {/* Thread switcher — WHICH conversation. Role-tinted navigation chips
+          (nurse teal / pharmacy navy / rep slate) that read as destinations,
+          in the conversation header. */}
+      <div className="scroll-x flex items-center gap-2 border-b border-border bg-card px-4 py-2.5">
+        <Icon name="ti-messages" size={15} className="shrink-0 text-text-muted" />
+        {threads.map((t) => {
+          const on = threadId === t.id;
+          const tint = ROLE_TINT[t.role] ?? ROLE_TINT.DEFAULT;
+          return (
+            <button
+              key={t.id}
+              onClick={() => setThreadId(t.id)}
+              className={cn(
+                "flex shrink-0 items-center gap-1.5 rounded-pill px-3 py-1.5 text-label-strong transition-colors",
+                on ? tint.active : tint.idle,
+              )}
+            >
+              <Icon name={ROLE_ICON[t.role] ?? "ti-user"} size={14} />
+              {t.roleLabel}
+            </button>
+          );
+        })}
       </div>
 
-      {/* filter toggle */}
-      <div className="flex gap-1.5 border-b border-border bg-card px-4 py-2">
-        {(["both", "messages", "notes"] as Filter[]).map((f) => (
-          <ChipFilter key={f} active={filter === f} onClick={() => setFilter(f)}>
-            {f === "both" ? "All" : f === "messages" ? "Messages" : "Notes"}
-          </ChipFilter>
-        ))}
+      {/* Content toggle — WHAT content within the thread. A lighter, secondary
+          segmented control just above the stream (amber accent on Notes). */}
+      <div className="flex items-center gap-2 border-b border-border bg-page px-4 py-2">
+        <span className="text-micro text-text-muted">Show</span>
+        <div className="inline-flex rounded-control bg-fill-control p-0.5">
+          {(["both", "messages", "notes"] as Filter[]).map((f) => {
+            const on = filter === f;
+            const isNotes = f === "notes";
+            return (
+              <button
+                key={f}
+                onClick={() => setFilter(f)}
+                className={cn(
+                  "rounded-[6px] px-3 py-1 text-label-strong transition-colors",
+                  on
+                    ? isNotes
+                      ? "bg-amber-light text-amber shadow-card"
+                      : "bg-card text-navy shadow-card"
+                    : isNotes
+                      ? "text-amber/80"
+                      : "text-text-secondary",
+                )}
+              >
+                {f === "both" ? "All" : f === "messages" ? "Messages" : "Notes"}
+              </button>
+            );
+          })}
+        </div>
       </div>
 
       {/* timeline */}

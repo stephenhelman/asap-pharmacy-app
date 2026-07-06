@@ -57,7 +57,7 @@ export function NotificationsBell({ patientId }: { patientId: string }) {
         className="relative flex h-9 w-9 items-center justify-center rounded-control text-navy active:bg-fill-control"
         aria-label="Notifications"
       >
-        <Icon name={open ? "ti-bell-filled" : "ti-bell"} size={20} />
+        <Icon name={open ? "ti-bell" : "ti-bell"} size={20} />
         {unreadCount > 0 && (
           <span className="absolute right-1 top-1 flex h-4 min-w-4 items-center justify-center rounded-full border border-card bg-red px-1 text-[9px] font-semibold text-white">
             {unreadCount}

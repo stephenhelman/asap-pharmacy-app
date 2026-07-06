@@ -9,7 +9,7 @@
  * writes this same object shape and the login-as switcher is the only thing
  * that goes away.
  */
-import { createContext, useContext, useMemo, useState } from "react";
+import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import type { StaffRole } from "./types";
 import { getStaff, getPatients } from "./dataProvider";
 
@@ -27,6 +27,18 @@ interface SessionContextValue {
   session: Session;
   loginAsPatient: (patientId: string) => void;
   loginAsStaff: (userId: string) => void;
+}
+
+/**
+ * Deep-link identity (Option B): a URL like `/patients/{id}?as={userId}` carries
+ * the acting identity so a cold-loaded / new tab renders as the right person.
+ * Reading URL identity lives ENTIRELY here in the session layer — components
+ * never parse it. Production NextAuth swaps this for a real cookie/token session.
+ */
+function sessionFromParams(search: string): Session | null {
+  const as = new URLSearchParams(search).get("as");
+  if (as && getStaff().some((u) => u.id === as)) return staffSession(as);
+  return null;
 }
 
 function patientSession(patientId: string): Session {
@@ -58,6 +70,18 @@ const SessionContext = createContext<SessionContextValue | null>(null);
 
 export function SessionProvider({ children }: { children: React.ReactNode }) {
   const [session, setSession] = useState<Session>(DEFAULT_SESSION);
+
+  // (a) if the URL carries an identity (?as=), hydrate from it; (b) else keep
+  // the default so a cold load never crashes and the switcher stays available.
+  // Runs post-mount (client only) to avoid an SSR/hydration mismatch.
+  useEffect(() => {
+    const fromUrl = sessionFromParams(window.location.search);
+    // Intentional: sync session from the URL exactly once on mount. A lazy
+    // useState initializer can't read window during SSR and would hydration-
+    // mismatch (server renders the default shell, client the deep-linked one).
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    if (fromUrl) setSession(fromUrl);
+  }, []);
 
   const value = useMemo<SessionContextValue>(
     () => ({

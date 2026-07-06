@@ -189,7 +189,7 @@ export function CheckboxRow({
       className="flex w-full items-center gap-3 py-2.5 text-left"
     >
       <Icon
-        name={checked ? "ti-square-check-filled" : "ti-square"}
+        name={checked ? "ti-square-check" : "ti-square"}
         size={20}
         className={checked ? "text-teal" : suggested ? "text-amber" : "text-border-strong"}
       />
@@ -264,7 +264,7 @@ export function SignaturePad({
             {signedName}
           </span>
           <span className="mt-0.5 flex items-center gap-1 text-micro text-teal-dark">
-            <Icon name="ti-circle-check-filled" size={13} />
+            <Icon name="ti-circle-check" size={13} />
             Signed
           </span>
         </>

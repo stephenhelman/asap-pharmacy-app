@@ -79,7 +79,7 @@ export function ClinicalCheck({ orderId }: { orderId: string }) {
         right={
           <StatusPill
             tone={decision?.decision === "approved" ? "success" : decision?.decision === "held" ? "warning" : "warning"}
-            icon={decision?.decision === "approved" ? "ti-circle-check-filled" : "ti-stethoscope"}
+            icon={decision?.decision === "approved" ? "ti-circle-check" : "ti-stethoscope"}
           >
             {decision?.decision === "approved" ? "Approved" : decision?.decision === "held" ? "On hold" : "Needs review"}
           </StatusPill>
@@ -225,7 +225,7 @@ function CheckRow({
   return (
     <div className="flex items-center gap-3 px-3.5 py-3">
       <Icon
-        name={ok ? "ti-circle-check-filled" : "ti-alert-circle-filled"}
+        name={ok ? "ti-circle-check" : "ti-alert-circle"}
         size={20}
         className={ok ? "text-teal" : "text-amber"}
       />
@@ -258,7 +258,7 @@ function DecisionState({
       )}
     >
       <Icon
-        name={approved ? "ti-circle-check-filled" : "ti-player-pause-filled"}
+        name={approved ? "ti-circle-check" : "ti-player-pause"}
         size={26}
         className={cn("mb-1", approved ? "text-teal" : "text-amber")}
       />

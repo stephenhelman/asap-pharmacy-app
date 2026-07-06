@@ -36,7 +36,7 @@ export function PatientContactWidget() {
     <>
       <button
         onClick={() => setOpen(true)}
-        className="absolute bottom-[84px] right-3 z-20 flex items-center justify-center rounded-full bg-teal text-white shadow-float active:bg-teal-dark lg:hidden"
+        className="fixed bottom-[84px] right-3 z-30 flex items-center justify-center rounded-full bg-teal text-white shadow-float active:bg-teal-dark lg:hidden"
         style={{ height: 52, width: 52 }}
         aria-label="Contact your team"
       >
@@ -44,7 +44,7 @@ export function PatientContactWidget() {
       </button>
 
       {open && (
-        <div className="absolute inset-0 z-40 flex items-end justify-center">
+        <div className="fixed inset-0 z-40 flex items-end justify-center">
           <button className="absolute inset-0 bg-navy-dark/40 animate-scrim-in" onClick={() => setOpen(false)} />
           <div className="relative z-10 w-full rounded-t-frame bg-page p-4 pb-6 animate-sheet-up md:mb-4 md:max-w-[360px] md:rounded-frame">
             <div className="mb-3 flex items-center justify-between">

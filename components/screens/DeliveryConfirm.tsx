@@ -1,10 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { getOrder } from "@/lib/dataProvider";
 import { useMutations } from "@/lib/mutations";
-import type { DeliveryStatus } from "@/lib/types";
+import type { DeliveryStatus, OrderLineItemRow } from "@/lib/types";
 import {
   Button,
   Icon,
@@ -24,12 +24,28 @@ const fmt = (iso: string) =>
     timeZone: "UTC",
   });
 
-/** P7 · Delivery / Confirm — own-data tracker + scan/manual receipt confirmation. */
+const itemIcon = (kind: OrderLineItemRow["kind"]) =>
+  kind === "SUPPLY" ? "ti-box" : kind === "PRN_REPLACEMENT" ? "ti-first-aid-kit" : "ti-vaccine";
+
+type Method = "scan" | "manual";
+
+/**
+ * P7 · Delivery / Confirm (Spec C) — own-data tracker + a RECONCILIATION of what
+ * was received against what was shipped. The patient checks off the shipped
+ * manifest (scan auto-checks all; manual checks each); any unchecked item
+ * captures a missing/damaged reason → Delivery.exceptionNote, which flags to
+ * rep/tech. Confirming sets confirmedByPatientAt + confirmedMethod.
+ */
 export function DeliveryConfirm({ orderId }: { orderId: string }) {
   const router = useRouter();
   const order = getOrder(orderId);
   const { confirmDelivery, confirmedDeliveries } = useMutations();
-  const [justConfirmed, setJustConfirmed] = useState<null | "scan" | "manual">(null);
+
+  const [method, setMethod] = useState<Method | null>(null);
+  const [checked, setChecked] = useState<Record<string, boolean>>({});
+  const [reasons, setReasons] = useState<Record<string, "missing" | "damaged">>({});
+
+  const manifest = useMemo(() => order?.lineItems ?? [], [order]);
 
   if (!order || !order.delivery) {
     return (
@@ -44,8 +60,10 @@ export function DeliveryConfirm({ orderId }: { orderId: string }) {
   }
 
   const d = order.delivery;
-  const confirmedMethod = confirmedDeliveries[orderId] ?? justConfirmed;
-  const isConfirmed = !!confirmedMethod || !!d.confirmedByPatientAt;
+  const confirmation = confirmedDeliveries[orderId];
+  const isConfirmed = !!confirmation || !!d.confirmedByPatientAt;
+  const confirmedMethod = confirmation?.method ?? d.confirmedMethod ?? null;
+  const confirmedException = confirmation?.exceptionNote ?? d.exceptionNote ?? null;
 
   const statusIdx: Record<DeliveryStatus, number> = {
     PENDING: 0,
@@ -66,7 +84,7 @@ export function DeliveryConfirm({ orderId }: { orderId: string }) {
   ];
 
   const bigStatus = isConfirmed
-    ? { icon: "ti-circle-check-filled", tone: "teal", title: "Delivery confirmed", sub: "Your cycle timer has reset." }
+    ? { icon: "ti-circle-check", tone: "teal", title: "Delivery confirmed", sub: "Your cycle timer has reset." }
     : d.status === "OUT_FOR_DELIVERY"
       ? { icon: "ti-truck-delivery", tone: "amber", title: "Out for delivery", sub: "Arriving today" }
       : d.status === "DELIVERED"
@@ -76,9 +94,32 @@ export function DeliveryConfirm({ orderId }: { orderId: string }) {
   const canConfirm =
     !isConfirmed && (d.status === "OUT_FOR_DELIVERY" || d.status === "DELIVERED");
 
-  function confirm(method: "scan" | "manual") {
-    confirmDelivery(orderId, method);
-    setJustConfirmed(method);
+  const isChecked = (id: string) => !!checked[id];
+
+  function chooseScan() {
+    setMethod("scan");
+    setChecked(Object.fromEntries(manifest.map((li) => [li.id, true])));
+  }
+  function chooseManual() {
+    setMethod("manual");
+    setChecked({});
+  }
+  function toggleItem(id: string) {
+    setChecked((c) => ({ ...c, [id]: !c[id] }));
+  }
+
+  const uncheckedItems = manifest.filter((li) => !isChecked(li.id));
+
+  function buildExceptionNote(): string | null {
+    if (uncheckedItems.length === 0) return null;
+    return uncheckedItems
+      .map((li) => `${li.label} ×${li.quantity} — ${reasons[li.id] ?? "missing"}`)
+      .join("; ");
+  }
+
+  function confirm() {
+    if (!method) return;
+    confirmDelivery(orderId, method, method === "manual" ? buildExceptionNote() : null);
   }
 
   const toneBg = {
@@ -89,11 +130,8 @@ export function DeliveryConfirm({ orderId }: { orderId: string }) {
 
   return (
     <div className="flex min-h-[100dvh] flex-col md:min-h-[844px]">
-      <TopBarNav
-        title={order.cycleLabel + " delivery"}
-        onDismiss={() => router.push("/")}
-      />
-      <main className="flex-1 overflow-y-auto p-4">
+      <TopBarNav title={order.cycleLabel + " delivery"} onDismiss={() => router.push("/")} />
+      <main className="flex-1 overflow-y-auto p-4 max-lg:pb-8">
         {/* Big status */}
         <div className="mb-4.5 flex flex-col items-center text-center">
           <div className={cn("mb-2.5 flex h-14 w-14 items-center justify-center rounded-full", toneBg)}>
@@ -103,7 +141,7 @@ export function DeliveryConfirm({ orderId }: { orderId: string }) {
           <p className="text-body text-text-secondary">{bigStatus.sub}</p>
         </div>
 
-        {/* Stepper card */}
+        {/* Tracker */}
         <Card padding="16" className="mb-4.5">
           <StepperVertical steps={steps} />
           {d.trackingUrl && (
@@ -119,38 +157,119 @@ export function DeliveryConfirm({ orderId }: { orderId: string }) {
           )}
         </Card>
 
-        {/* Confirm receipt */}
+        {/* Confirmed summary */}
         {isConfirmed ? (
           <div className="rounded-card border border-border bg-teal-light p-4 text-center">
-            <Icon name="ti-circle-check-filled" size={24} className="mb-1 text-teal" />
+            <Icon name="ti-circle-check" size={24} className="mb-1 text-teal" />
             <p className="text-title-card text-navy">
               Received — confirmed by {confirmedMethod === "scan" ? "scan" : "you"}
             </p>
-            <p className="mt-0.5 text-body text-teal-dark">
-              Thanks for confirming. Your next order cycle starts now.
-            </p>
+            {confirmedException ? (
+              <p className="mx-auto mt-1 max-w-[280px] text-body text-amber">
+                Flagged to your team: {confirmedException}
+              </p>
+            ) : (
+              <p className="mt-0.5 text-body text-teal-dark">
+                Everything checked out. Your next order cycle starts now.
+              </p>
+            )}
             <Button variant="primary" block icon="ti-home" className="mt-3" onClick={() => router.push("/")}>
               Back to dashboard
             </Button>
           </div>
         ) : canConfirm ? (
           <>
-            <SectionLabel className="mb-2">Confirm receipt</SectionLabel>
-            <Card padding="14">
-              <p className="mb-3 text-body text-text-secondary">
-                When your package arrives, confirm it so we know it's in your hands
-                — and your cycle timer resets.
-              </p>
-              <Button variant="primary" block icon="ti-scan" className="mb-2" onClick={() => confirm("scan")}>
-                Scan delivery ticket
-              </Button>
-              <Button variant="secondary" block icon="ti-checkbox" onClick={() => confirm("manual")}>
-                I received it — confirm manually
-              </Button>
-            </Card>
-            <p className="mt-3 text-center text-micro text-text-muted">
-              Scanning auto-checks every item against what was shipped.
-            </p>
+            <SectionLabel className="mb-2">
+              Confirm receipt — check against what shipped
+            </SectionLabel>
+
+            {/* Manifest */}
+            <div className="mb-3 overflow-hidden rounded-card border border-border bg-card">
+              <div className="[&>*+*]:border-t [&>*+*]:border-border">
+                {manifest.map((li) => {
+                  const on = isChecked(li.id);
+                  const interactive = method === "manual";
+                  return (
+                    <div key={li.id} className="px-3.5 py-3">
+                      <div className="flex items-center gap-3">
+                        <button
+                          onClick={() => interactive && toggleItem(li.id)}
+                          disabled={!interactive}
+                          className={cn("flex flex-1 items-center gap-3 text-left", !interactive && "cursor-default")}
+                        >
+                          <Icon
+                            name={on ? "ti-square-check" : "ti-square"}
+                            size={20}
+                            className={on ? "text-teal" : method === null ? "text-border-strong" : "text-amber"}
+                          />
+                          <div className="flex h-8 w-8 items-center justify-center rounded-tile bg-icon-tile">
+                            <Icon name={itemIcon(li.kind)} size={16} className="text-navy-light" />
+                          </div>
+                          <span className="flex-1 text-body text-text-primary">{li.label}</span>
+                          <span className="text-label text-text-muted">×{li.quantity}</span>
+                        </button>
+                      </div>
+                      {/* discrepancy reason for unchecked items (manual) */}
+                      {interactive && !on && (
+                        <div className="mt-2 flex items-center gap-2 pl-8">
+                          <span className="text-micro text-amber">Not received —</span>
+                          {(["missing", "damaged"] as const).map((r) => (
+                            <button
+                              key={r}
+                              onClick={() => setReasons((s) => ({ ...s, [li.id]: r }))}
+                              className={cn(
+                                "rounded-pill px-2.5 py-0.5 text-[11px] font-semibold capitalize transition-colors",
+                                (reasons[li.id] ?? "missing") === r
+                                  ? "bg-amber text-white"
+                                  : "border border-amber-light bg-card text-amber",
+                              )}
+                            >
+                              {r}
+                            </button>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            {method === null ? (
+              <>
+                <p className="mb-2.5 text-body text-text-secondary">
+                  When your package arrives, confirm what's inside — scan the ticket
+                  to auto-check everything, or check each item yourself.
+                </p>
+                <Button variant="primary" block icon="ti-scan" className="mb-2" onClick={chooseScan}>
+                  Scan delivery ticket
+                </Button>
+                <Button variant="secondary" block icon="ti-checkbox" onClick={chooseManual}>
+                  Check items manually
+                </Button>
+              </>
+            ) : (
+              <>
+                {method === "manual" && uncheckedItems.length > 0 && (
+                  <div className="mb-2.5 flex gap-2.5 rounded-card border border-amber-light bg-amber-light p-3">
+                    <Icon name="ti-alert-triangle" size={18} className="mt-px shrink-0 text-amber" />
+                    <p className="text-body text-amber">
+                      {uncheckedItems.length} item{uncheckedItems.length === 1 ? "" : "s"} not
+                      received — we'll flag this to your rep and tech.
+                    </p>
+                  </div>
+                )}
+                <Button variant="primary" block icon="ti-circle-check" onClick={confirm}>
+                  Confirm receipt
+                </Button>
+                <button
+                  onClick={() => setMethod(null)}
+                  className="mt-2 w-full text-center text-micro text-text-muted"
+                >
+                  {method === "scan" ? "Scanned all items" : "Check items yourself"} · change method
+                </button>
+              </>
+            )}
           </>
         ) : (
           <p className="text-center text-micro text-text-muted">

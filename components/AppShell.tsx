@@ -51,13 +51,18 @@ function PatientShell({
 }) {
   return (
     <div className="lg:min-h-[100dvh]">
-      {patientId && <PatientBrandBar patientId={patientId} />}
-      <div className="flex justify-center md:py-6 lg:items-start lg:gap-6 lg:py-8">
-        <div className="relative flex w-full flex-col bg-page md:min-h-[844px] md:max-w-phone md:overflow-hidden md:rounded-frame md:border md:border-border-strong md:shadow-[0_20px_60px_rgba(15,37,64,0.12)] lg:min-h-0 lg:max-w-[500px] lg:overflow-visible lg:rounded-card lg:shadow-card">
-          {children}
-          <PatientContactWidget />
+      {/* Center-and-breathe: the header lives in the SAME centered container as
+          the content (column + spine), so it aligns to the content width rather
+          than stretching edge-to-edge. */}
+      <div className="lg:mx-auto lg:max-w-[840px] lg:px-4">
+        {patientId && <PatientBrandBar patientId={patientId} />}
+        <div className="flex justify-center md:py-6 lg:items-start lg:gap-6 lg:pb-8 lg:pt-6">
+          <div className="relative flex w-full flex-col bg-page md:min-h-[844px] md:max-w-phone md:overflow-hidden md:rounded-frame md:border md:border-border-strong md:shadow-[0_20px_60px_rgba(15,37,64,0.12)] lg:min-h-0 lg:max-w-[500px] lg:overflow-visible lg:rounded-card lg:shadow-card">
+            {children}
+            <PatientContactWidget />
+          </div>
+          {patientId && <PatientSpine patientId={patientId} />}
         </div>
-        {patientId && <PatientSpine patientId={patientId} />}
       </div>
     </div>
   );
