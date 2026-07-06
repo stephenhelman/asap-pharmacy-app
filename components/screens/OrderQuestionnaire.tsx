@@ -81,6 +81,8 @@ export function OrderQuestionnaire({ orderId }: { orderId: string }) {
       )}
 
       <main className="flex-1 min-h-0 overflow-y-auto p-4">
+        {/* key by stage so each advance replays the quiet stage-in rise */}
+        <div key={submitted ? "done" : stage} className="animate-stage-in">
         {submitted ? (
           <SubmittedView patientName={p.firstName} onDone={() => router.push("/")} />
         ) : stage === 1 ? (
@@ -115,6 +117,7 @@ export function OrderQuestionnaire({ orderId }: { orderId: string }) {
             onSubmit={() => setSubmitted(true)}
           />
         )}
+        </div>
       </main>
     </div>
   );

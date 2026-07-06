@@ -98,3 +98,37 @@ body {
 .animate-sheet-up {
   animation: sheet-up 0.2s cubic-bezier(0.22, 1, 0.36, 1);
 }
+
+/* Order-flow stage advance — a quiet rise, so a stage change reads as forward
+   progress rather than an abrupt content swap. Entrance only; plays once. */
+@keyframes stage-in {
+  from {
+    transform: translateY(6px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+.animate-stage-in {
+  animation: stage-in 0.24s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Reduced motion is a first-class path (DESIGN.md). Per Emil: fewer and gentler,
+   not zero — keep comprehension cues (opacity/color), remove positional movement.
+   Transform-based entrances collapse to a plain fade; the decorative ink flourish
+   is dropped; press-scale and other transform transitions are suppressed. */
+@media (prefers-reduced-motion: reduce) {
+  .animate-pane-in,
+  .animate-sheet-up,
+  .animate-stage-in {
+    animation: scrim-in 0.2s ease-out;
+  }
+  *,
+  ::before,
+  ::after {
+    transition-property: opacity, color, background-color, border-color,
+      box-shadow, fill, stroke !important;
+  }
+}

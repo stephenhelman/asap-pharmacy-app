@@ -36,7 +36,7 @@ export function Button({
       <button
         disabled={disabled}
         className={cn(
-          "flex h-[60px] flex-col items-center justify-center gap-1 rounded-control border border-border-strong bg-card text-label-strong text-navy transition-colors active:bg-fill-control disabled:cursor-not-allowed disabled:opacity-60",
+          "flex h-[60px] flex-col items-center justify-center gap-1 rounded-control border border-border-strong bg-card text-label-strong text-navy transition-[transform,background-color,border-color] duration-150 ease-out active:bg-fill-control active:scale-[0.98] disabled:active:scale-100 disabled:cursor-not-allowed disabled:opacity-60",
           block && "w-full",
           className,
         )}
@@ -53,7 +53,7 @@ export function Button({
       <button
         disabled={disabled}
         className={cn(
-          "inline-flex h-[30px] items-center gap-1 rounded-control bg-teal-light px-2.5 text-label-strong text-teal-dark transition-colors active:bg-teal-mid disabled:opacity-60",
+          "inline-flex h-[30px] items-center gap-1 rounded-control bg-teal-light px-2.5 text-label-strong text-teal-dark transition-[transform,background-color] duration-150 ease-out active:bg-teal-mid active:scale-[0.97] disabled:opacity-60",
           className,
         )}
         {...rest}
@@ -65,7 +65,7 @@ export function Button({
   }
 
   const base =
-    "inline-flex items-center justify-center gap-2 rounded-control font-semibold transition-colors disabled:cursor-not-allowed select-none";
+    "inline-flex items-center justify-center gap-2 rounded-control font-semibold transition-[transform,color,background-color,border-color] duration-150 ease-out active:scale-[0.98] disabled:active:scale-100 disabled:cursor-not-allowed select-none";
 
   const variants: Record<Exclude<Variant, "quick" | "scan-inline">, string> = {
     primary:
