@@ -20,7 +20,7 @@ const displayNum = (n: string | null) =>
 export function PatientBrandBar({ patientId }: { patientId: string }) {
   const p = getPatient(patientId);
   return (
-    <header className="sticky top-0 z-20 hidden h-16 items-center justify-between border-b border-border bg-card px-6 lg:flex">
+    <header className="sticky top-0 z-20 hidden h-16 items-center justify-between border-b border-border bg-card px-6 xl:flex">
       <div className="flex items-center gap-2.5">
         <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-navy text-white">
           <Icon name="ti-cross" size={18} />
@@ -42,7 +42,7 @@ export function PatientSpine({ patientId }: { patientId: string }) {
   const threads = getPatientThreads(patientId);
 
   return (
-    <aside className="hidden w-[280px] shrink-0 flex-col gap-4 lg:flex">
+    <aside className="hidden w-[280px] shrink-0 flex-col gap-4 xl:flex">
       {/* contact card */}
       <div className="rounded-card border border-border bg-card p-4 shadow-card">
         <p className="mb-3 text-section uppercase text-text-muted">Your care team</p>

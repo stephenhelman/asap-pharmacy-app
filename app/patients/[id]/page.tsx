@@ -34,13 +34,13 @@ export default function PatientPage({
   }
 
   return (
-    <div className="flex min-h-[100dvh] flex-col md:min-h-[844px] lg:mx-auto lg:min-h-[100dvh] lg:w-full lg:max-w-[680px]">
+    <div className="flex h-full flex-col xl:h-auto lg:mx-auto lg:w-full lg:max-w-[680px]">
       <TopBarNav
         title="Patient record"
         mode={deepLinked ? "close" : "back"}
         onDismiss={dismiss}
       />
-      <div className="flex-1 overflow-y-auto">
+      <div className="flex-1 min-h-0 overflow-y-auto">
         <PatientRecordContent patientId={id} />
       </div>
     </div>

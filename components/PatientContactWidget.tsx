@@ -36,7 +36,7 @@ export function PatientContactWidget() {
     <>
       <button
         onClick={() => setOpen(true)}
-        className="fixed bottom-[84px] right-3 z-30 flex items-center justify-center rounded-full bg-teal text-white shadow-float active:bg-teal-dark lg:hidden"
+        className="fixed bottom-[84px] right-3 z-30 flex items-center justify-center rounded-full bg-teal text-white shadow-float active:bg-teal-dark xl:hidden"
         style={{ height: 52, width: 52 }}
         aria-label="Contact your team"
       >

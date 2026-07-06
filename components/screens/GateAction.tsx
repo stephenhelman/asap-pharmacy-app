@@ -32,7 +32,7 @@ export function GateAction({ gateId }: { gateId: string }) {
 
   if (!ctx) {
     return (
-      <div className="flex min-h-[100dvh] flex-col md:min-h-[844px]">
+      <div className="flex h-full flex-col xl:h-auto">
         <TopBarNav title="Gate" onDismiss={() => router.back()} />
         <div className="flex flex-1 items-center justify-center text-body text-text-muted">
           Gate not found.
@@ -69,7 +69,7 @@ export function GateAction({ gateId }: { gateId: string }) {
   const isViability = gate.type === "VIABILITY";
 
   return (
-    <div className="flex min-h-[100dvh] flex-col md:min-h-[844px] lg:mx-auto lg:min-h-[100dvh] lg:w-full lg:max-w-[680px]">
+    <div className="flex h-full flex-col xl:h-auto lg:mx-auto lg:w-full lg:max-w-[680px]">
       <TopBarNav
         title={GATE_LABELS[gate.type]}
         onDismiss={() => router.back()}
@@ -97,7 +97,7 @@ export function GateAction({ gateId }: { gateId: string }) {
         <Icon name="ti-chevron-right" size={18} className="text-text-muted" />
       </button>
 
-      <main className="flex-1 overflow-y-auto p-4">
+      <main className="flex-1 min-h-0 overflow-y-auto p-4">
         {/* For-reference card */}
         <SectionLabel className="mb-2">For reference</SectionLabel>
         <Card padding="0" className="mb-2">

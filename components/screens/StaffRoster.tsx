@@ -1,8 +1,10 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { getRoster, type RosterRow } from "@/lib/dataProvider";
 import { useSession, roleSummary } from "@/lib/session";
+import { useIsDesktop } from "@/lib/useBreakpoint";
 import {
   Avatar,
   Icon,
@@ -17,8 +19,14 @@ type Filter = "all" | "active" | "onboarding" | "attention";
 
 export function StaffRoster() {
   const { session } = useSession();
+  const router = useRouter();
+  const isDesktop = useIsDesktop();
   const [filter, setFilter] = useState<Filter>("all");
   const [selected, setSelected] = useState<string | null>(null);
+
+  // Desktop (xl): slide-in pane. Below xl: full-page tabbed record.
+  const openRecord = (id: string) =>
+    isDesktop ? setSelected(id) : router.push(`/patients/${id}`);
 
   const rows = getRoster();
   const counts = {
@@ -39,7 +47,7 @@ export function StaffRoster() {
   });
 
   return (
-    <div className="relative flex min-h-[100dvh] flex-col md:min-h-[844px]">
+    <div className="relative flex h-full flex-col xl:h-auto">
       {/* Header */}
       <header className="border-b border-border bg-card px-4 pt-4">
         <div className="flex items-center justify-between">
@@ -70,9 +78,9 @@ export function StaffRoster() {
       </header>
 
       {/* Rows — full-width list on mobile, card grid on desktop */}
-      <main className="flex-1 overflow-y-auto max-lg:pb-24 lg:grid lg:grid-cols-2 lg:content-start lg:gap-3 lg:p-6 xl:grid-cols-3">
+      <main className="flex-1 min-h-0 overflow-y-auto lg:grid lg:grid-cols-2 lg:content-start lg:gap-3 lg:p-6 xl:grid-cols-3">
         {visible.map((r) => (
-          <RosterRowItem key={r.patient.id} row={r} onOpen={() => setSelected(r.patient.id)} />
+          <RosterRowItem key={r.patient.id} row={r} onOpen={() => openRecord(r.patient.id)} />
         ))}
         {visible.length === 0 && (
           <div className="flex flex-col items-center gap-2 py-16 text-center lg:col-span-full">
@@ -85,7 +93,9 @@ export function StaffRoster() {
 
       <BottomNav items={STAFF_NAV} activeKey="roster" />
 
-      <RecordPane patientId={selected} onClose={() => setSelected(null)} />
+      {isDesktop && (
+        <RecordPane patientId={selected} onClose={() => setSelected(null)} />
+      )}
     </div>
   );
 }

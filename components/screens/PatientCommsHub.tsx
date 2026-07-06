@@ -34,14 +34,14 @@ export function PatientCommsHub({ patientId }: { patientId: string }) {
     return <ThreadView threadId={openThread} onBack={() => setOpenThread(null)} />;
 
   return (
-    <div className="flex min-h-[100dvh] flex-col md:min-h-[844px]">
+    <div className="flex h-full flex-col xl:h-auto">
       <header className="border-b border-border bg-card px-4 pb-3 pt-4">
         <h1 className="text-display text-navy">Your care team</h1>
         <p className="text-micro text-text-muted">
           Message history — reply anytime by text or call
         </p>
       </header>
-      <main className="flex-1 overflow-y-auto max-lg:pb-24">
+      <main className="flex-1 min-h-0 overflow-y-auto">
         {threads.length === 0 ? (
           <Empty />
         ) : (
@@ -94,7 +94,7 @@ function ThreadView({ threadId, onBack }: { threadId: string; onBack: () => void
   const showDays = computeDayDividers(messages.map((m) => m.sentAt));
 
   return (
-    <div className="flex min-h-[100dvh] flex-col md:min-h-[844px]">
+    <div className="flex h-full flex-col xl:h-auto">
       <TopBarNav
         title={roleLabel}
         onDismiss={onBack}
@@ -108,7 +108,7 @@ function ThreadView({ threadId, onBack }: { threadId: string; onBack: () => void
         }
       />
 
-      <main className="flex flex-1 flex-col gap-1 overflow-y-auto bg-page px-4 py-4">
+      <main className="flex min-h-0 flex-1 flex-col gap-1 overflow-y-auto bg-page px-4 py-4">
         {messages.map((m, i) => (
           <div key={m.id}>
             {showDays[i] && <DayDivider iso={m.sentAt} />}
@@ -118,7 +118,7 @@ function ThreadView({ threadId, onBack }: { threadId: string; onBack: () => void
       </main>
 
       {/* Read-only footer with launchers (mobile) / number (desktop) */}
-      <footer className="border-t border-border bg-card p-4">
+      <footer className="shrink-0 border-t border-border bg-card p-4">
         <p className="mb-2.5 flex items-center justify-center gap-1.5 text-micro text-text-muted">
           <Icon name="ti-lock" size={13} />
           This history is read-only. Reply by text or call.

@@ -25,7 +25,7 @@ export function ComingSoon({
   const items = session.kind === "patient" ? PATIENT_NAV : STAFF_NAV;
 
   return (
-    <div className="flex min-h-[100dvh] flex-col md:min-h-[844px]">
+    <div className="flex h-full flex-col xl:h-auto">
       <header className="border-b border-border bg-card px-4 pb-3 pt-4">
         <h1 className="text-display text-navy">{title}</h1>
       </header>

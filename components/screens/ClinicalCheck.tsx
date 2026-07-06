@@ -29,7 +29,7 @@ export function ClinicalCheck({ orderId }: { orderId: string }) {
 
   if (!order)
     return (
-      <div className="flex min-h-[100dvh] flex-col md:min-h-[844px]">
+      <div className="flex h-full flex-col xl:h-auto">
         <TopBarNav title="Clinical check" onDismiss={() => router.back()} />
         <div className="flex flex-1 items-center justify-center text-body text-text-muted">
           Order not found.
@@ -72,7 +72,7 @@ export function ClinicalCheck({ orderId }: { orderId: string }) {
   }
 
   return (
-    <div className="flex min-h-[100dvh] flex-col md:min-h-[844px] lg:mx-auto lg:min-h-[100dvh] lg:w-full lg:max-w-[680px]">
+    <div className="flex h-full flex-col xl:h-auto lg:mx-auto lg:w-full lg:max-w-[680px]">
       <TopBarNav
         title="Clinical check"
         onDismiss={() => router.back()}
@@ -88,7 +88,7 @@ export function ClinicalCheck({ orderId }: { orderId: string }) {
 
       <PatientContextRow patient={patient} cycle={order.cycleLabel} onClick={() => router.push(`/patients/${patient.id}`)} />
 
-      <main className="flex-1 overflow-y-auto p-4">
+      <main className="flex-1 min-h-0 overflow-y-auto p-4">
         {/* Order vs prescription */}
         <SectionLabel className="mb-2">Order vs. prescription</SectionLabel>
         <Card padding="0" className="mb-4">

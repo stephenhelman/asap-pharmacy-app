@@ -14,6 +14,7 @@ import {
 } from "@/components/ui";
 import { STAFF_NAV } from "./nav-config";
 import { RecordPane } from "./RecordPane";
+import { useIsDesktop } from "@/lib/useBreakpoint";
 
 // Role-derived default filter (§S2): nurse → Clinicals, pharmacist → All, …
 const DEFAULT_CATEGORY: Partial<Record<StaffRole, string>> = {
@@ -26,7 +27,14 @@ const DEFAULT_CATEGORY: Partial<Record<StaffRole, string>> = {
 
 export function WorkQueue() {
   const { session } = useSession();
+  const router = useRouter();
+  const isDesktop = useIsDesktop();
   const [selected, setSelected] = useState<string | null>(null);
+
+  // Desktop (xl): open the slide-in pane over the matrix. Below xl (mobile /
+  // tablet): navigate to the full-page tabbed record — no pane at this tier.
+  const openRecord = (id: string) =>
+    isDesktop ? setSelected(id) : router.push(`/patients/${id}`);
 
   const rows = useMemo(
     () => getWorkQueue(session.roles),
@@ -60,7 +68,7 @@ export function WorkQueue() {
   const totalItems = visible.reduce((s, r) => s + r.items.length, 0);
 
   return (
-    <div className="relative flex min-h-[100dvh] flex-col md:min-h-[844px]">
+    <div className="relative flex h-full flex-col xl:h-auto">
       <header className="border-b border-border bg-card px-4 pt-4">
         <div className="flex items-center justify-between">
           <div>
@@ -95,7 +103,7 @@ export function WorkQueue() {
         </div>
       </header>
 
-      <main className="flex-1 overflow-y-auto max-lg:pb-24">
+      <main className="flex-1 min-h-0 overflow-y-auto">
         {visible.length === 0 ? (
           <div className="flex flex-col items-center gap-2 py-16 text-center">
             <Icon name="ti-checks" size={34} className="text-teal" />
@@ -106,13 +114,13 @@ export function WorkQueue() {
           </div>
         ) : (
           <>
-            {/* mobile: patients-as-rows, chips indented */}
-            <div className="lg:hidden">
+            {/* below xl: patients-as-rows, chips indented */}
+            <div className="xl:hidden lg:grid lg:grid-cols-2 lg:content-start lg:gap-3 lg:p-4">
               {visible.map((r) => (
                 <QueueRowItem
                   key={r.patient.id}
                   row={r}
-                  onOpen={() => setSelected(r.patient.id)}
+                  onOpen={() => openRecord(r.patient.id)}
                 />
               ))}
             </div>
@@ -124,14 +132,16 @@ export function WorkQueue() {
                   ? categories
                   : categories.filter((c) => c === activeFilter)
               }
-              onOpen={setSelected}
+              onOpen={openRecord}
             />
           </>
         )}
       </main>
 
       <BottomNav items={STAFF_NAV} activeKey="queue" />
-      <RecordPane patientId={selected} onClose={() => setSelected(null)} />
+      {isDesktop && (
+        <RecordPane patientId={selected} onClose={() => setSelected(null)} />
+      )}
     </div>
   );
 }
@@ -151,7 +161,7 @@ function QueueTable({
   const cols = COLUMN_ORDER.filter((c) => columns.includes(c));
 
   return (
-    <div className="hidden overflow-x-auto lg:block">
+    <div className="hidden overflow-x-auto xl:block">
       <table className="w-full border-collapse">
         <thead>
           <tr className="border-b border-border bg-page">
@@ -232,7 +242,8 @@ function QueueRowItem({
   const router = useRouter();
   const { patient, lifecycleLabel, items } = row;
   return (
-    <div className="border-b border-border px-4 py-3.5">
+    <div className="border-b border-border px-4 py-3.5 lg:rounded-card lg:border lg:bg-card lg:shadow-card">
+
       <button
         onClick={onOpen}
         className="mb-2 flex w-full items-center gap-3 text-left"

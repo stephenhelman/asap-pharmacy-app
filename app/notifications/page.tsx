@@ -28,9 +28,9 @@ export default function NotificationsPage() {
   const informational = notifs.filter((n) => n.flavor === "INFORMATIONAL");
 
   return (
-    <div className="flex min-h-[100dvh] flex-col md:min-h-[844px]">
+    <div className="flex h-full flex-col xl:h-auto">
       <TopBarNav title="Notifications" onDismiss={() => router.push("/")} />
-      <main className="flex-1 overflow-y-auto">
+      <main className="flex-1 min-h-0 overflow-y-auto">
         {notifs.length === 0 ? (
           <div className="flex flex-col items-center gap-2 py-20 text-center">
             <Icon name="ti-bell-check" size={34} className="text-teal" />

@@ -61,12 +61,12 @@ export function StaffCommsHub() {
     return <Conversation patientId={openPatient} onBack={() => setOpenPatient(null)} />;
 
   return (
-    <div className="flex min-h-[100dvh] flex-col md:min-h-[844px] lg:mx-auto lg:min-h-[100dvh] lg:w-full lg:max-w-[760px] lg:border-x lg:border-border">
+    <div className="flex h-full flex-col xl:h-auto lg:mx-auto lg:w-full lg:max-w-[760px] lg:border-x lg:border-border">
       <header className="border-b border-border bg-card px-4 pb-3 pt-4">
         <h1 className="text-display text-navy">Messages</h1>
         <p className="text-micro text-text-muted">{convos.length} conversations</p>
       </header>
-      <main className="flex-1 overflow-y-auto max-lg:pb-24">
+      <main className="flex-1 min-h-0 overflow-y-auto">
         {convos.map((c) => (
           <button
             key={c.patient.id}
@@ -208,7 +208,7 @@ function Conversation({
   const showDays = computeDayDividers(items.map((it) => it.at));
 
   return (
-    <div className="flex min-h-[100dvh] flex-col md:min-h-[844px] lg:mx-auto lg:min-h-[100dvh] lg:w-full lg:max-w-[760px] lg:border-x lg:border-border">
+    <div className="flex h-full flex-col xl:h-auto lg:mx-auto lg:w-full lg:max-w-[760px] lg:border-x lg:border-border">
       <TopBarNav
         title={`${patient.firstName} ${patient.lastName}`}
         onDismiss={onBack}
@@ -280,7 +280,7 @@ function Conversation({
       </div>
 
       {/* timeline */}
-      <main className="flex flex-1 flex-col gap-1 overflow-y-auto bg-page px-4 py-4">
+      <main className="flex min-h-0 flex-1 flex-col gap-1 overflow-y-auto bg-page px-4 py-4">
         {items.length === 0 ? (
           <p className="py-10 text-center text-body text-text-muted">
             Nothing here yet.
@@ -308,7 +308,7 @@ function Conversation({
       </main>
 
       {/* composer */}
-      <footer className="border-t border-border bg-card p-3">
+      <footer className="shrink-0 border-t border-border bg-card p-3">
         <div className="mb-2 flex gap-1.5">
           <ModeTab label="Message" icon="ti-message-2" active={mode === "message"} onClick={() => setMode("message")} />
           <ModeTab label="Internal note" icon="ti-notes" active={mode === "note"} onClick={() => setMode("note")} />

@@ -22,14 +22,14 @@ export function BottomNav({
   activeKey: string;
 }) {
   return (
-    <nav className="fixed inset-x-0 bottom-0 z-40 mx-auto flex w-full items-stretch justify-around border-t border-border bg-card px-2 pb-3 pt-2.5 md:max-w-phone lg:hidden">
+    <nav className="z-40 flex shrink-0 items-stretch justify-around border-t border-border bg-card px-2 pb-3 pt-2.5 md:px-8 md:pb-4 md:pt-3 xl:hidden">
       {items.map((it) => {
         const active = it.key === activeKey;
         return (
           <Link
             key={it.key}
             href={it.href}
-            className="flex min-w-[56px] flex-col items-center gap-1 py-1"
+            className="flex min-w-[56px] flex-col items-center gap-1 py-1 md:min-w-[72px]"
           >
             <Icon
               name={active ? (it.activeIcon ?? it.icon) : it.icon}

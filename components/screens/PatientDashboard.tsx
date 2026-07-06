@@ -34,20 +34,20 @@ export function PatientDashboard({ patientId }: { patientId: string }) {
   if (!p) return null;
 
   return (
-    <div className="flex min-h-[100dvh] flex-col md:min-h-[844px]">
+    <div className="flex h-full flex-col xl:h-auto">
       {/* Header */}
       <header className="flex items-center justify-between border-b border-border bg-card px-4 pb-3 pt-4">
         <div>
           <p className="text-body text-text-secondary">Welcome back,</p>
           <p className="text-title-name text-navy">{p.firstName}</p>
         </div>
-        <div className="flex items-center gap-2.5 lg:hidden">
+        <div className="flex items-center gap-2.5 xl:hidden">
           <NotificationsBell patientId={patientId} />
           <Avatar name={p.firstName + " " + p.lastName} size={32} tone="navy" />
         </div>
       </header>
 
-      <main className="flex-1 overflow-y-auto px-4 pb-6 pt-3 max-lg:pb-24">
+      <main className="flex-1 min-h-0 overflow-y-auto px-4 pb-6 pt-3">
         {p.lifecycle === "ACTIVE" ? (
           <ActiveDashboard patientId={patientId} />
         ) : p.lifecycle === "ONBOARDING" ? (
@@ -71,7 +71,8 @@ function ActiveDashboard({ patientId }: { patientId: string }) {
   const unread = getUnreadFromTeam(patientId);
 
   return (
-    <>
+    // Landscape-tablet (lg): stackable cards flow into 2 columns (browsing 2-up).
+    <div className="lg:columns-2 lg:gap-4 xl:columns-1 [&>*]:lg:break-inside-avoid">
       {/* Status pills */}
       <div className="mb-3.5 flex flex-wrap gap-1.5">
         <StatusPill tone="success" icon="ti-circle-check">
@@ -145,7 +146,7 @@ function ActiveDashboard({ patientId }: { patientId: string }) {
           href="/logs"
         />
       </RowCard>
-    </>
+    </div>
   );
 }
 

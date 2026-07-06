@@ -49,7 +49,7 @@ export function DeliveryConfirm({ orderId }: { orderId: string }) {
 
   if (!order || !order.delivery) {
     return (
-      <div className="flex min-h-[100dvh] flex-col md:min-h-[844px]">
+      <div className="flex h-full flex-col xl:h-auto">
         <TopBarNav title="Delivery" onDismiss={() => router.push("/")} />
         <div className="flex flex-1 flex-col items-center justify-center gap-2 text-center">
           <Icon name="ti-package-off" size={32} className="text-text-muted" />
@@ -129,9 +129,9 @@ export function DeliveryConfirm({ orderId }: { orderId: string }) {
   }[bigStatus.tone];
 
   return (
-    <div className="flex min-h-[100dvh] flex-col md:min-h-[844px]">
+    <div className="flex h-full flex-col xl:h-auto lg:mx-auto lg:w-full lg:max-w-[600px]">
       <TopBarNav title={order.cycleLabel + " delivery"} onDismiss={() => router.push("/")} />
-      <main className="flex-1 overflow-y-auto p-4 max-lg:pb-8">
+      <main className="flex-1 min-h-0 overflow-y-auto p-4">
         {/* Big status */}
         <div className="mb-4.5 flex flex-col items-center text-center">
           <div className={cn("mb-2.5 flex h-14 w-14 items-center justify-center rounded-full", toneBg)}>

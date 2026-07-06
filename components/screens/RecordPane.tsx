@@ -47,7 +47,7 @@ export function RecordPane({
       />
       {/* pane — full-width within the phone frame (mobile); a fixed-width panel
           sliding in over the table on the desktop canvas */}
-      <div className="relative flex h-full w-full flex-col bg-page shadow-pane animate-pane-in lg:w-[480px] lg:border-l lg:border-border-strong">
+      <div className="relative flex h-full w-full flex-col bg-page shadow-pane animate-pane-in xl:w-[480px] xl:border-l xl:border-border-strong">
         <div className="flex items-center justify-between border-b border-border bg-card px-3 py-2.5">
           <span className="pl-1 text-label uppercase tracking-wide text-text-muted">
             Patient record
