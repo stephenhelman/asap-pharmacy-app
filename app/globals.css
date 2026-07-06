@@ -12,6 +12,15 @@
   ::after {
     border-color: theme("colors.border.DEFAULT", currentColor);
   }
+
+  /* Consistent keyboard focus across every interactive control — one calm navy
+     ring, app-wide. `:where()` keeps specificity at 0 so component-level focus
+     utilities (e.g. scan-inline's teal ring) still win. focus-visible only, so
+     it never shows on mouse/touch. */
+  :where(a, button, input, textarea, select, summary, [tabindex]):focus-visible {
+    outline: 2px solid theme("colors.navy");
+    outline-offset: 2px;
+  }
 }
 
 :root {
