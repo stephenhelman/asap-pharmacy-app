@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { createPortal } from "react-dom";
 import { Icon } from "@/components/ui";
 import { useSession } from "@/lib/session";
 import { PatientRecordContent } from "./PatientRecordContent";
@@ -37,18 +38,21 @@ export function RecordPane({
 
   if (!patientId) return null;
 
-  return (
-    <div className="absolute inset-0 z-30 flex justify-end">
-      {/* scrim */}
+  // Portal to <body> so the scrim + pane escape the app-shell's shorter,
+  // content-height container (which was clipping them mid-viewport) and size to
+  // the real viewport (100dvh) instead.
+  return createPortal(
+    <>
+      {/* scrim — full viewport, click-to-close */}
       <button
         aria-label="Close record"
         onClick={onClose}
-        className="absolute inset-0 bg-[rgba(15,37,64,0.42)] backdrop-blur-[1.5px] animate-scrim-in"
+        className="fixed inset-0 z-40 h-[100dvh] w-screen bg-[rgba(15,37,64,0.42)] backdrop-blur-[1.5px] animate-scrim-in"
       />
-      {/* pane — full-width within the phone frame (mobile); a fixed-width panel
-          sliding in over the table on the desktop canvas */}
-      <div className="relative flex h-full w-full flex-col bg-page shadow-pane animate-pane-in xl:w-[480px] xl:border-l xl:border-border-strong">
-        <div className="flex items-center justify-between border-b border-border bg-card px-3 py-2.5">
+      {/* pane — pinned right, full viewport height, above the scrim. Internally a
+          flex column: fixed header + internally-scrolling body (app-shell pattern) */}
+      <div className="fixed right-0 top-0 z-50 flex h-[100dvh] w-full max-w-[480px] flex-col bg-page shadow-pane animate-pane-in xl:border-l xl:border-border-strong">
+        <div className="flex shrink-0 items-center justify-between border-b border-border bg-card px-3 py-2.5">
           <span className="pl-1 text-label uppercase tracking-wide text-text-muted">
             Patient record
           </span>
@@ -73,6 +77,7 @@ export function RecordPane({
           <PatientRecordContent patientId={patientId} />
         </div>
       </div>
-    </div>
+    </>,
+    document.body,
   );
 }

@@ -14,6 +14,7 @@ import {
 } from "@/components/ui";
 import { STAFF_NAV } from "./nav-config";
 import { RecordPane } from "./RecordPane";
+import { AddPatientModal } from "./intake/AddPatientModal";
 
 type Filter = "all" | "active" | "onboarding" | "attention";
 
@@ -23,6 +24,10 @@ export function StaffRoster() {
   const isDesktop = useIsDesktop();
   const [filter, setFilter] = useState<Filter>("all");
   const [selected, setSelected] = useState<string | null>(null);
+  const [addOpen, setAddOpen] = useState(false);
+
+  // "Add new" is a rep-only affordance (§5.1.1) — all onboarding begins here.
+  const canAdd = session.roles.includes("REP");
 
   // Desktop (xl): slide-in pane. Below xl: full-page tabbed record.
   const openRecord = (id: string) =>
@@ -57,9 +62,20 @@ export function StaffRoster() {
               {rows.length} patients · {roleSummary(session.roles) || "Staff"} view
             </p>
           </div>
-          <button className="flex h-9 w-9 items-center justify-center rounded-control text-navy active:bg-fill-control">
-            <Icon name="ti-search" size={20} />
-          </button>
+          <div className="flex items-center gap-1.5">
+            {canAdd && (
+              <button
+                onClick={() => setAddOpen(true)}
+                className="inline-flex h-9 items-center gap-1.5 rounded-control bg-accent px-3 text-label-strong text-white active:bg-navy-dark"
+              >
+                <Icon name="ti-plus" size={16} />
+                Add new
+              </button>
+            )}
+            <button className="flex h-9 w-9 items-center justify-center rounded-control text-navy active:bg-fill-control">
+              <Icon name="ti-search" size={20} />
+            </button>
+          </div>
         </div>
         <div className="scroll-x -mx-4 mt-3 flex gap-1.5 px-4 pb-4">
           <ChipFilter active={filter === "all"} count={counts.all} onClick={() => setFilter("all")}>
@@ -96,6 +112,7 @@ export function StaffRoster() {
       {isDesktop && (
         <RecordPane patientId={selected} onClose={() => setSelected(null)} />
       )}
+      {addOpen && <AddPatientModal onClose={() => setAddOpen(false)} />}
     </div>
   );
 }

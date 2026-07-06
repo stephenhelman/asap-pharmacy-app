@@ -2,9 +2,9 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { getPatient, TODAY, GATE_LABELS } from "@/lib/dataProvider";
+import { getPatient, TODAY, GATE_LABELS, DOC_SLOT_LABELS } from "@/lib/dataProvider";
 import { ROLE_LABELS } from "@/lib/session";
-import type { GateStatus, PatientDetail } from "@/lib/types";
+import type { GateStatus, GateType, StaffRole, PatientDetail } from "@/lib/types";
 import {
   Avatar,
   Icon,
@@ -37,11 +37,34 @@ const fmt = (iso: string) =>
     timeZone: "UTC",
   });
 
+// Chronological, left→right as the patient moves through the system.
+// Intake (creation) and Onboarding (gates) are distinct, permanent phases.
 const TABS = [
   { key: "intake", label: "Intake" },
+  { key: "onboarding", label: "Onboarding" },
   { key: "clinical", label: "Clinical" },
   { key: "orders", label: "Orders" },
   { key: "renewals", label: "Renewals" },
+];
+
+const LIFECYCLE_LABEL: Record<string, string> = {
+  ACTIVE: "Active",
+  INTAKE: "Intake",
+  ONBOARDING: "Onboarding",
+  TRANSFERRED_OUT: "Transferred out",
+  INACTIVE: "Inactive",
+};
+
+// The six sub-pipeline gates in order (§5.1), with their owning role. Used to
+// render a COMPLETE itemized onboarding history even when a patient has no gate
+// records of their own (e.g. a long-Active patient whose gates all satisfied).
+const GATE_TEMPLATE: { type: GateType; ownerRole: StaffRole }[] = [
+  { type: "BENEFITS_VERIFICATION", ownerRole: "VERIFICATION" },
+  { type: "VIABILITY", ownerRole: "PHARMACIST" },
+  { type: "CLINICAL_RECORDS", ownerRole: "NURSE" },
+  { type: "PRIOR_AUTHORIZATION", ownerRole: "PHARMACIST" },
+  { type: "ASSISTANCE_ENROLLMENT", ownerRole: "SOCIAL_WORKER" },
+  { type: "PATIENT_INTAKE", ownerRole: "NURSE" },
 ];
 
 export function PatientRecordContent({ patientId }: { patientId: string }) {
@@ -73,11 +96,7 @@ export function PatientRecordContent({ patientId }: { patientId: string }) {
             tone={p.lifecycle === "ACTIVE" ? "success" : "neutral"}
             icon={p.lifecycle === "ACTIVE" ? "ti-circle-check" : "ti-progress"}
           >
-            {p.lifecycle === "ACTIVE"
-              ? "Active"
-              : p.lifecycle === "ONBOARDING"
-                ? "Onboarding"
-                : "Transferred out"}
+            {LIFECYCLE_LABEL[p.lifecycle] ?? p.lifecycle}
           </StatusPill>
           {prophyRx && (
             <StatusPill tone="neutral" icon="ti-prescription">
@@ -104,6 +123,7 @@ export function PatientRecordContent({ patientId }: { patientId: string }) {
 
       <div className="px-4 py-4">
         {tab === "intake" && <IntakeTab p={p} />}
+        {tab === "onboarding" && <OnboardingTab p={p} />}
         {tab === "clinical" && <ClinicalTab p={p} />}
         {tab === "orders" && <OrdersTab p={p} />}
         {tab === "renewals" && <RenewalsTab p={p} />}
@@ -111,30 +131,132 @@ export function PatientRecordContent({ patientId }: { patientId: string }) {
     </div>
   );
 
-  // ── Tabs ──────────────────────────────────────────────────────────────────
+  // ── Intake tab — the CREATION record (docs, consents, info) ────────────────
+  // Permanent, accumulating history: what the patient provided and when.
   function IntakeTab({ p }: { p: PatientDetail }) {
-    const gates = p.onboarding?.gates ?? [];
-    if (gates.length === 0)
+    const consentItems = [
+      { label: "SMS consent", done: p.smsConsent, when: null as string | null },
+      { label: "Email consent", done: p.emailConsent, when: null },
+      {
+        label: "HIPAA consent",
+        done: !!p.hipaaConsentedAt,
+        when: p.hipaaConsentedAt ? fmt(p.hipaaConsentedAt) : null,
+      },
+    ];
+    const infoItems = [
+      { label: "Contact (phone / email)", done: !!p.phone },
+      {
+        label: "Mailing address",
+        done: !!(p.addressLine1 && p.city && p.state && p.zip),
+      },
+      { label: "Date of birth", done: !!p.dob },
+      { label: "Prescriber", done: !!p.prescriberName },
+    ];
+
+    return (
+      <div className="flex flex-col gap-4">
+        <div>
+          <SectionLabel className="mb-2.5">Consents</SectionLabel>
+          <RowCard>
+            {consentItems.map((it) => (
+              <CheckRow key={it.label} label={it.label} done={it.done} when={it.when} />
+            ))}
+          </RowCard>
+        </div>
+        <div>
+          <SectionLabel className="mb-2.5">Information</SectionLabel>
+          <RowCard>
+            {infoItems.map((it) => (
+              <CheckRow key={it.label} label={it.label} done={it.done} />
+            ))}
+          </RowCard>
+        </div>
+        <div>
+          <SectionLabel className="mb-2.5">Documents</SectionLabel>
+          {p.documentSlots.length === 0 ? (
+            <EmptyState icon="ti-files" title="No document slots" />
+          ) : (
+            <RowCard>
+              {p.documentSlots.map((s) => (
+                <CheckRow
+                  key={s.id}
+                  label={`${DOC_SLOT_LABELS[s.type]}${s.required ? "" : " (optional)"}`}
+                  done={s.status === "UPLOADED"}
+                  when={s.uploadedAt ? fmt(s.uploadedAt) : null}
+                  pendingLabel="Pending"
+                />
+              ))}
+            </RowCard>
+          )}
+        </div>
+      </div>
+    );
+  }
+
+  // ── Onboarding tab — the GATE progression toward Active ────────────────────
+  // Always an itemized list of the six sub-pipeline gates (like the Intake tab),
+  // so a completed onboarding reads as a full green history — not an empty state.
+  function OnboardingTab({ p }: { p: PatientDetail }) {
+    // Ordering constraint made visible: gates can't begin until intake completes.
+    if (p.lifecycle === "INTAKE")
       return (
         <EmptyState
-          icon="ti-checks"
-          title="Onboarding complete"
-          body="All intake gates were satisfied. This patient is active."
+          icon="ti-lock"
+          title="Onboarding not started"
+          body="Onboarding gates begin once the patient finishes intake. Intake must complete first."
         />
       );
+
+    // Merge the patient's real gate records over the canonical template. A gate
+    // with no record defaults to satisfied for an Active patient (they cleared
+    // it) or not-started for one still onboarding.
+    const byType = new Map(
+      (p.onboarding?.gates ?? []).map((g) => [g.type, g]),
+    );
+    const rows = GATE_TEMPLATE.map((t) => {
+      const g = byType.get(t.type);
+      if (g)
+        return {
+          key: g.id,
+          gateId: g.id,
+          type: t.type,
+          status: g.status,
+          outcome: g.outcome,
+          note: g.outcomeNote,
+          ownerRole: g.ownerRole,
+        };
+      const satisfied = p.lifecycle === "ACTIVE";
+      return {
+        key: `tmpl-${t.type}`,
+        gateId: null,
+        type: t.type,
+        status: (satisfied ? "SATISFIED" : "NOT_STARTED") as GateStatus,
+        outcome: satisfied ? "satisfied" : null,
+        note: null,
+        ownerRole: t.ownerRole,
+      };
+    });
+
+    const doneCount = rows.filter((r) => r.status === "SATISFIED").length;
+
     return (
       <>
-        <SectionLabel className="mb-2.5">Intake gates</SectionLabel>
+        <div className="mb-2.5 flex items-center justify-between">
+          <SectionLabel>Onboarding gates</SectionLabel>
+          <span className="text-micro text-text-muted">
+            {doneCount} of {rows.length} cleared
+          </span>
+        </div>
         <RowCard>
-          {gates.map((g) => (
+          {rows.map((r) => (
             <GateRow
-              key={g.id}
-              gateId={g.id}
-              name={GATE_LABELS[g.type]}
-              status={g.status}
-              outcome={g.outcome}
-              note={g.outcomeNote}
-              ownerRole={ROLE_LABELS[g.ownerRole]}
+              key={r.key}
+              gateId={r.gateId}
+              name={GATE_LABELS[r.type]}
+              status={r.status}
+              outcome={r.outcome}
+              note={r.note}
+              ownerRole={ROLE_LABELS[r.ownerRole]}
             />
           ))}
         </RowCard>
@@ -328,7 +450,7 @@ function GateRow({
   note,
   ownerRole,
 }: {
-  gateId: string;
+  gateId: string | null;
   name: string;
   status: GateStatus;
   outcome: string | null;
@@ -351,7 +473,9 @@ function GateRow({
           ? (outcome ?? "Blocked")
           : "Not started";
 
-  const actionable = status !== "SATISFIED";
+  // Only real gate instances are actionable; synthesized template rows (gateId
+  // null) are display-only.
+  const actionable = status !== "SATISFIED" && gateId !== null;
 
   const inner = (
     <>
@@ -386,6 +510,42 @@ function GateRow({
       </Link>
     );
   return <div className="flex items-start gap-3 px-3.5 py-2.5">{inner}</div>;
+}
+
+function CheckRow({
+  label,
+  done,
+  when,
+  pendingLabel = "Not yet",
+}: {
+  label: string;
+  done: boolean;
+  when?: string | null;
+  pendingLabel?: string;
+}) {
+  return (
+    <div className="flex items-center gap-3 px-3.5 py-2.5">
+      <Icon
+        name={done ? "ti-circle-check" : "ti-circle"}
+        size={18}
+        className={done ? "text-teal" : "text-border-strong"}
+      />
+      <div className="min-w-0 flex-1">
+        <p className="text-title-card text-text-primary">{label}</p>
+        {done && when && (
+          <p className="text-micro text-text-muted">{when}</p>
+        )}
+      </div>
+      <span
+        className={cn(
+          "text-micro",
+          done ? "text-teal-dark" : "text-text-muted",
+        )}
+      >
+        {done ? "Done" : pendingLabel}
+      </span>
+    </div>
+  );
 }
 
 function EmptyState({

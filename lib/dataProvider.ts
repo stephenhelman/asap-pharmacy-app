@@ -23,6 +23,9 @@ import type {
   InternalNoteRow,
   UserRow,
   NotificationRow,
+  DocumentSlotType,
+  DocumentSlotRow,
+  IntakeTaskType,
 } from "./types";
 
 // The story's fixed "today" — deterministic so the demo never drifts.
@@ -36,6 +39,43 @@ function daysBetween(a: Date, b: Date): number {
 
 export function getPatients(): PatientRow[] {
   return db.patients;
+}
+
+/** Flip a document slot in-memory (Documents screen upload/delete). §5.1.1 */
+export function uploadDocumentSlot(slotId: string, fileRef: string): void {
+  const s = db.documentSlots.find((x) => x.id === slotId);
+  if (!s) return;
+  s.status = "UPLOADED";
+  s.fileRef = fileRef;
+  s.uploadedAt = new Date(TODAY.getTime()).toISOString();
+  autoResolveIntakeTasks(s.patientId);
+}
+
+/** Clear a document slot (delete in the permanent doc manager). */
+export function clearDocumentSlot(slotId: string): void {
+  const s = db.documentSlots.find((x) => x.id === slotId);
+  if (!s) return;
+  s.status = "PENDING";
+  s.fileRef = null;
+  s.uploadedAt = null;
+}
+
+/**
+ * Auto-satisfy, stall-surface (§5.1): the moment the patient completes the
+ * triggering action, the intake task self-resolves. Called after doc uploads.
+ */
+function autoResolveIntakeTasks(patientId: string): void {
+  const slots = db.documentSlots.filter((s) => s.patientId === patientId);
+  const docsDone =
+    slots.filter((s) => s.required).length > 0 &&
+    slots.filter((s) => s.required).every((s) => s.status === "UPLOADED");
+  if (!docsDone) return;
+  for (const t of db.intakeTasks) {
+    if (t.patientId === patientId && t.type === "NEEDS_DOCS" && !t.resolvedAt) {
+      t.status = "RESOLVED";
+      t.resolvedAt = new Date(TODAY.getTime()).toISOString();
+    }
+  }
 }
 
 export function getStaff(): StaffUser[] {
@@ -58,6 +98,67 @@ export function getUser(id: string): StaffUser | null {
 
 export function getSupplies(): SupplyItemRow[] {
   return db.supplyItems.filter((s) => s.active);
+}
+
+// ── Draft-patient commit (§ Part 3) ────────────────────────────────────────
+// The intake flow builds a transient draft in memory (lib/draft.tsx). On finish
+// it commits here: the draft is pushed into the SAME in-memory `db` arrays the
+// fixtures live in, so `getPatient(draftId)` returns it with ZERO special-casing
+// — the dashboard and every downstream screen treat it exactly like a fixture
+// patient. A full page refresh re-evaluates the module and the draft evaporates,
+// consistent with every other in-memory mutation.
+
+export interface DraftCommit {
+  patient: PatientRow;
+  docSlots: DocumentSlotRow[];
+  referringRepId: string | null;
+}
+
+/** Commit a finished draft into the live fixtures db (idempotent upsert). */
+export function registerDraftPatient({
+  patient,
+  docSlots,
+  referringRepId,
+}: DraftCommit): void {
+  // upsert patient
+  const pIdx = db.patients.findIndex((p) => p.id === patient.id);
+  if (pIdx >= 0) db.patients[pIdx] = patient;
+  else db.patients.push(patient);
+
+  // replace this patient's doc slots
+  db.documentSlots = db.documentSlots.filter((s) => s.patientId !== patient.id);
+  db.documentSlots.push(...docSlots);
+
+  // referring rep → care-team REP assignment (rep assignment happens at creation)
+  if (referringRepId) {
+    const has = db.careTeamAssignments.some(
+      (c) => c.patientId === patient.id && c.role === "REP",
+    );
+    if (!has)
+      db.careTeamAssignments.push({
+        id: `cta_${patient.id}_rep`,
+        patientId: patient.id,
+        userId: referringRepId,
+        role: "REP",
+      });
+  }
+
+  // Intake tasks: model the still-open gaps as LATENT (tracked, invisible — they
+  // only SURFACE on stall, which a just-created patient hasn't done yet).
+  db.intakeTasks = db.intakeTasks.filter((t) => t.patientId !== patient.id);
+  const pendingRequired = docSlots.filter(
+    (s) => s.required && s.status !== "UPLOADED",
+  );
+  if (pendingRequired.length > 0)
+    db.intakeTasks.push({
+      id: `itk_${patient.id}_docs`,
+      patientId: patient.id,
+      type: "NEEDS_DOCS",
+      status: "LATENT",
+      detail: pendingRequired.map((s) => DOC_SLOT_LABELS[s.type]).join(", "),
+      createdAt: patient.createdAt,
+      resolvedAt: null,
+    });
 }
 
 // ── Joins ────────────────────────────────────────────────────────────────────
@@ -133,6 +234,10 @@ export function getPatient(id: string): PatientDetail | null {
       .filter((c) => c.patientId === id)
       .map((c) => ({ ...c, user: db.users.find((u) => u.id === c.userId)! })),
     authorizedUsers: db.authorizedUsers.filter((a) => a.patientId === id),
+    intakeTasks: db.intakeTasks
+      .filter((t) => t.patientId === id)
+      .sort((a, b) => a.createdAt.localeCompare(b.createdAt)),
+    documentSlots: db.documentSlots.filter((s) => s.patientId === id),
   };
 }
 
@@ -408,6 +513,135 @@ export function getUnreadFromTeam(patientId: string): number {
   return count;
 }
 
+// ── Intake (§5.1.1) ───────────────────────────────────────────────────────────
+
+export const DOC_SLOT_LABELS: Record<DocumentSlotType, string> = {
+  GOV_ID: "Government ID",
+  INSURANCE_CARD: "Insurance card",
+  RX_PHOTO: "Prescription photo",
+  DIAGNOSIS_LETTER: "Diagnosis letter",
+};
+
+export const INTAKE_TASK_LABELS: Record<IntakeTaskType, string> = {
+  NEEDS_DOCS: "Needs documents",
+  NEEDS_CONSENT: "Needs consent",
+  NEEDS_INFO: "Needs information",
+  AWAITING_PATIENT: "Awaiting patient",
+};
+
+/** Join a list of labels into "a, b and c". */
+function humanList(items: string[]): string {
+  if (items.length === 0) return "";
+  if (items.length === 1) return items[0];
+  if (items.length === 2) return `${items[0]} and ${items[1]}`;
+  return `${items.slice(0, -1).join(", ")} and ${items[items.length - 1]}`;
+}
+
+export interface ChecklistItem {
+  key: string;
+  label: string;
+  sub: string;
+  done: boolean;
+  href: string;
+}
+
+export interface IntakeChecklist {
+  items: ChecklistItem[];
+  complete: boolean;
+  missingRequiredDocs: string[]; // human labels of required, still-pending docs
+  callout: string | null; // polite, specific "what's still needed" line
+}
+
+/** The minimal shape the intake-completeness rule reads (patient + its slots). */
+export interface IntakeProbe {
+  dob: string;
+  addressLine1: string | null;
+  city: string | null;
+  state: string | null;
+  zip: string | null;
+  smsConsent: boolean;
+  emailConsent: boolean;
+  hipaaConsentedAt: string | null;
+  documentSlots: DocumentSlotRow[];
+}
+
+/** True when the patient's part of intake is fully done (required docs included). */
+export function isIntakeComplete(p: IntakeProbe): boolean {
+  const infoDone = !!(p.addressLine1 && p.city && p.state && p.zip && p.dob);
+  const consentDone = p.smsConsent || p.emailConsent;
+  const hipaaDone = !!p.hipaaConsentedAt;
+  const requiredSlots = p.documentSlots.filter((s) => s.required);
+  const docsDone =
+    requiredSlots.length > 0 &&
+    requiredSlots.every((s) => s.status === "UPLOADED");
+  return infoDone && consentDone && hipaaDone && docsDone;
+}
+
+/**
+ * The patient's intake to-do (§5.1.1). Complete items show complete; incomplete
+ * ones deep-link to where they're finished. `complete` gates checklist-vs-tracker.
+ */
+export function getIntakeChecklist(p: PatientDetail): IntakeChecklist {
+  const infoDone = !!(p.addressLine1 && p.city && p.state && p.zip && p.dob);
+  const consentDone = p.smsConsent || p.emailConsent;
+  const hipaaDone = !!p.hipaaConsentedAt;
+  const requiredSlots = p.documentSlots.filter((s) => s.required);
+  const pendingRequired = requiredSlots.filter((s) => s.status !== "UPLOADED");
+  const docsDone = requiredSlots.length > 0 && pendingRequired.length === 0;
+
+  const items: ChecklistItem[] = [
+    {
+      key: "contact",
+      label: "Confirm contact & consent",
+      sub: "Phone, email & how we reach you",
+      done: consentDone,
+      href: "/intake/confirm",
+    },
+    {
+      key: "info",
+      label: "Your information",
+      sub: "Address, date of birth & prescriber",
+      done: infoDone,
+      href: "/intake/info",
+    },
+    {
+      key: "docs",
+      label: "Upload your documents",
+      sub: `${requiredSlots.length - pendingRequired.length} of ${requiredSlots.length} received`,
+      done: docsDone,
+      href: "/documents",
+    },
+    {
+      key: "hipaa",
+      label: "Sign HIPAA consent",
+      sub: "Standard privacy acknowledgment",
+      done: hipaaDone,
+      href: "/intake/hipaa",
+    },
+  ];
+
+  const missingRequiredDocs = pendingRequired.map(
+    (s) => DOC_SLOT_LABELS[s.type],
+  );
+
+  let callout: string | null = null;
+  if (missingRequiredDocs.length > 0) {
+    callout = `We still need your ${humanList(
+      missingRequiredDocs.map((l) => l.toLowerCase()),
+    )} to start onboarding on our end — please upload as soon as you can.`;
+  } else if (!consentDone || !infoDone || !hipaaDone) {
+    const missing = items.filter((i) => !i.done).map((i) => i.label.toLowerCase());
+    callout = `A few things left: ${humanList(missing)}.`;
+  }
+
+  return {
+    items,
+    complete: items.every((i) => i.done),
+    missingRequiredDocs,
+    callout,
+  };
+}
+
 // ── Roster (S1) ───────────────────────────────────────────────────────────────
 
 export interface LeadSignal {
@@ -426,6 +660,16 @@ export interface RosterRow {
 /** Single lead signal by severity priority (§S1). */
 function leadSignalFor(patientId: string): LeadSignal {
   const detail = getPatient(patientId)!;
+
+  // Intake patients: surface the intake-task gap (docs / consent / awaiting).
+  if (detail.lifecycle === "INTAKE") {
+    const surfaced = detail.intakeTasks.find((t) => t.status === "SURFACED");
+    if (surfaced?.type === "AWAITING_PATIENT")
+      return { label: "Awaiting patient", tone: "warning", icon: "ti-hourglass" };
+    if (surfaced)
+      return { label: "Docs needed", tone: "warning", icon: "ti-file-alert" };
+    return { label: "In intake", tone: "neutral", icon: "ti-user-plus" };
+  }
 
   const openBleed = detail.bleeds.find((b) => !b.closedAt);
   if (openBleed)
@@ -472,11 +716,13 @@ export function getRoster(): RosterRow[] {
       patient: p,
       lifecycleLabel: active
         ? "Active"
-        : p.lifecycle === "ONBOARDING"
-          ? "Onboarding"
-          : p.lifecycle === "TRANSFERRED_OUT"
-            ? "Transferred"
-            : "Inactive",
+        : p.lifecycle === "INTAKE"
+          ? "Intake"
+          : p.lifecycle === "ONBOARDING"
+            ? "Onboarding"
+            : p.lifecycle === "TRANSFERRED_OUT"
+              ? "Transferred"
+              : "Inactive",
       lifecycleTone: active ? "success" : "neutral",
       lead: leadSignalFor(p.id),
     };
@@ -505,6 +751,22 @@ export interface QueueRow {
 function workItemsFor(patientId: string): WorkItem[] {
   const d = getPatient(patientId)!;
   const items: WorkItem[] = [];
+
+  // Intake-completion items (§5.1) — the third flavor: patient-resolved,
+  // rep-owned, surfaced ONLY when stalled (LATENT stays invisible).
+  for (const t of d.intakeTasks) {
+    if (t.status !== "SURFACED") continue;
+    items.push(
+      mk(
+        `intake-${t.id}`,
+        INTAKE_TASK_LABELS[t.type],
+        "Intake",
+        t.type === "AWAITING_PATIENT" ? "neutral" : "warning",
+        ["REP"],
+        `/patients/${patientId}`,
+      ),
+    );
+  }
 
   // Onboarding gates that still need someone to act.
   for (const g of d.onboarding?.gates ?? []) {
@@ -603,9 +865,11 @@ export function getWorkQueue(roles: StaffRole[]): QueueRow[] {
       lifecycleLabel:
         p.lifecycle === "ACTIVE"
           ? "Active"
-          : p.lifecycle === "ONBOARDING"
-            ? "Onboarding"
-            : "—",
+          : p.lifecycle === "INTAKE"
+            ? "Intake"
+            : p.lifecycle === "ONBOARDING"
+              ? "Onboarding"
+              : "—",
       items: scoped,
     });
   }

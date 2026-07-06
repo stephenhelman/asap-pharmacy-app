@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useSession, roleSummary } from "@/lib/session";
+import { useDraft } from "@/lib/draft";
 import { getPatients, getStaff } from "@/lib/dataProvider";
 import { Avatar, Button, Icon, cn } from "@/components/ui";
 
@@ -14,6 +15,7 @@ import { Avatar, Button, Icon, cn } from "@/components/ui";
  */
 export function LoginSwitcher() {
   const { session, loginAsPatient, loginAsStaff } = useSession();
+  const { discardDraft } = useDraft();
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const [collapsed, setCollapsed] = useState(true);
@@ -33,6 +35,9 @@ export function LoginSwitcher() {
 
   function commit() {
     if (!choice || !type) return;
+    // Switching identity mid-draft discards the half-built draft (no ceremony —
+    // it's a demo). Don't try to preserve it across identity switches.
+    discardDraft();
     if (type === "patient") loginAsPatient(choice);
     else loginAsStaff(choice);
     setOpen(false);
@@ -149,9 +154,13 @@ export function LoginSwitcher() {
                       sub={
                         p.lifecycle === "ACTIVE"
                           ? "Active"
-                          : p.lifecycle === "ONBOARDING"
-                            ? "Onboarding"
-                            : "Transferred out"
+                          : p.lifecycle === "INTAKE"
+                            ? "Intake"
+                            : p.lifecycle === "ONBOARDING"
+                              ? "Onboarding"
+                              : p.lifecycle === "TRANSFERRED_OUT"
+                                ? "Transferred out"
+                                : "Inactive"
                       }
                       selected={choice === p.id}
                       onClick={() => setChoice(p.id)}

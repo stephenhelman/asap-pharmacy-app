@@ -12,274 +12,2174 @@
       "notifications": "actionable (order due, confirm delivery, dose reminder, onboarding step) + informational (new message, delivery status)"
     }
   },
-
   "users": [
-    { "id": "usr_sofia", "fullName": "Sofia Reyes", "email": "sofia@asappharmacy.com", "phone": "+19155550110", "active": true, "createdAt": "2025-01-04T00:00:00Z" },
-    { "id": "usr_jennifer", "fullName": "Jennifer Mata", "email": "jennifer@asappharmacy.com", "phone": "+19155550164", "active": true, "createdAt": "2025-01-04T00:00:00Z" },
-    { "id": "usr_daniel", "fullName": "Daniel Cho", "email": "daniel@asappharmacy.com", "phone": "+19155550171", "active": true, "createdAt": "2025-02-01T00:00:00Z" },
-    { "id": "usr_gabe", "fullName": "Gabriel Terrazas", "email": "gabe@asappharmacy.com", "phone": "+19155550100", "active": true, "createdAt": "2025-01-01T00:00:00Z" },
-    { "id": "usr_nadia", "fullName": "Nadia Okonkwo", "email": "nadia@asappharmacy.com", "phone": "+19155550120", "active": true, "createdAt": "2025-09-01T00:00:00Z" },
-    { "id": "usr_priest", "fullName": "Priya Sethi", "email": "priya@asappharmacy.com", "phone": "+19155550122", "active": true, "createdAt": "2025-09-01T00:00:00Z" },
-    { "id": "usr_marco_v", "fullName": "Marco Villareal", "email": "marcov@asappharmacy.com", "phone": "+19155550124", "active": true, "createdAt": "2025-09-15T00:00:00Z" },
-    { "id": "usr_bianca", "fullName": "Bianca Ortiz", "email": "bianca@asappharmacy.com", "phone": "+19155550126", "active": true, "createdAt": "2025-10-01T00:00:00Z" }
+    {
+      "id": "usr_sofia",
+      "fullName": "Sofia Reyes",
+      "email": "sofia@asappharmacy.com",
+      "phone": "+19155550110",
+      "active": true,
+      "createdAt": "2025-01-04T00:00:00Z"
+    },
+    {
+      "id": "usr_jennifer",
+      "fullName": "Jennifer Mata",
+      "email": "jennifer@asappharmacy.com",
+      "phone": "+19155550164",
+      "active": true,
+      "createdAt": "2025-01-04T00:00:00Z"
+    },
+    {
+      "id": "usr_daniel",
+      "fullName": "Daniel Cho",
+      "email": "daniel@asappharmacy.com",
+      "phone": "+19155550171",
+      "active": true,
+      "createdAt": "2025-02-01T00:00:00Z"
+    },
+    {
+      "id": "usr_gabe",
+      "fullName": "Gabriel Terrazas",
+      "email": "gabe@asappharmacy.com",
+      "phone": "+19155550100",
+      "active": true,
+      "createdAt": "2025-01-01T00:00:00Z"
+    },
+    {
+      "id": "usr_nadia",
+      "fullName": "Nadia Okonkwo",
+      "email": "nadia@asappharmacy.com",
+      "phone": "+19155550120",
+      "active": true,
+      "createdAt": "2025-09-01T00:00:00Z"
+    },
+    {
+      "id": "usr_priest",
+      "fullName": "Priya Sethi",
+      "email": "priya@asappharmacy.com",
+      "phone": "+19155550122",
+      "active": true,
+      "createdAt": "2025-09-01T00:00:00Z"
+    },
+    {
+      "id": "usr_marco_v",
+      "fullName": "Marco Villareal",
+      "email": "marcov@asappharmacy.com",
+      "phone": "+19155550124",
+      "active": true,
+      "createdAt": "2025-09-15T00:00:00Z"
+    },
+    {
+      "id": "usr_bianca",
+      "fullName": "Bianca Ortiz",
+      "email": "bianca@asappharmacy.com",
+      "phone": "+19155550126",
+      "active": true,
+      "createdAt": "2025-10-01T00:00:00Z"
+    }
   ],
-
   "userRoles": [
-    { "id": "ur_sofia_pharm", "userId": "usr_sofia", "role": "PHARMACIST" },
-    { "id": "ur_sofia_nurse", "userId": "usr_sofia", "role": "NURSE" },
-    { "id": "ur_sofia_verif", "userId": "usr_sofia", "role": "VERIFICATION" },
-    { "id": "ur_sofia_social", "userId": "usr_sofia", "role": "SOCIAL_WORKER" },
-    { "id": "ur_jennifer_rep", "userId": "usr_jennifer", "role": "REP" },
-    { "id": "ur_daniel_tech", "userId": "usr_daniel", "role": "TECH" },
-    { "id": "ur_gabe_mgmt", "userId": "usr_gabe", "role": "MANAGEMENT" },
-    { "id": "ur_nadia_pharm", "userId": "usr_nadia", "role": "PHARMACIST" },
-    { "id": "ur_priya_nurse", "userId": "usr_priest", "role": "NURSE" },
-    { "id": "ur_marcov_verif", "userId": "usr_marco_v", "role": "VERIFICATION" },
-    { "id": "ur_bianca_social", "userId": "usr_bianca", "role": "SOCIAL_WORKER" }
+    {
+      "id": "ur_sofia_pharm",
+      "userId": "usr_sofia",
+      "role": "PHARMACIST"
+    },
+    {
+      "id": "ur_sofia_nurse",
+      "userId": "usr_sofia",
+      "role": "NURSE"
+    },
+    {
+      "id": "ur_sofia_verif",
+      "userId": "usr_sofia",
+      "role": "VERIFICATION"
+    },
+    {
+      "id": "ur_sofia_social",
+      "userId": "usr_sofia",
+      "role": "SOCIAL_WORKER"
+    },
+    {
+      "id": "ur_jennifer_rep",
+      "userId": "usr_jennifer",
+      "role": "REP"
+    },
+    {
+      "id": "ur_daniel_tech",
+      "userId": "usr_daniel",
+      "role": "TECH"
+    },
+    {
+      "id": "ur_gabe_mgmt",
+      "userId": "usr_gabe",
+      "role": "MANAGEMENT"
+    },
+    {
+      "id": "ur_nadia_pharm",
+      "userId": "usr_nadia",
+      "role": "PHARMACIST"
+    },
+    {
+      "id": "ur_priya_nurse",
+      "userId": "usr_priest",
+      "role": "NURSE"
+    },
+    {
+      "id": "ur_marcov_verif",
+      "userId": "usr_marco_v",
+      "role": "VERIFICATION"
+    },
+    {
+      "id": "ur_bianca_social",
+      "userId": "usr_bianca",
+      "role": "SOCIAL_WORKER"
+    }
   ],
-
   "patients": [
-    { "id": "pat_marcos", "firstName": "Marcos", "lastName": "Rivera", "dob": "1991-04-12T00:00:00Z", "phone": "+19155551042", "email": "marcos.r@example.com", "hemophiliaType": "A", "severity": "SEVERE", "lifecycle": "ACTIVE", "isMinor": false, "guardianName": null, "guardianPhone": null, "prescriberName": "Dr. Alan Cheng", "prescriberPractice": "El Paso Hematology Assoc.", "prescriberPhone": "+19155553300", "prescriberFax": "+19155553301", "prescriberNpi": "1487654320", "nextOrderDueDate": "2026-08-10T00:00:00Z", "leadTimeDays": 7, "createdAt": "2025-03-10T00:00:00Z" },
-    { "id": "pat_james", "firstName": "James", "lastName": "Turner", "dob": "1988-09-02T00:00:00Z", "phone": "+19155552210", "email": "j.turner@example.com", "hemophiliaType": "A", "severity": "MODERATE", "lifecycle": "ONBOARDING", "isMinor": false, "guardianName": null, "guardianPhone": null, "prescriberName": "Dr. Priya Nair", "prescriberPractice": "Sun City Hematology", "prescriberPhone": "+19155553320", "prescriberFax": null, "prescriberNpi": null, "nextOrderDueDate": null, "leadTimeDays": null, "createdAt": "2026-06-28T00:00:00Z" },
-    { "id": "pat_robert", "firstName": "Robert", "lastName": "Diaz", "dob": "1979-11-23T00:00:00Z", "phone": "+19155553390", "email": "rdiaz@example.com", "hemophiliaType": "B", "severity": "SEVERE", "lifecycle": "ACTIVE", "isMinor": false, "guardianName": null, "guardianPhone": null, "prescriberName": "Dr. Alan Cheng", "prescriberPractice": "El Paso Hematology Assoc.", "prescriberPhone": "+19155553300", "prescriberFax": "+19155553301", "prescriberNpi": "1487654320", "nextOrderDueDate": "2026-07-28T00:00:00Z", "leadTimeDays": 7, "createdAt": "2025-05-19T00:00:00Z" },
-    { "id": "pat_elton", "firstName": "Elton", "lastName": "Moreno", "dob": "1995-01-30T00:00:00Z", "phone": "+19155554415", "email": "elton.m@example.com", "hemophiliaType": "A", "severity": "MODERATE", "lifecycle": "ONBOARDING", "isMinor": false, "guardianName": null, "guardianPhone": null, "prescriberName": "Dr. Priya Nair", "prescriberPractice": "Sun City Hematology", "prescriberPhone": "+19155553320", "prescriberFax": null, "prescriberNpi": null, "nextOrderDueDate": null, "leadTimeDays": null, "createdAt": "2026-07-06T00:00:00Z" },
-    { "id": "pat_angel", "firstName": "Angel", "lastName": "Koroma", "dob": "1983-07-15T00:00:00Z", "phone": "+19155555530", "email": "akoroma@example.com", "hemophiliaType": "A", "severity": "SEVERE", "lifecycle": "ACTIVE", "isMinor": false, "guardianName": null, "guardianPhone": null, "prescriberName": "Dr. Alan Cheng", "prescriberPractice": "El Paso Hematology Assoc.", "prescriberPhone": "+19155553300", "prescriberFax": "+19155553301", "prescriberNpi": "1487654320", "nextOrderDueDate": "2026-07-20T00:00:00Z", "leadTimeDays": 5, "createdAt": "2025-02-14T00:00:00Z" },
-    { "id": "pat_david", "firstName": "David", "lastName": "Okafor", "dob": "1990-12-08T00:00:00Z", "phone": "+19155556640", "email": "d.okafor@example.com", "hemophiliaType": "B", "severity": "MODERATE", "lifecycle": "ACTIVE", "isMinor": false, "guardianName": null, "guardianPhone": null, "prescriberName": "Dr. Priya Nair", "prescriberPractice": "Sun City Hematology", "prescriberPhone": "+19155553320", "prescriberFax": null, "prescriberNpi": null, "nextOrderDueDate": "2026-07-15T00:00:00Z", "leadTimeDays": 6, "createdAt": "2025-04-22T00:00:00Z" },
-    { "id": "pat_luis", "firstName": "Luis", "lastName": "Herrera", "dob": "1986-03-19T00:00:00Z", "phone": "+19155557750", "email": "lherrera@example.com", "hemophiliaType": "A", "severity": "SEVERE", "lifecycle": "ACTIVE", "isMinor": false, "guardianName": null, "guardianPhone": null, "prescriberName": "Dr. Alan Cheng", "prescriberPractice": "El Paso Hematology Assoc.", "prescriberPhone": "+19155553300", "prescriberFax": "+19155553301", "prescriberNpi": "1487654320", "nextOrderDueDate": "2026-07-24T00:00:00Z", "leadTimeDays": 7, "createdAt": "2025-06-30T00:00:00Z" },
-    { "id": "pat_samuel", "firstName": "Samuel", "lastName": "Ford", "dob": "2013-05-27T00:00:00Z", "phone": "+19155558860", "email": null, "hemophiliaType": "B", "severity": "SEVERE", "lifecycle": "ACTIVE", "isMinor": true, "guardianName": "Rachel Ford", "guardianPhone": "+19155558861", "prescriberName": "Dr. Priya Nair", "prescriberPractice": "Sun City Hematology", "prescriberPhone": "+19155553320", "prescriberFax": null, "prescriberNpi": null, "nextOrderDueDate": "2026-07-26T00:00:00Z", "leadTimeDays": 6, "createdAt": "2025-08-11T00:00:00Z" },
-    { "id": "pat_theo", "firstName": "Theo", "lastName": "Nguyen", "dob": "1977-02-11T00:00:00Z", "phone": "+19155559970", "email": "theo.n@example.com", "hemophiliaType": "A", "severity": "MODERATE", "lifecycle": "ACTIVE", "isMinor": false, "guardianName": null, "guardianPhone": null, "prescriberName": "Dr. Alan Cheng", "prescriberPractice": "El Paso Hematology Assoc.", "prescriberPhone": "+19155553300", "prescriberFax": "+19155553301", "prescriberNpi": "1487654320", "nextOrderDueDate": "2026-08-02T00:00:00Z", "leadTimeDays": 7, "createdAt": "2025-07-03T00:00:00Z" },
-    { "id": "pat_ruben", "firstName": "Ruben", "lastName": "Salas", "dob": "1992-10-05T00:00:00Z", "phone": "+19155551180", "email": "rsalas@example.com", "hemophiliaType": "A", "severity": "SEVERE", "lifecycle": "ACTIVE", "isMinor": false, "guardianName": null, "guardianPhone": null, "prescriberName": "Dr. Alan Cheng", "prescriberPractice": "El Paso Hematology Assoc.", "prescriberPhone": "+19155553300", "prescriberFax": "+19155553301", "prescriberNpi": "1487654320", "nextOrderDueDate": "2026-08-05T00:00:00Z", "leadTimeDays": 7, "createdAt": "2025-05-02T00:00:00Z" },
-    { "id": "pat_omar", "firstName": "Omar", "lastName": "Vance", "dob": "1984-08-20T00:00:00Z", "phone": "+19155552290", "email": "omar.v@example.com", "hemophiliaType": "OTHER", "severity": "MILD", "lifecycle": "TRANSFERRED_OUT", "isMinor": false, "guardianName": null, "guardianPhone": null, "prescriberName": null, "prescriberPractice": null, "prescriberPhone": null, "prescriberFax": null, "prescriberNpi": null, "nextOrderDueDate": null, "leadTimeDays": null, "createdAt": "2026-06-15T00:00:00Z" }
+    {
+      "id": "pat_marcos",
+      "firstName": "Marcos",
+      "lastName": "Rivera",
+      "dob": "1991-04-12T00:00:00Z",
+      "phone": "+19155551042",
+      "email": "marcos.r@example.com",
+      "hemophiliaType": "A",
+      "severity": "SEVERE",
+      "lifecycle": "ACTIVE",
+      "isMinor": false,
+      "guardianName": null,
+      "guardianPhone": null,
+      "prescriberName": "Dr. Alan Cheng",
+      "prescriberPractice": "El Paso Hematology Assoc.",
+      "prescriberPhone": "+19155553300",
+      "prescriberFax": "+19155553301",
+      "prescriberNpi": "1487654320",
+      "nextOrderDueDate": "2026-08-10T00:00:00Z",
+      "leadTimeDays": 7,
+      "createdAt": "2025-03-10T00:00:00Z",
+      "addressLine1": null,
+      "city": null,
+      "state": null,
+      "zip": null,
+      "smsConsent": true,
+      "emailConsent": true,
+      "preferredChannel": "SMS",
+      "dndEnabled": false,
+      "hipaaConsentedAt": "2025-03-10T00:00:00Z",
+      "hipaaSignedBy": "Marcos Rivera"
+    },
+    {
+      "id": "pat_james",
+      "firstName": "James",
+      "lastName": "Turner",
+      "dob": "1988-09-02T00:00:00Z",
+      "phone": "+19155552210",
+      "email": "j.turner@example.com",
+      "hemophiliaType": "A",
+      "severity": "MODERATE",
+      "lifecycle": "ONBOARDING",
+      "isMinor": false,
+      "guardianName": null,
+      "guardianPhone": null,
+      "prescriberName": "Dr. Priya Nair",
+      "prescriberPractice": "Sun City Hematology",
+      "prescriberPhone": "+19155553320",
+      "prescriberFax": null,
+      "prescriberNpi": null,
+      "nextOrderDueDate": null,
+      "leadTimeDays": null,
+      "createdAt": "2026-06-28T00:00:00Z",
+      "addressLine1": null,
+      "city": null,
+      "state": null,
+      "zip": null,
+      "smsConsent": true,
+      "emailConsent": true,
+      "preferredChannel": "SMS",
+      "dndEnabled": false,
+      "hipaaConsentedAt": "2026-06-28T00:00:00Z",
+      "hipaaSignedBy": "James Turner"
+    },
+    {
+      "id": "pat_robert",
+      "firstName": "Robert",
+      "lastName": "Diaz",
+      "dob": "1979-11-23T00:00:00Z",
+      "phone": "+19155553390",
+      "email": "rdiaz@example.com",
+      "hemophiliaType": "B",
+      "severity": "SEVERE",
+      "lifecycle": "ACTIVE",
+      "isMinor": false,
+      "guardianName": null,
+      "guardianPhone": null,
+      "prescriberName": "Dr. Alan Cheng",
+      "prescriberPractice": "El Paso Hematology Assoc.",
+      "prescriberPhone": "+19155553300",
+      "prescriberFax": "+19155553301",
+      "prescriberNpi": "1487654320",
+      "nextOrderDueDate": "2026-07-28T00:00:00Z",
+      "leadTimeDays": 7,
+      "createdAt": "2025-05-19T00:00:00Z",
+      "addressLine1": null,
+      "city": null,
+      "state": null,
+      "zip": null,
+      "smsConsent": true,
+      "emailConsent": true,
+      "preferredChannel": "SMS",
+      "dndEnabled": false,
+      "hipaaConsentedAt": "2025-05-19T00:00:00Z",
+      "hipaaSignedBy": "Robert Diaz"
+    },
+    {
+      "id": "pat_elton",
+      "firstName": "Elton",
+      "lastName": "Moreno",
+      "dob": "1995-01-30T00:00:00Z",
+      "phone": "+19155554415",
+      "email": "elton.m@example.com",
+      "hemophiliaType": "A",
+      "severity": "MODERATE",
+      "lifecycle": "ONBOARDING",
+      "isMinor": false,
+      "guardianName": null,
+      "guardianPhone": null,
+      "prescriberName": "Dr. Priya Nair",
+      "prescriberPractice": "Sun City Hematology",
+      "prescriberPhone": "+19155553320",
+      "prescriberFax": null,
+      "prescriberNpi": null,
+      "nextOrderDueDate": null,
+      "leadTimeDays": null,
+      "createdAt": "2026-07-06T00:00:00Z",
+      "addressLine1": null,
+      "city": null,
+      "state": null,
+      "zip": null,
+      "smsConsent": true,
+      "emailConsent": true,
+      "preferredChannel": "SMS",
+      "dndEnabled": false,
+      "hipaaConsentedAt": "2026-07-06T00:00:00Z",
+      "hipaaSignedBy": "Elton Moreno"
+    },
+    {
+      "id": "pat_angel",
+      "firstName": "Angel",
+      "lastName": "Koroma",
+      "dob": "1983-07-15T00:00:00Z",
+      "phone": "+19155555530",
+      "email": "akoroma@example.com",
+      "hemophiliaType": "A",
+      "severity": "SEVERE",
+      "lifecycle": "ACTIVE",
+      "isMinor": false,
+      "guardianName": null,
+      "guardianPhone": null,
+      "prescriberName": "Dr. Alan Cheng",
+      "prescriberPractice": "El Paso Hematology Assoc.",
+      "prescriberPhone": "+19155553300",
+      "prescriberFax": "+19155553301",
+      "prescriberNpi": "1487654320",
+      "nextOrderDueDate": "2026-07-20T00:00:00Z",
+      "leadTimeDays": 5,
+      "createdAt": "2025-02-14T00:00:00Z",
+      "addressLine1": null,
+      "city": null,
+      "state": null,
+      "zip": null,
+      "smsConsent": true,
+      "emailConsent": true,
+      "preferredChannel": "SMS",
+      "dndEnabled": false,
+      "hipaaConsentedAt": "2025-02-14T00:00:00Z",
+      "hipaaSignedBy": "Angel Koroma"
+    },
+    {
+      "id": "pat_david",
+      "firstName": "David",
+      "lastName": "Okafor",
+      "dob": "1990-12-08T00:00:00Z",
+      "phone": "+19155556640",
+      "email": "d.okafor@example.com",
+      "hemophiliaType": "B",
+      "severity": "MODERATE",
+      "lifecycle": "ACTIVE",
+      "isMinor": false,
+      "guardianName": null,
+      "guardianPhone": null,
+      "prescriberName": "Dr. Priya Nair",
+      "prescriberPractice": "Sun City Hematology",
+      "prescriberPhone": "+19155553320",
+      "prescriberFax": null,
+      "prescriberNpi": null,
+      "nextOrderDueDate": "2026-07-15T00:00:00Z",
+      "leadTimeDays": 6,
+      "createdAt": "2025-04-22T00:00:00Z",
+      "addressLine1": null,
+      "city": null,
+      "state": null,
+      "zip": null,
+      "smsConsent": true,
+      "emailConsent": true,
+      "preferredChannel": "SMS",
+      "dndEnabled": false,
+      "hipaaConsentedAt": "2025-04-22T00:00:00Z",
+      "hipaaSignedBy": "David Okafor"
+    },
+    {
+      "id": "pat_luis",
+      "firstName": "Luis",
+      "lastName": "Herrera",
+      "dob": "1986-03-19T00:00:00Z",
+      "phone": "+19155557750",
+      "email": "lherrera@example.com",
+      "hemophiliaType": "A",
+      "severity": "SEVERE",
+      "lifecycle": "ACTIVE",
+      "isMinor": false,
+      "guardianName": null,
+      "guardianPhone": null,
+      "prescriberName": "Dr. Alan Cheng",
+      "prescriberPractice": "El Paso Hematology Assoc.",
+      "prescriberPhone": "+19155553300",
+      "prescriberFax": "+19155553301",
+      "prescriberNpi": "1487654320",
+      "nextOrderDueDate": "2026-07-24T00:00:00Z",
+      "leadTimeDays": 7,
+      "createdAt": "2025-06-30T00:00:00Z",
+      "addressLine1": null,
+      "city": null,
+      "state": null,
+      "zip": null,
+      "smsConsent": true,
+      "emailConsent": true,
+      "preferredChannel": "SMS",
+      "dndEnabled": false,
+      "hipaaConsentedAt": "2025-06-30T00:00:00Z",
+      "hipaaSignedBy": "Luis Herrera"
+    },
+    {
+      "id": "pat_samuel",
+      "firstName": "Samuel",
+      "lastName": "Ford",
+      "dob": "2013-05-27T00:00:00Z",
+      "phone": "+19155558860",
+      "email": null,
+      "hemophiliaType": "B",
+      "severity": "SEVERE",
+      "lifecycle": "ACTIVE",
+      "isMinor": true,
+      "guardianName": "Rachel Ford",
+      "guardianPhone": "+19155558861",
+      "prescriberName": "Dr. Priya Nair",
+      "prescriberPractice": "Sun City Hematology",
+      "prescriberPhone": "+19155553320",
+      "prescriberFax": null,
+      "prescriberNpi": null,
+      "nextOrderDueDate": "2026-07-26T00:00:00Z",
+      "leadTimeDays": 6,
+      "createdAt": "2025-08-11T00:00:00Z",
+      "addressLine1": null,
+      "city": null,
+      "state": null,
+      "zip": null,
+      "smsConsent": true,
+      "emailConsent": true,
+      "preferredChannel": "SMS",
+      "dndEnabled": false,
+      "hipaaConsentedAt": "2025-08-11T00:00:00Z",
+      "hipaaSignedBy": "Samuel Ford"
+    },
+    {
+      "id": "pat_theo",
+      "firstName": "Theo",
+      "lastName": "Nguyen",
+      "dob": "1977-02-11T00:00:00Z",
+      "phone": "+19155559970",
+      "email": "theo.n@example.com",
+      "hemophiliaType": "A",
+      "severity": "MODERATE",
+      "lifecycle": "ACTIVE",
+      "isMinor": false,
+      "guardianName": null,
+      "guardianPhone": null,
+      "prescriberName": "Dr. Alan Cheng",
+      "prescriberPractice": "El Paso Hematology Assoc.",
+      "prescriberPhone": "+19155553300",
+      "prescriberFax": "+19155553301",
+      "prescriberNpi": "1487654320",
+      "nextOrderDueDate": "2026-08-02T00:00:00Z",
+      "leadTimeDays": 7,
+      "createdAt": "2025-07-03T00:00:00Z",
+      "addressLine1": null,
+      "city": null,
+      "state": null,
+      "zip": null,
+      "smsConsent": true,
+      "emailConsent": true,
+      "preferredChannel": "SMS",
+      "dndEnabled": false,
+      "hipaaConsentedAt": "2025-07-03T00:00:00Z",
+      "hipaaSignedBy": "Theo Nguyen"
+    },
+    {
+      "id": "pat_ruben",
+      "firstName": "Ruben",
+      "lastName": "Salas",
+      "dob": "1992-10-05T00:00:00Z",
+      "phone": "+19155551180",
+      "email": "rsalas@example.com",
+      "hemophiliaType": "A",
+      "severity": "SEVERE",
+      "lifecycle": "ACTIVE",
+      "isMinor": false,
+      "guardianName": null,
+      "guardianPhone": null,
+      "prescriberName": "Dr. Alan Cheng",
+      "prescriberPractice": "El Paso Hematology Assoc.",
+      "prescriberPhone": "+19155553300",
+      "prescriberFax": "+19155553301",
+      "prescriberNpi": "1487654320",
+      "nextOrderDueDate": "2026-08-05T00:00:00Z",
+      "leadTimeDays": 7,
+      "createdAt": "2025-05-02T00:00:00Z",
+      "addressLine1": null,
+      "city": null,
+      "state": null,
+      "zip": null,
+      "smsConsent": true,
+      "emailConsent": true,
+      "preferredChannel": "SMS",
+      "dndEnabled": false,
+      "hipaaConsentedAt": "2025-05-02T00:00:00Z",
+      "hipaaSignedBy": "Ruben Salas"
+    },
+    {
+      "id": "pat_omar",
+      "firstName": "Omar",
+      "lastName": "Vance",
+      "dob": "1984-08-20T00:00:00Z",
+      "phone": "+19155552290",
+      "email": "omar.v@example.com",
+      "hemophiliaType": "OTHER",
+      "severity": "MILD",
+      "lifecycle": "TRANSFERRED_OUT",
+      "isMinor": false,
+      "guardianName": null,
+      "guardianPhone": null,
+      "prescriberName": null,
+      "prescriberPractice": null,
+      "prescriberPhone": null,
+      "prescriberFax": null,
+      "prescriberNpi": null,
+      "nextOrderDueDate": null,
+      "leadTimeDays": null,
+      "createdAt": "2026-06-15T00:00:00Z",
+      "addressLine1": null,
+      "city": null,
+      "state": null,
+      "zip": null,
+      "smsConsent": true,
+      "emailConsent": true,
+      "preferredChannel": "SMS",
+      "dndEnabled": false,
+      "hipaaConsentedAt": "2026-06-15T00:00:00Z",
+      "hipaaSignedBy": "Omar Vance"
+    },
+    {
+      "isMinor": false,
+      "guardianName": null,
+      "guardianPhone": null,
+      "prescriberFax": null,
+      "prescriberNpi": null,
+      "nextOrderDueDate": null,
+      "leadTimeDays": null,
+      "addressLine1": "4120 Yandell Dr",
+      "city": "El Paso",
+      "state": "TX",
+      "zip": "79903",
+      "smsConsent": true,
+      "emailConsent": true,
+      "preferredChannel": "SMS",
+      "dndEnabled": false,
+      "hipaaConsentedAt": "2026-07-07T15:20:00Z",
+      "hipaaSignedBy": "Diego Salazar",
+      "id": "pat_intake_lagging",
+      "firstName": "Diego",
+      "lastName": "Salazar",
+      "dob": "1994-03-18T00:00:00Z",
+      "phone": "+19155552310",
+      "email": "diego.salazar@example.com",
+      "hemophiliaType": "A",
+      "severity": "MODERATE",
+      "lifecycle": "INTAKE",
+      "prescriberName": "Dr. Priya Nair",
+      "prescriberPractice": "Sun City Hematology",
+      "prescriberPhone": "+19155553320",
+      "createdAt": "2026-07-07T15:05:00Z"
+    },
+    {
+      "isMinor": false,
+      "guardianName": null,
+      "guardianPhone": null,
+      "prescriberFax": null,
+      "prescriberNpi": null,
+      "nextOrderDueDate": null,
+      "leadTimeDays": null,
+      "addressLine1": "902 N Oregon St",
+      "city": "El Paso",
+      "state": "TX",
+      "zip": "79902",
+      "smsConsent": false,
+      "emailConsent": false,
+      "preferredChannel": "SMS",
+      "dndEnabled": true,
+      "hipaaConsentedAt": null,
+      "hipaaSignedBy": null,
+      "id": "pat_intake_awaiting",
+      "firstName": "Karen",
+      "lastName": "Whitfield",
+      "dob": "1979-11-05T00:00:00Z",
+      "phone": "+19155552320",
+      "email": "k.whitfield@example.com",
+      "hemophiliaType": "B",
+      "severity": "SEVERE",
+      "lifecycle": "INTAKE",
+      "prescriberName": "Dr. Alan Fisher",
+      "prescriberPractice": "Rio Grande Hematology",
+      "prescriberPhone": "+19155554480",
+      "createdAt": "2026-07-09T18:40:00Z"
+    }
   ],
-
   "careTeamAssignments": [
-    { "id": "cta_marcos_rep", "patientId": "pat_marcos", "userId": "usr_jennifer", "role": "REP" },
-    { "id": "cta_marcos_pharm", "patientId": "pat_marcos", "userId": "usr_sofia", "role": "PHARMACIST" },
-    { "id": "cta_marcos_nurse", "patientId": "pat_marcos", "userId": "usr_sofia", "role": "NURSE" },
-    { "id": "cta_marcos_social", "patientId": "pat_marcos", "userId": "usr_sofia", "role": "SOCIAL_WORKER" },
-    { "id": "cta_james_rep", "patientId": "pat_james", "userId": "usr_jennifer", "role": "REP" },
-    { "id": "cta_james_pharm", "patientId": "pat_james", "userId": "usr_sofia", "role": "PHARMACIST" },
-    { "id": "cta_robert_rep", "patientId": "pat_robert", "userId": "usr_jennifer", "role": "REP" },
-    { "id": "cta_robert_pharm", "patientId": "pat_robert", "userId": "usr_sofia", "role": "PHARMACIST" },
-    { "id": "cta_elton_rep", "patientId": "pat_elton", "userId": "usr_jennifer", "role": "REP" },
-    { "id": "cta_elton_pharm", "patientId": "pat_elton", "userId": "usr_sofia", "role": "PHARMACIST" },
-    { "id": "cta_angel_rep", "patientId": "pat_angel", "userId": "usr_jennifer", "role": "REP" },
-    { "id": "cta_angel_nurse", "patientId": "pat_angel", "userId": "usr_sofia", "role": "NURSE" },
-    { "id": "cta_david_rep", "patientId": "pat_david", "userId": "usr_jennifer", "role": "REP" },
-    { "id": "cta_luis_rep", "patientId": "pat_luis", "userId": "usr_jennifer", "role": "REP" },
-    { "id": "cta_luis_pharm", "patientId": "pat_luis", "userId": "usr_sofia", "role": "PHARMACIST" },
-    { "id": "cta_samuel_rep", "patientId": "pat_samuel", "userId": "usr_jennifer", "role": "REP" },
-    { "id": "cta_theo_rep", "patientId": "pat_theo", "userId": "usr_jennifer", "role": "REP" },
-    { "id": "cta_theo_social", "patientId": "pat_theo", "userId": "usr_sofia", "role": "SOCIAL_WORKER" },
-    { "id": "cta_ruben_rep", "patientId": "pat_ruben", "userId": "usr_jennifer", "role": "REP" },
-    { "id": "cta_ruben_tech", "patientId": "pat_ruben", "userId": "usr_daniel", "role": "TECH" }
+    {
+      "id": "cta_marcos_rep",
+      "patientId": "pat_marcos",
+      "userId": "usr_jennifer",
+      "role": "REP"
+    },
+    {
+      "id": "cta_marcos_pharm",
+      "patientId": "pat_marcos",
+      "userId": "usr_sofia",
+      "role": "PHARMACIST"
+    },
+    {
+      "id": "cta_marcos_nurse",
+      "patientId": "pat_marcos",
+      "userId": "usr_sofia",
+      "role": "NURSE"
+    },
+    {
+      "id": "cta_marcos_social",
+      "patientId": "pat_marcos",
+      "userId": "usr_sofia",
+      "role": "SOCIAL_WORKER"
+    },
+    {
+      "id": "cta_james_rep",
+      "patientId": "pat_james",
+      "userId": "usr_jennifer",
+      "role": "REP"
+    },
+    {
+      "id": "cta_james_pharm",
+      "patientId": "pat_james",
+      "userId": "usr_sofia",
+      "role": "PHARMACIST"
+    },
+    {
+      "id": "cta_robert_rep",
+      "patientId": "pat_robert",
+      "userId": "usr_jennifer",
+      "role": "REP"
+    },
+    {
+      "id": "cta_robert_pharm",
+      "patientId": "pat_robert",
+      "userId": "usr_sofia",
+      "role": "PHARMACIST"
+    },
+    {
+      "id": "cta_elton_rep",
+      "patientId": "pat_elton",
+      "userId": "usr_jennifer",
+      "role": "REP"
+    },
+    {
+      "id": "cta_elton_pharm",
+      "patientId": "pat_elton",
+      "userId": "usr_sofia",
+      "role": "PHARMACIST"
+    },
+    {
+      "id": "cta_angel_rep",
+      "patientId": "pat_angel",
+      "userId": "usr_jennifer",
+      "role": "REP"
+    },
+    {
+      "id": "cta_angel_nurse",
+      "patientId": "pat_angel",
+      "userId": "usr_sofia",
+      "role": "NURSE"
+    },
+    {
+      "id": "cta_david_rep",
+      "patientId": "pat_david",
+      "userId": "usr_jennifer",
+      "role": "REP"
+    },
+    {
+      "id": "cta_luis_rep",
+      "patientId": "pat_luis",
+      "userId": "usr_jennifer",
+      "role": "REP"
+    },
+    {
+      "id": "cta_luis_pharm",
+      "patientId": "pat_luis",
+      "userId": "usr_sofia",
+      "role": "PHARMACIST"
+    },
+    {
+      "id": "cta_samuel_rep",
+      "patientId": "pat_samuel",
+      "userId": "usr_jennifer",
+      "role": "REP"
+    },
+    {
+      "id": "cta_theo_rep",
+      "patientId": "pat_theo",
+      "userId": "usr_jennifer",
+      "role": "REP"
+    },
+    {
+      "id": "cta_theo_social",
+      "patientId": "pat_theo",
+      "userId": "usr_sofia",
+      "role": "SOCIAL_WORKER"
+    },
+    {
+      "id": "cta_ruben_rep",
+      "patientId": "pat_ruben",
+      "userId": "usr_jennifer",
+      "role": "REP"
+    },
+    {
+      "id": "cta_ruben_tech",
+      "patientId": "pat_ruben",
+      "userId": "usr_daniel",
+      "role": "TECH"
+    },
+    {
+      "id": "cta_lagging_rep",
+      "patientId": "pat_intake_lagging",
+      "userId": "usr_jennifer",
+      "role": "REP"
+    },
+    {
+      "id": "cta_awaiting_rep",
+      "patientId": "pat_intake_awaiting",
+      "userId": "usr_jennifer",
+      "role": "REP"
+    }
   ],
-
   "authorizedUsers": [
-    { "id": "au_marcos_spouse", "patientId": "pat_marcos", "name": "Carla Rivera", "relation": "Spouse", "phone": "+19155551043" },
-    { "id": "au_samuel_guardian", "patientId": "pat_samuel", "name": "Rachel Ford", "relation": "Mother / guardian", "phone": "+19155558861" }
+    {
+      "id": "au_marcos_spouse",
+      "patientId": "pat_marcos",
+      "name": "Carla Rivera",
+      "relation": "Spouse",
+      "phone": "+19155551043"
+    },
+    {
+      "id": "au_samuel_guardian",
+      "patientId": "pat_samuel",
+      "name": "Rachel Ford",
+      "relation": "Mother / guardian",
+      "phone": "+19155558861"
+    }
   ],
-
   "prescriptions": [
-    { "id": "rx_marcos_prophy", "patientId": "pat_marcos", "productName": "Advate", "factorType": "Factor VIII", "doseType": "PROPHYLAXIS", "active": true, "frequencyPerWeek": 2, "prnTier": null, "targetIu": 3000, "createdAt": "2025-03-12T00:00:00Z" },
-    { "id": "rx_marcos_prn_mild", "patientId": "pat_marcos", "productName": "Advate", "factorType": "Factor VIII", "doseType": "PRN", "active": true, "frequencyPerWeek": null, "prnTier": "MILD", "targetIu": 1500, "createdAt": "2025-03-12T00:00:00Z" },
-    { "id": "rx_marcos_prn_mod", "patientId": "pat_marcos", "productName": "Advate", "factorType": "Factor VIII", "doseType": "PRN", "active": true, "frequencyPerWeek": null, "prnTier": "MODERATE", "targetIu": 3000, "createdAt": "2025-03-12T00:00:00Z" },
-    { "id": "rx_marcos_prn_sev", "patientId": "pat_marcos", "productName": "Advate", "factorType": "Factor VIII", "doseType": "PRN", "active": true, "frequencyPerWeek": null, "prnTier": "SEVERE", "targetIu": 4000, "createdAt": "2025-03-12T00:00:00Z" },
-    { "id": "rx_robert_prophy", "patientId": "pat_robert", "productName": "BeneFIX", "factorType": "Factor IX", "doseType": "PROPHYLAXIS", "active": true, "frequencyPerWeek": 2, "prnTier": null, "targetIu": 2000, "createdAt": "2025-05-20T00:00:00Z" },
-    { "id": "rx_angel_prophy", "patientId": "pat_angel", "productName": "Advate", "factorType": "Factor VIII", "doseType": "PROPHYLAXIS", "active": true, "frequencyPerWeek": 3, "prnTier": null, "targetIu": 2500, "createdAt": "2025-02-16T00:00:00Z" },
-    { "id": "rx_angel_prn_sev", "patientId": "pat_angel", "productName": "Advate", "factorType": "Factor VIII", "doseType": "PRN", "active": true, "frequencyPerWeek": null, "prnTier": "SEVERE", "targetIu": 4000, "createdAt": "2025-02-16T00:00:00Z" },
-    { "id": "rx_david_prophy", "patientId": "pat_david", "productName": "BeneFIX", "factorType": "Factor IX", "doseType": "PROPHYLAXIS", "active": true, "frequencyPerWeek": 2, "prnTier": null, "targetIu": 2000, "createdAt": "2025-04-24T00:00:00Z" },
-    { "id": "rx_luis_prophy", "patientId": "pat_luis", "productName": "Advate", "factorType": "Factor VIII", "doseType": "PROPHYLAXIS", "active": true, "frequencyPerWeek": 3, "prnTier": null, "targetIu": 3000, "createdAt": "2025-07-01T00:00:00Z" },
-    { "id": "rx_samuel_prophy", "patientId": "pat_samuel", "productName": "BeneFIX", "factorType": "Factor IX", "doseType": "PROPHYLAXIS", "active": true, "frequencyPerWeek": 2, "prnTier": null, "targetIu": 1000, "createdAt": "2025-08-12T00:00:00Z" },
-    { "id": "rx_theo_prophy", "patientId": "pat_theo", "productName": "Advate", "factorType": "Factor VIII", "doseType": "PROPHYLAXIS", "active": true, "frequencyPerWeek": 2, "prnTier": null, "targetIu": 2000, "createdAt": "2025-07-05T00:00:00Z" },
-    { "id": "rx_ruben_prophy", "patientId": "pat_ruben", "productName": "Advate", "factorType": "Factor VIII", "doseType": "PROPHYLAXIS", "active": true, "frequencyPerWeek": 2, "prnTier": null, "targetIu": 3000, "createdAt": "2025-05-04T00:00:00Z" }
+    {
+      "id": "rx_marcos_prophy",
+      "patientId": "pat_marcos",
+      "productName": "Advate",
+      "factorType": "Factor VIII",
+      "doseType": "PROPHYLAXIS",
+      "active": true,
+      "frequencyPerWeek": 2,
+      "prnTier": null,
+      "targetIu": 3000,
+      "createdAt": "2025-03-12T00:00:00Z"
+    },
+    {
+      "id": "rx_marcos_prn_mild",
+      "patientId": "pat_marcos",
+      "productName": "Advate",
+      "factorType": "Factor VIII",
+      "doseType": "PRN",
+      "active": true,
+      "frequencyPerWeek": null,
+      "prnTier": "MILD",
+      "targetIu": 1500,
+      "createdAt": "2025-03-12T00:00:00Z"
+    },
+    {
+      "id": "rx_marcos_prn_mod",
+      "patientId": "pat_marcos",
+      "productName": "Advate",
+      "factorType": "Factor VIII",
+      "doseType": "PRN",
+      "active": true,
+      "frequencyPerWeek": null,
+      "prnTier": "MODERATE",
+      "targetIu": 3000,
+      "createdAt": "2025-03-12T00:00:00Z"
+    },
+    {
+      "id": "rx_marcos_prn_sev",
+      "patientId": "pat_marcos",
+      "productName": "Advate",
+      "factorType": "Factor VIII",
+      "doseType": "PRN",
+      "active": true,
+      "frequencyPerWeek": null,
+      "prnTier": "SEVERE",
+      "targetIu": 4000,
+      "createdAt": "2025-03-12T00:00:00Z"
+    },
+    {
+      "id": "rx_robert_prophy",
+      "patientId": "pat_robert",
+      "productName": "BeneFIX",
+      "factorType": "Factor IX",
+      "doseType": "PROPHYLAXIS",
+      "active": true,
+      "frequencyPerWeek": 2,
+      "prnTier": null,
+      "targetIu": 2000,
+      "createdAt": "2025-05-20T00:00:00Z"
+    },
+    {
+      "id": "rx_angel_prophy",
+      "patientId": "pat_angel",
+      "productName": "Advate",
+      "factorType": "Factor VIII",
+      "doseType": "PROPHYLAXIS",
+      "active": true,
+      "frequencyPerWeek": 3,
+      "prnTier": null,
+      "targetIu": 2500,
+      "createdAt": "2025-02-16T00:00:00Z"
+    },
+    {
+      "id": "rx_angel_prn_sev",
+      "patientId": "pat_angel",
+      "productName": "Advate",
+      "factorType": "Factor VIII",
+      "doseType": "PRN",
+      "active": true,
+      "frequencyPerWeek": null,
+      "prnTier": "SEVERE",
+      "targetIu": 4000,
+      "createdAt": "2025-02-16T00:00:00Z"
+    },
+    {
+      "id": "rx_david_prophy",
+      "patientId": "pat_david",
+      "productName": "BeneFIX",
+      "factorType": "Factor IX",
+      "doseType": "PROPHYLAXIS",
+      "active": true,
+      "frequencyPerWeek": 2,
+      "prnTier": null,
+      "targetIu": 2000,
+      "createdAt": "2025-04-24T00:00:00Z"
+    },
+    {
+      "id": "rx_luis_prophy",
+      "patientId": "pat_luis",
+      "productName": "Advate",
+      "factorType": "Factor VIII",
+      "doseType": "PROPHYLAXIS",
+      "active": true,
+      "frequencyPerWeek": 3,
+      "prnTier": null,
+      "targetIu": 3000,
+      "createdAt": "2025-07-01T00:00:00Z"
+    },
+    {
+      "id": "rx_samuel_prophy",
+      "patientId": "pat_samuel",
+      "productName": "BeneFIX",
+      "factorType": "Factor IX",
+      "doseType": "PROPHYLAXIS",
+      "active": true,
+      "frequencyPerWeek": 2,
+      "prnTier": null,
+      "targetIu": 1000,
+      "createdAt": "2025-08-12T00:00:00Z"
+    },
+    {
+      "id": "rx_theo_prophy",
+      "patientId": "pat_theo",
+      "productName": "Advate",
+      "factorType": "Factor VIII",
+      "doseType": "PROPHYLAXIS",
+      "active": true,
+      "frequencyPerWeek": 2,
+      "prnTier": null,
+      "targetIu": 2000,
+      "createdAt": "2025-07-05T00:00:00Z"
+    },
+    {
+      "id": "rx_ruben_prophy",
+      "patientId": "pat_ruben",
+      "productName": "Advate",
+      "factorType": "Factor VIII",
+      "doseType": "PROPHYLAXIS",
+      "active": true,
+      "frequencyPerWeek": 2,
+      "prnTier": null,
+      "targetIu": 3000,
+      "createdAt": "2025-05-04T00:00:00Z"
+    }
   ],
-
   "assayComponents": [
-    { "id": "ac_marcos_prophy_2000", "prescriptionId": "rx_marcos_prophy", "iu": 2000, "quantity": 1 },
-    { "id": "ac_marcos_prophy_500a", "prescriptionId": "rx_marcos_prophy", "iu": 500, "quantity": 2 },
-    { "id": "ac_marcos_prn_mod_2000", "prescriptionId": "rx_marcos_prn_mod", "iu": 2000, "quantity": 1 },
-    { "id": "ac_marcos_prn_mod_500", "prescriptionId": "rx_marcos_prn_mod", "iu": 500, "quantity": 2 },
-    { "id": "ac_robert_prophy_2000", "prescriptionId": "rx_robert_prophy", "iu": 2000, "quantity": 1 },
-    { "id": "ac_angel_prophy_2500", "prescriptionId": "rx_angel_prophy", "iu": 2000, "quantity": 1 },
-    { "id": "ac_angel_prophy_500", "prescriptionId": "rx_angel_prophy", "iu": 500, "quantity": 1 },
-    { "id": "ac_david_prophy_2000", "prescriptionId": "rx_david_prophy", "iu": 2000, "quantity": 1 },
-    { "id": "ac_luis_prophy_3000", "prescriptionId": "rx_luis_prophy", "iu": 3000, "quantity": 1 },
-    { "id": "ac_ruben_prophy_2000", "prescriptionId": "rx_ruben_prophy", "iu": 2000, "quantity": 1 },
-    { "id": "ac_ruben_prophy_500", "prescriptionId": "rx_ruben_prophy", "iu": 500, "quantity": 2 },
-    { "id": "ac_theo_prophy_2000", "prescriptionId": "rx_theo_prophy", "iu": 2000, "quantity": 1 }
+    {
+      "id": "ac_marcos_prophy_2000",
+      "prescriptionId": "rx_marcos_prophy",
+      "iu": 2000,
+      "quantity": 1
+    },
+    {
+      "id": "ac_marcos_prophy_500a",
+      "prescriptionId": "rx_marcos_prophy",
+      "iu": 500,
+      "quantity": 2
+    },
+    {
+      "id": "ac_marcos_prn_mod_2000",
+      "prescriptionId": "rx_marcos_prn_mod",
+      "iu": 2000,
+      "quantity": 1
+    },
+    {
+      "id": "ac_marcos_prn_mod_500",
+      "prescriptionId": "rx_marcos_prn_mod",
+      "iu": 500,
+      "quantity": 2
+    },
+    {
+      "id": "ac_robert_prophy_2000",
+      "prescriptionId": "rx_robert_prophy",
+      "iu": 2000,
+      "quantity": 1
+    },
+    {
+      "id": "ac_angel_prophy_2500",
+      "prescriptionId": "rx_angel_prophy",
+      "iu": 2000,
+      "quantity": 1
+    },
+    {
+      "id": "ac_angel_prophy_500",
+      "prescriptionId": "rx_angel_prophy",
+      "iu": 500,
+      "quantity": 1
+    },
+    {
+      "id": "ac_david_prophy_2000",
+      "prescriptionId": "rx_david_prophy",
+      "iu": 2000,
+      "quantity": 1
+    },
+    {
+      "id": "ac_luis_prophy_3000",
+      "prescriptionId": "rx_luis_prophy",
+      "iu": 3000,
+      "quantity": 1
+    },
+    {
+      "id": "ac_ruben_prophy_2000",
+      "prescriptionId": "rx_ruben_prophy",
+      "iu": 2000,
+      "quantity": 1
+    },
+    {
+      "id": "ac_ruben_prophy_500",
+      "prescriptionId": "rx_ruben_prophy",
+      "iu": 500,
+      "quantity": 2
+    },
+    {
+      "id": "ac_theo_prophy_2000",
+      "prescriptionId": "rx_theo_prophy",
+      "iu": 2000,
+      "quantity": 1
+    }
   ],
-
   "onboardings": [
-    { "id": "onb_james", "patientId": "pat_james", "completedAt": null, "createdAt": "2026-06-28T00:00:00Z" },
-    { "id": "onb_elton", "patientId": "pat_elton", "completedAt": null, "createdAt": "2026-07-06T00:00:00Z" },
-    { "id": "onb_omar", "patientId": "pat_omar", "completedAt": null, "createdAt": "2026-06-15T00:00:00Z" }
+    {
+      "id": "onb_james",
+      "patientId": "pat_james",
+      "completedAt": null,
+      "createdAt": "2026-06-28T00:00:00Z"
+    },
+    {
+      "id": "onb_elton",
+      "patientId": "pat_elton",
+      "completedAt": null,
+      "createdAt": "2026-07-06T00:00:00Z"
+    },
+    {
+      "id": "onb_omar",
+      "patientId": "pat_omar",
+      "completedAt": null,
+      "createdAt": "2026-06-15T00:00:00Z"
+    }
   ],
-
   "gates": [
-    { "id": "gate_james_verif", "onboardingId": "onb_james", "type": "BENEFITS_VERIFICATION", "ownerRole": "VERIFICATION", "status": "SATISFIED", "outcome": "verified", "outcomeNote": null, "isStanding": false },
-    { "id": "gate_james_viab", "onboardingId": "onb_james", "type": "VIABILITY", "ownerRole": "PHARMACIST", "status": "SATISFIED", "outcome": "viable", "outcomeNote": "Reimbursement checked, margin positive.", "isStanding": false },
-    { "id": "gate_james_clin", "onboardingId": "onb_james", "type": "CLINICAL_RECORDS", "ownerRole": "NURSE", "status": "BLOCKED", "outcome": "incomplete", "outcomeNote": "Awaiting Rx + chart notes from Dr. Nair.", "isStanding": false },
-    { "id": "gate_james_pa", "onboardingId": "onb_james", "type": "PRIOR_AUTHORIZATION", "ownerRole": "PHARMACIST", "status": "IN_PROGRESS", "outcome": null, "outcomeNote": "Submitted via CoverMyMeds 07/10.", "isStanding": true },
-    { "id": "gate_james_assist", "onboardingId": "onb_james", "type": "ASSISTANCE_ENROLLMENT", "ownerRole": "SOCIAL_WORKER", "status": "SATISFIED", "outcome": "approved", "outcomeNote": null, "isStanding": true },
-    { "id": "gate_james_intake", "onboardingId": "onb_james", "type": "PATIENT_INTAKE", "ownerRole": "NURSE", "status": "NOT_STARTED", "outcome": null, "outcomeNote": null, "isStanding": false },
-
-    { "id": "gate_elton_verif", "onboardingId": "onb_elton", "type": "BENEFITS_VERIFICATION", "ownerRole": "VERIFICATION", "status": "SATISFIED", "outcome": "verified", "outcomeNote": null, "isStanding": false },
-    { "id": "gate_elton_viab", "onboardingId": "onb_elton", "type": "VIABILITY", "ownerRole": "PHARMACIST", "status": "IN_PROGRESS", "outcome": null, "outcomeNote": "Management decision pending.", "isStanding": false },
-    { "id": "gate_elton_clin", "onboardingId": "onb_elton", "type": "CLINICAL_RECORDS", "ownerRole": "NURSE", "status": "NOT_STARTED", "outcome": null, "outcomeNote": null, "isStanding": false },
-    { "id": "gate_elton_pa", "onboardingId": "onb_elton", "type": "PRIOR_AUTHORIZATION", "ownerRole": "PHARMACIST", "status": "NOT_STARTED", "outcome": null, "outcomeNote": null, "isStanding": true },
-    { "id": "gate_elton_assist", "onboardingId": "onb_elton", "type": "ASSISTANCE_ENROLLMENT", "ownerRole": "SOCIAL_WORKER", "status": "NOT_STARTED", "outcome": null, "outcomeNote": null, "isStanding": true },
-    { "id": "gate_elton_intake", "onboardingId": "onb_elton", "type": "PATIENT_INTAKE", "ownerRole": "NURSE", "status": "NOT_STARTED", "outcome": null, "outcomeNote": null, "isStanding": false },
-
-    { "id": "gate_omar_verif", "onboardingId": "onb_omar", "type": "BENEFITS_VERIFICATION", "ownerRole": "VERIFICATION", "status": "SATISFIED", "outcome": "verified", "outcomeNote": null, "isStanding": false },
-    { "id": "gate_omar_viab", "onboardingId": "onb_omar", "type": "VIABILITY", "ownerRole": "PHARMACIST", "status": "BLOCKED", "outcome": "not-viable-transfer-out", "outcomeNote": "Product not serviceable; transferred to specialty partner.", "isStanding": false }
+    {
+      "id": "gate_james_verif",
+      "onboardingId": "onb_james",
+      "type": "BENEFITS_VERIFICATION",
+      "ownerRole": "VERIFICATION",
+      "status": "SATISFIED",
+      "outcome": "verified",
+      "outcomeNote": null,
+      "isStanding": false
+    },
+    {
+      "id": "gate_james_viab",
+      "onboardingId": "onb_james",
+      "type": "VIABILITY",
+      "ownerRole": "PHARMACIST",
+      "status": "SATISFIED",
+      "outcome": "viable",
+      "outcomeNote": "Reimbursement checked, margin positive.",
+      "isStanding": false
+    },
+    {
+      "id": "gate_james_clin",
+      "onboardingId": "onb_james",
+      "type": "CLINICAL_RECORDS",
+      "ownerRole": "NURSE",
+      "status": "BLOCKED",
+      "outcome": "incomplete",
+      "outcomeNote": "Awaiting Rx + chart notes from Dr. Nair.",
+      "isStanding": false
+    },
+    {
+      "id": "gate_james_pa",
+      "onboardingId": "onb_james",
+      "type": "PRIOR_AUTHORIZATION",
+      "ownerRole": "PHARMACIST",
+      "status": "IN_PROGRESS",
+      "outcome": null,
+      "outcomeNote": "Submitted via CoverMyMeds 07/10.",
+      "isStanding": true
+    },
+    {
+      "id": "gate_james_assist",
+      "onboardingId": "onb_james",
+      "type": "ASSISTANCE_ENROLLMENT",
+      "ownerRole": "SOCIAL_WORKER",
+      "status": "SATISFIED",
+      "outcome": "approved",
+      "outcomeNote": null,
+      "isStanding": true
+    },
+    {
+      "id": "gate_james_intake",
+      "onboardingId": "onb_james",
+      "type": "PATIENT_INTAKE",
+      "ownerRole": "NURSE",
+      "status": "NOT_STARTED",
+      "outcome": null,
+      "outcomeNote": null,
+      "isStanding": false
+    },
+    {
+      "id": "gate_elton_verif",
+      "onboardingId": "onb_elton",
+      "type": "BENEFITS_VERIFICATION",
+      "ownerRole": "VERIFICATION",
+      "status": "SATISFIED",
+      "outcome": "verified",
+      "outcomeNote": null,
+      "isStanding": false
+    },
+    {
+      "id": "gate_elton_viab",
+      "onboardingId": "onb_elton",
+      "type": "VIABILITY",
+      "ownerRole": "PHARMACIST",
+      "status": "IN_PROGRESS",
+      "outcome": null,
+      "outcomeNote": "Management decision pending.",
+      "isStanding": false
+    },
+    {
+      "id": "gate_elton_clin",
+      "onboardingId": "onb_elton",
+      "type": "CLINICAL_RECORDS",
+      "ownerRole": "NURSE",
+      "status": "NOT_STARTED",
+      "outcome": null,
+      "outcomeNote": null,
+      "isStanding": false
+    },
+    {
+      "id": "gate_elton_pa",
+      "onboardingId": "onb_elton",
+      "type": "PRIOR_AUTHORIZATION",
+      "ownerRole": "PHARMACIST",
+      "status": "NOT_STARTED",
+      "outcome": null,
+      "outcomeNote": null,
+      "isStanding": true
+    },
+    {
+      "id": "gate_elton_assist",
+      "onboardingId": "onb_elton",
+      "type": "ASSISTANCE_ENROLLMENT",
+      "ownerRole": "SOCIAL_WORKER",
+      "status": "NOT_STARTED",
+      "outcome": null,
+      "outcomeNote": null,
+      "isStanding": true
+    },
+    {
+      "id": "gate_elton_intake",
+      "onboardingId": "onb_elton",
+      "type": "PATIENT_INTAKE",
+      "ownerRole": "NURSE",
+      "status": "NOT_STARTED",
+      "outcome": null,
+      "outcomeNote": null,
+      "isStanding": false
+    },
+    {
+      "id": "gate_omar_verif",
+      "onboardingId": "onb_omar",
+      "type": "BENEFITS_VERIFICATION",
+      "ownerRole": "VERIFICATION",
+      "status": "SATISFIED",
+      "outcome": "verified",
+      "outcomeNote": null,
+      "isStanding": false
+    },
+    {
+      "id": "gate_omar_viab",
+      "onboardingId": "onb_omar",
+      "type": "VIABILITY",
+      "ownerRole": "PHARMACIST",
+      "status": "BLOCKED",
+      "outcome": "not-viable-transfer-out",
+      "outcomeNote": "Product not serviceable; transferred to specialty partner.",
+      "isStanding": false
+    }
   ],
-
   "gateEvents": [
-    { "id": "ge_james_verif", "gateId": "gate_james_verif", "actorId": "usr_sofia", "roleExercised": "VERIFICATION", "outcome": "verified", "note": null, "createdAt": "2026-06-30T15:12:00Z" },
-    { "id": "ge_james_viab", "gateId": "gate_james_viab", "actorId": "usr_gabe", "roleExercised": "MANAGEMENT", "outcome": "viable", "note": "Approved on Sofia's recommendation.", "createdAt": "2026-07-01T17:40:00Z" },
-    { "id": "ge_james_clin", "gateId": "gate_james_clin", "actorId": "usr_sofia", "roleExercised": "NURSE", "outcome": "incomplete", "note": "Records requested from Dr. Nair 07/09.", "createdAt": "2026-07-09T14:05:00Z" },
-    { "id": "ge_elton_verif", "gateId": "gate_elton_verif", "actorId": "usr_sofia", "roleExercised": "VERIFICATION", "outcome": "verified", "note": null, "createdAt": "2026-07-08T10:20:00Z" },
-    { "id": "ge_omar_viab", "gateId": "gate_omar_viab", "actorId": "usr_gabe", "roleExercised": "MANAGEMENT", "outcome": "not-viable-transfer-out", "note": "Transferred out 06/20.", "createdAt": "2026-06-20T16:00:00Z" }
+    {
+      "id": "ge_james_verif",
+      "gateId": "gate_james_verif",
+      "actorId": "usr_sofia",
+      "roleExercised": "VERIFICATION",
+      "outcome": "verified",
+      "note": null,
+      "createdAt": "2026-06-30T15:12:00Z"
+    },
+    {
+      "id": "ge_james_viab",
+      "gateId": "gate_james_viab",
+      "actorId": "usr_gabe",
+      "roleExercised": "MANAGEMENT",
+      "outcome": "viable",
+      "note": "Approved on Sofia's recommendation.",
+      "createdAt": "2026-07-01T17:40:00Z"
+    },
+    {
+      "id": "ge_james_clin",
+      "gateId": "gate_james_clin",
+      "actorId": "usr_sofia",
+      "roleExercised": "NURSE",
+      "outcome": "incomplete",
+      "note": "Records requested from Dr. Nair 07/09.",
+      "createdAt": "2026-07-09T14:05:00Z"
+    },
+    {
+      "id": "ge_elton_verif",
+      "gateId": "gate_elton_verif",
+      "actorId": "usr_sofia",
+      "roleExercised": "VERIFICATION",
+      "outcome": "verified",
+      "note": null,
+      "createdAt": "2026-07-08T10:20:00Z"
+    },
+    {
+      "id": "ge_omar_viab",
+      "gateId": "gate_omar_viab",
+      "actorId": "usr_gabe",
+      "roleExercised": "MANAGEMENT",
+      "outcome": "not-viable-transfer-out",
+      "note": "Transferred out 06/20.",
+      "createdAt": "2026-06-20T16:00:00Z"
+    }
   ],
-
   "authorizations": [
-    { "id": "auth_marcos_pa", "patientId": "pat_marcos", "type": "PRIOR_AUTHORIZATION", "status": "EXPIRING", "programName": null, "effectiveAt": "2026-01-16T00:00:00Z", "expiresAt": "2026-07-16T00:00:00Z" },
-    { "id": "auth_marcos_assist", "patientId": "pat_marcos", "type": "ASSISTANCE", "status": "ACTIVE", "programName": "HOPE", "effectiveAt": "2026-01-10T00:00:00Z", "expiresAt": "2027-01-10T00:00:00Z" },
-    { "id": "auth_robert_pa", "patientId": "pat_robert", "type": "PRIOR_AUTHORIZATION", "status": "EXPIRING", "programName": null, "effectiveAt": "2026-01-16T00:00:00Z", "expiresAt": "2026-07-16T00:00:00Z" },
-    { "id": "auth_robert_assist", "patientId": "pat_robert", "type": "ASSISTANCE", "status": "ACTIVE", "programName": "HOPE", "effectiveAt": "2025-12-01T00:00:00Z", "expiresAt": "2026-12-01T00:00:00Z" },
-    { "id": "auth_david_pa", "patientId": "pat_david", "type": "PRIOR_AUTHORIZATION", "status": "ACTIVE", "programName": null, "effectiveAt": "2026-05-01T00:00:00Z", "expiresAt": "2026-11-01T00:00:00Z" },
-    { "id": "auth_david_assist", "patientId": "pat_david", "type": "ASSISTANCE", "status": "ACTIVE", "programName": "HOPE", "effectiveAt": "2026-02-01T00:00:00Z", "expiresAt": "2027-02-01T00:00:00Z" },
-    { "id": "auth_angel_pa", "patientId": "pat_angel", "type": "PRIOR_AUTHORIZATION", "status": "ACTIVE", "programName": null, "effectiveAt": "2026-04-01T00:00:00Z", "expiresAt": "2026-10-01T00:00:00Z" },
-    { "id": "auth_angel_assist", "patientId": "pat_angel", "type": "ASSISTANCE", "status": "LAPSED", "programName": "HOPE", "effectiveAt": "2025-06-01T00:00:00Z", "expiresAt": "2026-06-01T00:00:00Z" },
-    { "id": "auth_luis_pa", "patientId": "pat_luis", "type": "PRIOR_AUTHORIZATION", "status": "ACTIVE", "programName": null, "effectiveAt": "2026-06-01T00:00:00Z", "expiresAt": "2026-12-01T00:00:00Z" },
-    { "id": "auth_theo_assist", "patientId": "pat_theo", "type": "ASSISTANCE", "status": "BYPASSED", "programName": "HOPE", "effectiveAt": null, "expiresAt": null },
-    { "id": "auth_theo_pa", "patientId": "pat_theo", "type": "PRIOR_AUTHORIZATION", "status": "ACTIVE", "programName": null, "effectiveAt": "2026-05-15T00:00:00Z", "expiresAt": "2026-11-15T00:00:00Z" },
-    { "id": "auth_james_pa", "patientId": "pat_james", "type": "PRIOR_AUTHORIZATION", "status": "PENDING", "programName": null, "effectiveAt": null, "expiresAt": null },
-    { "id": "auth_samuel_pa", "patientId": "pat_samuel", "type": "PRIOR_AUTHORIZATION", "status": "ACTIVE", "programName": null, "effectiveAt": "2026-03-01T00:00:00Z", "expiresAt": "2026-09-01T00:00:00Z" },
-    { "id": "auth_ruben_pa", "patientId": "pat_ruben", "type": "PRIOR_AUTHORIZATION", "status": "ACTIVE", "programName": null, "effectiveAt": "2026-04-10T00:00:00Z", "expiresAt": "2026-10-10T00:00:00Z" }
+    {
+      "id": "auth_marcos_pa",
+      "patientId": "pat_marcos",
+      "type": "PRIOR_AUTHORIZATION",
+      "status": "EXPIRING",
+      "programName": null,
+      "effectiveAt": "2026-01-16T00:00:00Z",
+      "expiresAt": "2026-07-16T00:00:00Z"
+    },
+    {
+      "id": "auth_marcos_assist",
+      "patientId": "pat_marcos",
+      "type": "ASSISTANCE",
+      "status": "ACTIVE",
+      "programName": "HOPE",
+      "effectiveAt": "2026-01-10T00:00:00Z",
+      "expiresAt": "2027-01-10T00:00:00Z"
+    },
+    {
+      "id": "auth_robert_pa",
+      "patientId": "pat_robert",
+      "type": "PRIOR_AUTHORIZATION",
+      "status": "EXPIRING",
+      "programName": null,
+      "effectiveAt": "2026-01-16T00:00:00Z",
+      "expiresAt": "2026-07-16T00:00:00Z"
+    },
+    {
+      "id": "auth_robert_assist",
+      "patientId": "pat_robert",
+      "type": "ASSISTANCE",
+      "status": "ACTIVE",
+      "programName": "HOPE",
+      "effectiveAt": "2025-12-01T00:00:00Z",
+      "expiresAt": "2026-12-01T00:00:00Z"
+    },
+    {
+      "id": "auth_david_pa",
+      "patientId": "pat_david",
+      "type": "PRIOR_AUTHORIZATION",
+      "status": "ACTIVE",
+      "programName": null,
+      "effectiveAt": "2026-05-01T00:00:00Z",
+      "expiresAt": "2026-11-01T00:00:00Z"
+    },
+    {
+      "id": "auth_david_assist",
+      "patientId": "pat_david",
+      "type": "ASSISTANCE",
+      "status": "ACTIVE",
+      "programName": "HOPE",
+      "effectiveAt": "2026-02-01T00:00:00Z",
+      "expiresAt": "2027-02-01T00:00:00Z"
+    },
+    {
+      "id": "auth_angel_pa",
+      "patientId": "pat_angel",
+      "type": "PRIOR_AUTHORIZATION",
+      "status": "ACTIVE",
+      "programName": null,
+      "effectiveAt": "2026-04-01T00:00:00Z",
+      "expiresAt": "2026-10-01T00:00:00Z"
+    },
+    {
+      "id": "auth_angel_assist",
+      "patientId": "pat_angel",
+      "type": "ASSISTANCE",
+      "status": "LAPSED",
+      "programName": "HOPE",
+      "effectiveAt": "2025-06-01T00:00:00Z",
+      "expiresAt": "2026-06-01T00:00:00Z"
+    },
+    {
+      "id": "auth_luis_pa",
+      "patientId": "pat_luis",
+      "type": "PRIOR_AUTHORIZATION",
+      "status": "ACTIVE",
+      "programName": null,
+      "effectiveAt": "2026-06-01T00:00:00Z",
+      "expiresAt": "2026-12-01T00:00:00Z"
+    },
+    {
+      "id": "auth_theo_assist",
+      "patientId": "pat_theo",
+      "type": "ASSISTANCE",
+      "status": "BYPASSED",
+      "programName": "HOPE",
+      "effectiveAt": null,
+      "expiresAt": null
+    },
+    {
+      "id": "auth_theo_pa",
+      "patientId": "pat_theo",
+      "type": "PRIOR_AUTHORIZATION",
+      "status": "ACTIVE",
+      "programName": null,
+      "effectiveAt": "2026-05-15T00:00:00Z",
+      "expiresAt": "2026-11-15T00:00:00Z"
+    },
+    {
+      "id": "auth_james_pa",
+      "patientId": "pat_james",
+      "type": "PRIOR_AUTHORIZATION",
+      "status": "PENDING",
+      "programName": null,
+      "effectiveAt": null,
+      "expiresAt": null
+    },
+    {
+      "id": "auth_samuel_pa",
+      "patientId": "pat_samuel",
+      "type": "PRIOR_AUTHORIZATION",
+      "status": "ACTIVE",
+      "programName": null,
+      "effectiveAt": "2026-03-01T00:00:00Z",
+      "expiresAt": "2026-09-01T00:00:00Z"
+    },
+    {
+      "id": "auth_ruben_pa",
+      "patientId": "pat_ruben",
+      "type": "PRIOR_AUTHORIZATION",
+      "status": "ACTIVE",
+      "programName": null,
+      "effectiveAt": "2026-04-10T00:00:00Z",
+      "expiresAt": "2026-10-10T00:00:00Z"
+    }
   ],
-
   "orders": [
-    { "id": "ord_marcos_july", "patientId": "pat_marcos", "cycleLabel": "July 2026", "stage": "SHIPPED", "status": "IN_PROGRESS", "holdReason": null, "holdNote": null, "checkinIssues": null, "missedDoses": false, "medAllergyChanges": null, "dosesOnHandReported": 2, "dosesProjectedAtDelivery": 0, "submittedAt": "2026-07-08T15:30:00Z", "createdAt": "2026-07-08T14:00:00Z" },
-    { "id": "ord_marcos_june", "patientId": "pat_marcos", "cycleLabel": "June 2026", "stage": "DELIVERED", "status": "COMPLETE", "holdReason": null, "holdNote": null, "checkinIssues": null, "missedDoses": false, "medAllergyChanges": null, "dosesOnHandReported": 1, "dosesProjectedAtDelivery": 0, "submittedAt": "2026-06-09T12:00:00Z", "createdAt": "2026-06-09T11:00:00Z" },
-    { "id": "ord_david_july", "patientId": "pat_david", "cycleLabel": "July 2026", "stage": "ORDER_DUE", "status": "IN_PROGRESS", "holdReason": null, "holdNote": null, "checkinIssues": null, "missedDoses": null, "medAllergyChanges": null, "dosesOnHandReported": null, "dosesProjectedAtDelivery": null, "submittedAt": null, "createdAt": "2026-07-12T06:00:00Z" },
-    { "id": "ord_ruben_july", "patientId": "pat_ruben", "cycleLabel": "July 2026", "stage": "PROCESSING", "status": "IN_PROGRESS", "holdReason": null, "holdNote": null, "checkinIssues": "None reported.", "missedDoses": false, "medAllergyChanges": null, "dosesOnHandReported": 1, "dosesProjectedAtDelivery": 0, "submittedAt": "2026-07-09T10:15:00Z", "createdAt": "2026-07-09T09:00:00Z" },
-    { "id": "ord_luis_july", "patientId": "pat_luis", "cycleLabel": "July 2026", "stage": "SHIPPED", "status": "SHIPPED_INCOMPLETE", "holdReason": "STOCK_ISSUE", "holdNote": "Only 4 of 8 doses in stock; remainder to be reordered as a new order.", "checkinIssues": null, "missedDoses": false, "medAllergyChanges": null, "dosesOnHandReported": 1, "dosesProjectedAtDelivery": 0, "submittedAt": "2026-07-06T13:20:00Z", "createdAt": "2026-07-06T12:00:00Z" },
-    { "id": "ord_theo_july", "patientId": "pat_theo", "cycleLabel": "July 2026", "stage": "CLINICAL_CHECK", "status": "IN_PROGRESS", "holdReason": null, "holdNote": null, "checkinIssues": "Mild wrist stiffness, no bleed.", "missedDoses": false, "medAllergyChanges": null, "dosesOnHandReported": 1, "dosesProjectedAtDelivery": 0, "submittedAt": "2026-07-11T16:40:00Z", "createdAt": "2026-07-11T16:00:00Z" }
+    {
+      "id": "ord_marcos_july",
+      "patientId": "pat_marcos",
+      "cycleLabel": "July 2026",
+      "stage": "SHIPPED",
+      "status": "IN_PROGRESS",
+      "holdReason": null,
+      "holdNote": null,
+      "checkinIssues": null,
+      "missedDoses": false,
+      "medAllergyChanges": null,
+      "dosesOnHandReported": 2,
+      "dosesProjectedAtDelivery": 0,
+      "submittedAt": "2026-07-08T15:30:00Z",
+      "createdAt": "2026-07-08T14:00:00Z"
+    },
+    {
+      "id": "ord_marcos_june",
+      "patientId": "pat_marcos",
+      "cycleLabel": "June 2026",
+      "stage": "DELIVERED",
+      "status": "COMPLETE",
+      "holdReason": null,
+      "holdNote": null,
+      "checkinIssues": null,
+      "missedDoses": false,
+      "medAllergyChanges": null,
+      "dosesOnHandReported": 1,
+      "dosesProjectedAtDelivery": 0,
+      "submittedAt": "2026-06-09T12:00:00Z",
+      "createdAt": "2026-06-09T11:00:00Z"
+    },
+    {
+      "id": "ord_david_july",
+      "patientId": "pat_david",
+      "cycleLabel": "July 2026",
+      "stage": "ORDER_DUE",
+      "status": "IN_PROGRESS",
+      "holdReason": null,
+      "holdNote": null,
+      "checkinIssues": null,
+      "missedDoses": null,
+      "medAllergyChanges": null,
+      "dosesOnHandReported": null,
+      "dosesProjectedAtDelivery": null,
+      "submittedAt": null,
+      "createdAt": "2026-07-12T06:00:00Z"
+    },
+    {
+      "id": "ord_ruben_july",
+      "patientId": "pat_ruben",
+      "cycleLabel": "July 2026",
+      "stage": "PROCESSING",
+      "status": "IN_PROGRESS",
+      "holdReason": null,
+      "holdNote": null,
+      "checkinIssues": "None reported.",
+      "missedDoses": false,
+      "medAllergyChanges": null,
+      "dosesOnHandReported": 1,
+      "dosesProjectedAtDelivery": 0,
+      "submittedAt": "2026-07-09T10:15:00Z",
+      "createdAt": "2026-07-09T09:00:00Z"
+    },
+    {
+      "id": "ord_luis_july",
+      "patientId": "pat_luis",
+      "cycleLabel": "July 2026",
+      "stage": "SHIPPED",
+      "status": "SHIPPED_INCOMPLETE",
+      "holdReason": "STOCK_ISSUE",
+      "holdNote": "Only 4 of 8 doses in stock; remainder to be reordered as a new order.",
+      "checkinIssues": null,
+      "missedDoses": false,
+      "medAllergyChanges": null,
+      "dosesOnHandReported": 1,
+      "dosesProjectedAtDelivery": 0,
+      "submittedAt": "2026-07-06T13:20:00Z",
+      "createdAt": "2026-07-06T12:00:00Z"
+    },
+    {
+      "id": "ord_theo_july",
+      "patientId": "pat_theo",
+      "cycleLabel": "July 2026",
+      "stage": "CLINICAL_CHECK",
+      "status": "IN_PROGRESS",
+      "holdReason": null,
+      "holdNote": null,
+      "checkinIssues": "Mild wrist stiffness, no bleed.",
+      "missedDoses": false,
+      "medAllergyChanges": null,
+      "dosesOnHandReported": 1,
+      "dosesProjectedAtDelivery": 0,
+      "submittedAt": "2026-07-11T16:40:00Z",
+      "createdAt": "2026-07-11T16:00:00Z"
+    }
   ],
-
   "orderLineItems": [
-    { "id": "oli_marcos_prophy", "orderId": "ord_marcos_july", "kind": "PROPHYLAXIS_DOSE", "label": "Advate 3,000 IU · prophylaxis", "quantity": 6, "sourceBleedId": null, "supplyItemId": null },
-    { "id": "oli_marcos_prn", "orderId": "ord_marcos_july", "kind": "PRN_REPLACEMENT", "label": "Advate 3,000 IU · PRN replacement", "quantity": 2, "sourceBleedId": "bleed_marcos_ankle", "supplyItemId": null },
-    { "id": "oli_marcos_gauze", "orderId": "ord_marcos_july", "kind": "SUPPLY", "label": "Gauze pads (large)", "quantity": 2, "sourceBleedId": null, "supplyItemId": "sup_gauze_large" },
-    { "id": "oli_marcos_wipes", "orderId": "ord_marcos_july", "kind": "SUPPLY", "label": "Alcohol wipes", "quantity": 1, "sourceBleedId": null, "supplyItemId": "sup_wipes" },
-    { "id": "oli_ruben_prophy", "orderId": "ord_ruben_july", "kind": "PROPHYLAXIS_DOSE", "label": "Advate 3,000 IU · prophylaxis", "quantity": 4, "sourceBleedId": null, "supplyItemId": null },
-    { "id": "oli_ruben_needles", "orderId": "ord_ruben_july", "kind": "SUPPLY", "label": "25g needles", "quantity": 10, "sourceBleedId": null, "supplyItemId": "sup_needles_25" },
-    { "id": "oli_luis_prophy", "orderId": "ord_luis_july", "kind": "PROPHYLAXIS_DOSE", "label": "Advate 3,000 IU · prophylaxis", "quantity": 4, "sourceBleedId": null, "supplyItemId": null },
-    { "id": "oli_theo_prophy", "orderId": "ord_theo_july", "kind": "PROPHYLAXIS_DOSE", "label": "Advate 2,000 IU · prophylaxis", "quantity": 6, "sourceBleedId": null, "supplyItemId": null },
-    { "id": "oli_theo_gauze", "orderId": "ord_theo_july", "kind": "SUPPLY", "label": "Gauze pads (large)", "quantity": 2, "sourceBleedId": null, "supplyItemId": "sup_gauze_large" },
-    { "id": "oli_theo_wipes", "orderId": "ord_theo_july", "kind": "SUPPLY", "label": "Alcohol wipes", "quantity": 1, "sourceBleedId": null, "supplyItemId": "sup_wipes" }
+    {
+      "id": "oli_marcos_prophy",
+      "orderId": "ord_marcos_july",
+      "kind": "PROPHYLAXIS_DOSE",
+      "label": "Advate 3,000 IU · prophylaxis",
+      "quantity": 6,
+      "sourceBleedId": null,
+      "supplyItemId": null
+    },
+    {
+      "id": "oli_marcos_prn",
+      "orderId": "ord_marcos_july",
+      "kind": "PRN_REPLACEMENT",
+      "label": "Advate 3,000 IU · PRN replacement",
+      "quantity": 2,
+      "sourceBleedId": "bleed_marcos_ankle",
+      "supplyItemId": null
+    },
+    {
+      "id": "oli_marcos_gauze",
+      "orderId": "ord_marcos_july",
+      "kind": "SUPPLY",
+      "label": "Gauze pads (large)",
+      "quantity": 2,
+      "sourceBleedId": null,
+      "supplyItemId": "sup_gauze_large"
+    },
+    {
+      "id": "oli_marcos_wipes",
+      "orderId": "ord_marcos_july",
+      "kind": "SUPPLY",
+      "label": "Alcohol wipes",
+      "quantity": 1,
+      "sourceBleedId": null,
+      "supplyItemId": "sup_wipes"
+    },
+    {
+      "id": "oli_ruben_prophy",
+      "orderId": "ord_ruben_july",
+      "kind": "PROPHYLAXIS_DOSE",
+      "label": "Advate 3,000 IU · prophylaxis",
+      "quantity": 4,
+      "sourceBleedId": null,
+      "supplyItemId": null
+    },
+    {
+      "id": "oli_ruben_needles",
+      "orderId": "ord_ruben_july",
+      "kind": "SUPPLY",
+      "label": "25g needles",
+      "quantity": 10,
+      "sourceBleedId": null,
+      "supplyItemId": "sup_needles_25"
+    },
+    {
+      "id": "oli_luis_prophy",
+      "orderId": "ord_luis_july",
+      "kind": "PROPHYLAXIS_DOSE",
+      "label": "Advate 3,000 IU · prophylaxis",
+      "quantity": 4,
+      "sourceBleedId": null,
+      "supplyItemId": null
+    },
+    {
+      "id": "oli_theo_prophy",
+      "orderId": "ord_theo_july",
+      "kind": "PROPHYLAXIS_DOSE",
+      "label": "Advate 2,000 IU · prophylaxis",
+      "quantity": 6,
+      "sourceBleedId": null,
+      "supplyItemId": null
+    },
+    {
+      "id": "oli_theo_gauze",
+      "orderId": "ord_theo_july",
+      "kind": "SUPPLY",
+      "label": "Gauze pads (large)",
+      "quantity": 2,
+      "sourceBleedId": null,
+      "supplyItemId": "sup_gauze_large"
+    },
+    {
+      "id": "oli_theo_wipes",
+      "orderId": "ord_theo_july",
+      "kind": "SUPPLY",
+      "label": "Alcohol wipes",
+      "quantity": 1,
+      "sourceBleedId": null,
+      "supplyItemId": "sup_wipes"
+    }
   ],
-
   "packedVials": [
-    { "id": "pv_ruben_1a", "orderId": "ord_ruben_july", "doseIndex": 1, "productName": "Advate", "assayIu": 2000, "lotNumber": "27171JJ", "expiration": "2028-01-31T00:00:00Z" },
-    { "id": "pv_ruben_1b", "orderId": "ord_ruben_july", "doseIndex": 1, "productName": "Advate", "assayIu": 500, "lotNumber": "27180KM", "expiration": "2028-03-31T00:00:00Z" },
-    { "id": "pv_ruben_1c", "orderId": "ord_ruben_july", "doseIndex": 1, "productName": "Advate", "assayIu": 500, "lotNumber": "27180KM", "expiration": "2028-03-31T00:00:00Z" },
-    { "id": "pv_ruben_2a", "orderId": "ord_ruben_july", "doseIndex": 2, "productName": "Advate", "assayIu": 2000, "lotNumber": "27171JJ", "expiration": "2028-01-31T00:00:00Z" },
-    { "id": "pv_ruben_2b", "orderId": "ord_ruben_july", "doseIndex": 2, "productName": "Advate", "assayIu": 500, "lotNumber": "27180KM", "expiration": "2028-03-31T00:00:00Z" },
-    { "id": "pv_ruben_2c", "orderId": "ord_ruben_july", "doseIndex": 2, "productName": "Advate", "assayIu": 500, "lotNumber": "27180KM", "expiration": "2028-03-31T00:00:00Z" }
+    {
+      "id": "pv_ruben_1a",
+      "orderId": "ord_ruben_july",
+      "doseIndex": 1,
+      "productName": "Advate",
+      "assayIu": 2000,
+      "lotNumber": "27171JJ",
+      "expiration": "2028-01-31T00:00:00Z"
+    },
+    {
+      "id": "pv_ruben_1b",
+      "orderId": "ord_ruben_july",
+      "doseIndex": 1,
+      "productName": "Advate",
+      "assayIu": 500,
+      "lotNumber": "27180KM",
+      "expiration": "2028-03-31T00:00:00Z"
+    },
+    {
+      "id": "pv_ruben_1c",
+      "orderId": "ord_ruben_july",
+      "doseIndex": 1,
+      "productName": "Advate",
+      "assayIu": 500,
+      "lotNumber": "27180KM",
+      "expiration": "2028-03-31T00:00:00Z"
+    },
+    {
+      "id": "pv_ruben_2a",
+      "orderId": "ord_ruben_july",
+      "doseIndex": 2,
+      "productName": "Advate",
+      "assayIu": 2000,
+      "lotNumber": "27171JJ",
+      "expiration": "2028-01-31T00:00:00Z"
+    },
+    {
+      "id": "pv_ruben_2b",
+      "orderId": "ord_ruben_july",
+      "doseIndex": 2,
+      "productName": "Advate",
+      "assayIu": 500,
+      "lotNumber": "27180KM",
+      "expiration": "2028-03-31T00:00:00Z"
+    },
+    {
+      "id": "pv_ruben_2c",
+      "orderId": "ord_ruben_july",
+      "doseIndex": 2,
+      "productName": "Advate",
+      "assayIu": 500,
+      "lotNumber": "27180KM",
+      "expiration": "2028-03-31T00:00:00Z"
+    }
   ],
-
   "orderSignatures": [
-    { "id": "sig_marcos_july", "orderId": "ord_marcos_july", "signedByName": "Marcos Rivera", "signedAt": "2026-07-08T15:30:00Z" },
-    { "id": "sig_marcos_june", "orderId": "ord_marcos_june", "signedByName": "Marcos Rivera", "signedAt": "2026-06-09T12:00:00Z" },
-    { "id": "sig_ruben_july", "orderId": "ord_ruben_july", "signedByName": "Ruben Salas", "signedAt": "2026-07-09T10:15:00Z" },
-    { "id": "sig_luis_july", "orderId": "ord_luis_july", "signedByName": "Luis Herrera", "signedAt": "2026-07-06T13:20:00Z" },
-    { "id": "sig_theo_july", "orderId": "ord_theo_july", "signedByName": "Theo Nguyen", "signedAt": "2026-07-11T16:40:00Z" }
+    {
+      "id": "sig_marcos_july",
+      "orderId": "ord_marcos_july",
+      "signedByName": "Marcos Rivera",
+      "signedAt": "2026-07-08T15:30:00Z"
+    },
+    {
+      "id": "sig_marcos_june",
+      "orderId": "ord_marcos_june",
+      "signedByName": "Marcos Rivera",
+      "signedAt": "2026-06-09T12:00:00Z"
+    },
+    {
+      "id": "sig_ruben_july",
+      "orderId": "ord_ruben_july",
+      "signedByName": "Ruben Salas",
+      "signedAt": "2026-07-09T10:15:00Z"
+    },
+    {
+      "id": "sig_luis_july",
+      "orderId": "ord_luis_july",
+      "signedByName": "Luis Herrera",
+      "signedAt": "2026-07-06T13:20:00Z"
+    },
+    {
+      "id": "sig_theo_july",
+      "orderId": "ord_theo_july",
+      "signedByName": "Theo Nguyen",
+      "signedAt": "2026-07-11T16:40:00Z"
+    }
   ],
-
   "clinicalChecks": [
-    { "id": "cc_marcos_july", "orderId": "ord_marcos_july", "doseMatchesRx": true, "assayValid": true, "withinAllowance": true, "bleedFlag": true, "approved": true, "heldReason": null, "reviewedAt": "2026-07-08T18:00:00Z" },
-    { "id": "cc_ruben_july", "orderId": "ord_ruben_july", "doseMatchesRx": true, "assayValid": true, "withinAllowance": true, "bleedFlag": false, "approved": true, "heldReason": null, "reviewedAt": "2026-07-09T13:30:00Z" },
-    { "id": "cc_luis_july", "orderId": "ord_luis_july", "doseMatchesRx": true, "assayValid": true, "withinAllowance": true, "bleedFlag": false, "approved": true, "heldReason": null, "reviewedAt": "2026-07-06T15:00:00Z" },
-    { "id": "cc_theo_july", "orderId": "ord_theo_july", "doseMatchesRx": true, "assayValid": true, "withinAllowance": true, "bleedFlag": false, "approved": null, "heldReason": null, "reviewedAt": null }
+    {
+      "id": "cc_marcos_july",
+      "orderId": "ord_marcos_july",
+      "doseMatchesRx": true,
+      "assayValid": true,
+      "withinAllowance": true,
+      "bleedFlag": true,
+      "approved": true,
+      "heldReason": null,
+      "reviewedAt": "2026-07-08T18:00:00Z"
+    },
+    {
+      "id": "cc_ruben_july",
+      "orderId": "ord_ruben_july",
+      "doseMatchesRx": true,
+      "assayValid": true,
+      "withinAllowance": true,
+      "bleedFlag": false,
+      "approved": true,
+      "heldReason": null,
+      "reviewedAt": "2026-07-09T13:30:00Z"
+    },
+    {
+      "id": "cc_luis_july",
+      "orderId": "ord_luis_july",
+      "doseMatchesRx": true,
+      "assayValid": true,
+      "withinAllowance": true,
+      "bleedFlag": false,
+      "approved": true,
+      "heldReason": null,
+      "reviewedAt": "2026-07-06T15:00:00Z"
+    },
+    {
+      "id": "cc_theo_july",
+      "orderId": "ord_theo_july",
+      "doseMatchesRx": true,
+      "assayValid": true,
+      "withinAllowance": true,
+      "bleedFlag": false,
+      "approved": null,
+      "heldReason": null,
+      "reviewedAt": null
+    }
   ],
-
   "deliveries": [
-    { "id": "del_marcos_july", "orderId": "ord_marcos_july", "status": "OUT_FOR_DELIVERY", "carrier": "FedEx", "trackingNumber": "794612385521", "trackingUrl": "https://www.fedex.com/fedextrack/?trknbr=794612385521", "ticketId": "tkt_9f3a21", "shippedAt": "2026-07-10T14:14:00Z", "deliveredAt": null, "confirmedByPatientAt": null, "confirmedMethod": null, "exceptionNote": null, "photoR2Key": null },
-    { "id": "del_marcos_june", "orderId": "ord_marcos_june", "status": "DELIVERED", "carrier": "FedEx", "trackingNumber": "794500112233", "trackingUrl": "https://www.fedex.com/fedextrack/?trknbr=794500112233", "ticketId": "tkt_71bd08", "shippedAt": "2026-06-11T14:00:00Z", "deliveredAt": "2026-06-12T16:22:00Z", "confirmedByPatientAt": "2026-06-12T18:05:00Z", "confirmedMethod": "scan", "exceptionNote": null, "photoR2Key": null },
-    { "id": "del_luis_july", "orderId": "ord_luis_july", "status": "SHIPPED", "carrier": "FedEx", "trackingNumber": "794700998877", "trackingUrl": "https://www.fedex.com/fedextrack/?trknbr=794700998877", "ticketId": "tkt_44ac19", "shippedAt": "2026-07-08T15:00:00Z", "deliveredAt": null, "confirmedByPatientAt": null, "confirmedMethod": null, "exceptionNote": "Partial shipment — 4 of 8 doses; stock issue.", "photoR2Key": null }
+    {
+      "id": "del_marcos_july",
+      "orderId": "ord_marcos_july",
+      "status": "OUT_FOR_DELIVERY",
+      "carrier": "FedEx",
+      "trackingNumber": "794612385521",
+      "trackingUrl": "https://www.fedex.com/fedextrack/?trknbr=794612385521",
+      "ticketId": "tkt_9f3a21",
+      "shippedAt": "2026-07-10T14:14:00Z",
+      "deliveredAt": null,
+      "confirmedByPatientAt": null,
+      "confirmedMethod": null,
+      "exceptionNote": null,
+      "photoR2Key": null
+    },
+    {
+      "id": "del_marcos_june",
+      "orderId": "ord_marcos_june",
+      "status": "DELIVERED",
+      "carrier": "FedEx",
+      "trackingNumber": "794500112233",
+      "trackingUrl": "https://www.fedex.com/fedextrack/?trknbr=794500112233",
+      "ticketId": "tkt_71bd08",
+      "shippedAt": "2026-06-11T14:00:00Z",
+      "deliveredAt": "2026-06-12T16:22:00Z",
+      "confirmedByPatientAt": "2026-06-12T18:05:00Z",
+      "confirmedMethod": "scan",
+      "exceptionNote": null,
+      "photoR2Key": null
+    },
+    {
+      "id": "del_luis_july",
+      "orderId": "ord_luis_july",
+      "status": "SHIPPED",
+      "carrier": "FedEx",
+      "trackingNumber": "794700998877",
+      "trackingUrl": "https://www.fedex.com/fedextrack/?trknbr=794700998877",
+      "ticketId": "tkt_44ac19",
+      "shippedAt": "2026-07-08T15:00:00Z",
+      "deliveredAt": null,
+      "confirmedByPatientAt": null,
+      "confirmedMethod": null,
+      "exceptionNote": "Partial shipment — 4 of 8 doses; stock issue.",
+      "photoR2Key": null
+    }
   ],
-
   "infusionEntries": [
-    { "id": "inf_marcos_p1", "patientId": "pat_marcos", "doseType": "PROPHYLAXIS", "productName": "Advate", "targetIu": 3000, "lotNumber": "27171JJ", "expiration": "2028-01-31T00:00:00Z", "infusedAt": "2026-07-01T08:05:00Z", "enteredViaScan": true, "bleedId": null, "createdAt": "2026-07-01T08:06:00Z" },
-    { "id": "inf_marcos_prn1", "patientId": "pat_marcos", "doseType": "PRN", "productName": "Advate", "targetIu": 3000, "lotNumber": "27171JJ", "expiration": "2028-01-31T00:00:00Z", "infusedAt": "2026-07-03T09:10:00Z", "enteredViaScan": false, "bleedId": "bleed_marcos_ankle", "createdAt": "2026-07-03T09:12:00Z" },
-    { "id": "inf_marcos_prn2", "patientId": "pat_marcos", "doseType": "PRN", "productName": "Advate", "targetIu": 3000, "lotNumber": "27171JJ", "expiration": "2028-01-31T00:00:00Z", "infusedAt": "2026-07-03T18:40:00Z", "enteredViaScan": false, "bleedId": "bleed_marcos_ankle", "createdAt": "2026-07-03T18:42:00Z" },
-    { "id": "inf_marcos_p2", "patientId": "pat_marcos", "doseType": "PROPHYLAXIS", "productName": "Advate", "targetIu": 3000, "lotNumber": "27171JJ", "expiration": "2028-01-31T00:00:00Z", "infusedAt": "2026-07-08T08:00:00Z", "enteredViaScan": true, "bleedId": null, "createdAt": "2026-07-08T08:01:00Z" },
-    { "id": "inf_marcos_p3", "patientId": "pat_marcos", "doseType": "PROPHYLAXIS", "productName": "Advate", "targetIu": 3000, "lotNumber": "27171JJ", "expiration": "2028-01-31T00:00:00Z", "infusedAt": "2026-07-12T08:15:00Z", "enteredViaScan": false, "bleedId": null, "createdAt": "2026-07-12T08:16:00Z" },
-    { "id": "inf_angel_prn1", "patientId": "pat_angel", "doseType": "PRN", "productName": "Advate", "targetIu": 4000, "lotNumber": "31200QT", "expiration": "2027-11-30T00:00:00Z", "infusedAt": "2026-07-12T07:30:00Z", "enteredViaScan": false, "bleedId": "bleed_angel_knee", "createdAt": "2026-07-12T07:33:00Z" },
-    { "id": "inf_david_p1", "patientId": "pat_david", "doseType": "PROPHYLAXIS", "productName": "BeneFIX", "targetIu": 2000, "lotNumber": "55021BX", "expiration": "2027-09-30T00:00:00Z", "infusedAt": "2026-07-09T20:00:00Z", "enteredViaScan": true, "bleedId": null, "createdAt": "2026-07-09T20:01:00Z" },
-    { "id": "inf_luis_p1", "patientId": "pat_luis", "doseType": "PROPHYLAXIS", "productName": "Advate", "targetIu": 3000, "lotNumber": "27171JJ", "expiration": "2028-01-31T00:00:00Z", "infusedAt": "2026-07-11T09:00:00Z", "enteredViaScan": false, "bleedId": null, "createdAt": "2026-07-11T09:01:00Z" }
+    {
+      "id": "inf_marcos_p1",
+      "patientId": "pat_marcos",
+      "doseType": "PROPHYLAXIS",
+      "productName": "Advate",
+      "targetIu": 3000,
+      "lotNumber": "27171JJ",
+      "expiration": "2028-01-31T00:00:00Z",
+      "infusedAt": "2026-07-01T08:05:00Z",
+      "enteredViaScan": true,
+      "bleedId": null,
+      "createdAt": "2026-07-01T08:06:00Z"
+    },
+    {
+      "id": "inf_marcos_prn1",
+      "patientId": "pat_marcos",
+      "doseType": "PRN",
+      "productName": "Advate",
+      "targetIu": 3000,
+      "lotNumber": "27171JJ",
+      "expiration": "2028-01-31T00:00:00Z",
+      "infusedAt": "2026-07-03T09:10:00Z",
+      "enteredViaScan": false,
+      "bleedId": "bleed_marcos_ankle",
+      "createdAt": "2026-07-03T09:12:00Z"
+    },
+    {
+      "id": "inf_marcos_prn2",
+      "patientId": "pat_marcos",
+      "doseType": "PRN",
+      "productName": "Advate",
+      "targetIu": 3000,
+      "lotNumber": "27171JJ",
+      "expiration": "2028-01-31T00:00:00Z",
+      "infusedAt": "2026-07-03T18:40:00Z",
+      "enteredViaScan": false,
+      "bleedId": "bleed_marcos_ankle",
+      "createdAt": "2026-07-03T18:42:00Z"
+    },
+    {
+      "id": "inf_marcos_p2",
+      "patientId": "pat_marcos",
+      "doseType": "PROPHYLAXIS",
+      "productName": "Advate",
+      "targetIu": 3000,
+      "lotNumber": "27171JJ",
+      "expiration": "2028-01-31T00:00:00Z",
+      "infusedAt": "2026-07-08T08:00:00Z",
+      "enteredViaScan": true,
+      "bleedId": null,
+      "createdAt": "2026-07-08T08:01:00Z"
+    },
+    {
+      "id": "inf_marcos_p3",
+      "patientId": "pat_marcos",
+      "doseType": "PROPHYLAXIS",
+      "productName": "Advate",
+      "targetIu": 3000,
+      "lotNumber": "27171JJ",
+      "expiration": "2028-01-31T00:00:00Z",
+      "infusedAt": "2026-07-12T08:15:00Z",
+      "enteredViaScan": false,
+      "bleedId": null,
+      "createdAt": "2026-07-12T08:16:00Z"
+    },
+    {
+      "id": "inf_angel_prn1",
+      "patientId": "pat_angel",
+      "doseType": "PRN",
+      "productName": "Advate",
+      "targetIu": 4000,
+      "lotNumber": "31200QT",
+      "expiration": "2027-11-30T00:00:00Z",
+      "infusedAt": "2026-07-12T07:30:00Z",
+      "enteredViaScan": false,
+      "bleedId": "bleed_angel_knee",
+      "createdAt": "2026-07-12T07:33:00Z"
+    },
+    {
+      "id": "inf_david_p1",
+      "patientId": "pat_david",
+      "doseType": "PROPHYLAXIS",
+      "productName": "BeneFIX",
+      "targetIu": 2000,
+      "lotNumber": "55021BX",
+      "expiration": "2027-09-30T00:00:00Z",
+      "infusedAt": "2026-07-09T20:00:00Z",
+      "enteredViaScan": true,
+      "bleedId": null,
+      "createdAt": "2026-07-09T20:01:00Z"
+    },
+    {
+      "id": "inf_luis_p1",
+      "patientId": "pat_luis",
+      "doseType": "PROPHYLAXIS",
+      "productName": "Advate",
+      "targetIu": 3000,
+      "lotNumber": "27171JJ",
+      "expiration": "2028-01-31T00:00:00Z",
+      "infusedAt": "2026-07-11T09:00:00Z",
+      "enteredViaScan": false,
+      "bleedId": null,
+      "createdAt": "2026-07-11T09:01:00Z"
+    }
   ],
-
   "bleeds": [
-    { "id": "bleed_marcos_ankle", "patientId": "pat_marcos", "site": "Right ankle", "cause": "SPONTANEOUS", "tier": "MODERATE", "onsetAt": "2026-07-03T08:30:00Z", "closedAt": "2026-07-05T10:00:00Z", "createdAt": "2026-07-03T08:35:00Z" },
-    { "id": "bleed_angel_knee", "patientId": "pat_angel", "site": "Right knee", "cause": "INJURY", "tier": "SEVERE", "onsetAt": "2026-07-12T06:45:00Z", "closedAt": null, "createdAt": "2026-07-12T06:50:00Z" }
+    {
+      "id": "bleed_marcos_ankle",
+      "patientId": "pat_marcos",
+      "site": "Right ankle",
+      "cause": "SPONTANEOUS",
+      "tier": "MODERATE",
+      "onsetAt": "2026-07-03T08:30:00Z",
+      "closedAt": "2026-07-05T10:00:00Z",
+      "createdAt": "2026-07-03T08:35:00Z"
+    },
+    {
+      "id": "bleed_angel_knee",
+      "patientId": "pat_angel",
+      "site": "Right knee",
+      "cause": "INJURY",
+      "tier": "SEVERE",
+      "onsetAt": "2026-07-12T06:45:00Z",
+      "closedAt": null,
+      "createdAt": "2026-07-12T06:50:00Z"
+    }
   ],
-
   "supplyItems": [
-    { "id": "sup_gauze_large", "name": "Gauze pads (large)", "category": "gauze", "unit": "pack", "active": true },
-    { "id": "sup_gauze_small", "name": "Gauze pads (small)", "category": "gauze", "unit": "pack", "active": true },
-    { "id": "sup_wipes", "name": "Alcohol wipes", "category": "wipes", "unit": "box", "active": true },
-    { "id": "sup_needles_25", "name": "25g needles", "category": "needles", "unit": "each", "active": true },
-    { "id": "sup_syringes_10", "name": "10ml syringes", "category": "syringes", "unit": "each", "active": true },
-    { "id": "sup_bandages", "name": "Adhesive bandages", "category": "bandages", "unit": "box", "active": true },
-    { "id": "sup_ace_wrap", "name": "Ace wrap", "category": "wraps", "unit": "each", "active": true }
+    {
+      "id": "sup_gauze_large",
+      "name": "Gauze pads (large)",
+      "category": "gauze",
+      "unit": "pack",
+      "active": true
+    },
+    {
+      "id": "sup_gauze_small",
+      "name": "Gauze pads (small)",
+      "category": "gauze",
+      "unit": "pack",
+      "active": true
+    },
+    {
+      "id": "sup_wipes",
+      "name": "Alcohol wipes",
+      "category": "wipes",
+      "unit": "box",
+      "active": true
+    },
+    {
+      "id": "sup_needles_25",
+      "name": "25g needles",
+      "category": "needles",
+      "unit": "each",
+      "active": true
+    },
+    {
+      "id": "sup_syringes_10",
+      "name": "10ml syringes",
+      "category": "syringes",
+      "unit": "each",
+      "active": true
+    },
+    {
+      "id": "sup_bandages",
+      "name": "Adhesive bandages",
+      "category": "bandages",
+      "unit": "box",
+      "active": true
+    },
+    {
+      "id": "sup_ace_wrap",
+      "name": "Ace wrap",
+      "category": "wraps",
+      "unit": "each",
+      "active": true
+    }
   ],
-
   "threads": [
-    { "id": "thr_marcos_nurse", "patientId": "pat_marcos", "role": "NURSE", "roleNumber": "+19155550142", "createdAt": "2026-07-03T09:20:00Z" },
-    { "id": "thr_marcos_pharmacy", "patientId": "pat_marcos", "role": "PHARMACIST", "roleNumber": "+19155550180", "createdAt": "2026-05-01T00:00:00Z" },
-    { "id": "thr_marcos_rep", "patientId": "pat_marcos", "role": "REP", "roleNumber": "+19155550164", "createdAt": "2025-03-10T00:00:00Z" },
-    { "id": "thr_angel_nurse", "patientId": "pat_angel", "role": "NURSE", "roleNumber": "+19155550142", "createdAt": "2026-07-12T07:00:00Z" }
+    {
+      "id": "thr_marcos_nurse",
+      "patientId": "pat_marcos",
+      "role": "NURSE",
+      "roleNumber": "+19155550142",
+      "createdAt": "2026-07-03T09:20:00Z"
+    },
+    {
+      "id": "thr_marcos_pharmacy",
+      "patientId": "pat_marcos",
+      "role": "PHARMACIST",
+      "roleNumber": "+19155550180",
+      "createdAt": "2026-05-01T00:00:00Z"
+    },
+    {
+      "id": "thr_marcos_rep",
+      "patientId": "pat_marcos",
+      "role": "REP",
+      "roleNumber": "+19155550164",
+      "createdAt": "2025-03-10T00:00:00Z"
+    },
+    {
+      "id": "thr_angel_nurse",
+      "patientId": "pat_angel",
+      "role": "NURSE",
+      "roleNumber": "+19155550142",
+      "createdAt": "2026-07-12T07:00:00Z"
+    }
   ],
-
   "messages": [
-    { "id": "msg_marcos_1", "threadId": "thr_marcos_nurse", "sender": "STAFF", "kind": "SMS", "body": "Hi Marcos — saw you logged an ankle bleed. How's it feeling today? Any swelling?", "staffAuthorId": "usr_sofia", "sentAt": "2026-07-03T09:24:00Z" },
-    { "id": "msg_marcos_2", "threadId": "thr_marcos_nurse", "sender": "PATIENT", "kind": "SMS", "body": "Better today, swelling's down. Took my 2nd dose last night.", "staffAuthorId": null, "sentAt": "2026-07-03T14:57:00Z" },
-    { "id": "msg_marcos_3", "threadId": "thr_marcos_nurse", "sender": "PATIENT", "kind": "CALL_EVENT", "body": null, "staffAuthorId": null, "sentAt": "2026-07-03T15:10:00Z" },
-    { "id": "msg_marcos_4", "threadId": "thr_marcos_nurse", "sender": "STAFF", "kind": "SMS", "body": "Glad it's improving. I'll check in tomorrow — call anytime if it worsens.", "staffAuthorId": "usr_sofia", "sentAt": "2026-07-03T15:22:00Z" },
-    { "id": "msg_angel_1", "threadId": "thr_angel_nurse", "sender": "STAFF", "kind": "SMS", "body": "Angel, I see a knee bleed came through this morning. I'm calling you now to check in.", "staffAuthorId": "usr_sofia", "sentAt": "2026-07-12T07:05:00Z" }
+    {
+      "id": "msg_marcos_1",
+      "threadId": "thr_marcos_nurse",
+      "sender": "STAFF",
+      "kind": "SMS",
+      "body": "Hi Marcos — saw you logged an ankle bleed. How's it feeling today? Any swelling?",
+      "staffAuthorId": "usr_sofia",
+      "sentAt": "2026-07-03T09:24:00Z"
+    },
+    {
+      "id": "msg_marcos_2",
+      "threadId": "thr_marcos_nurse",
+      "sender": "PATIENT",
+      "kind": "SMS",
+      "body": "Better today, swelling's down. Took my 2nd dose last night.",
+      "staffAuthorId": null,
+      "sentAt": "2026-07-03T14:57:00Z"
+    },
+    {
+      "id": "msg_marcos_3",
+      "threadId": "thr_marcos_nurse",
+      "sender": "PATIENT",
+      "kind": "CALL_EVENT",
+      "body": null,
+      "staffAuthorId": null,
+      "sentAt": "2026-07-03T15:10:00Z"
+    },
+    {
+      "id": "msg_marcos_4",
+      "threadId": "thr_marcos_nurse",
+      "sender": "STAFF",
+      "kind": "SMS",
+      "body": "Glad it's improving. I'll check in tomorrow — call anytime if it worsens.",
+      "staffAuthorId": "usr_sofia",
+      "sentAt": "2026-07-03T15:22:00Z"
+    },
+    {
+      "id": "msg_angel_1",
+      "threadId": "thr_angel_nurse",
+      "sender": "STAFF",
+      "kind": "SMS",
+      "body": "Angel, I see a knee bleed came through this morning. I'm calling you now to check in.",
+      "staffAuthorId": "usr_sofia",
+      "sentAt": "2026-07-12T07:05:00Z"
+    }
   ],
-
   "internalNotes": [
-    { "id": "note_marcos_1", "threadId": "thr_marcos_nurse", "authorId": "usr_sofia", "body": "Ankle bleed resolving but 2nd this quarter — same joint. Rep should note for the relationship; social worker check if it affects his activity plan.", "createdAt": "2026-07-03T15:25:00Z" }
+    {
+      "id": "note_marcos_1",
+      "threadId": "thr_marcos_nurse",
+      "authorId": "usr_sofia",
+      "body": "Ankle bleed resolving but 2nd this quarter — same joint. Rep should note for the relationship; social worker check if it affects his activity plan.",
+      "createdAt": "2026-07-03T15:25:00Z"
+    }
   ],
-
   "noteTags": [
-    { "id": "ntag_marcos_rep", "noteId": "note_marcos_1", "taggedRole": "REP" },
-    { "id": "ntag_marcos_social", "noteId": "note_marcos_1", "taggedRole": "SOCIAL_WORKER" }
+    {
+      "id": "ntag_marcos_rep",
+      "noteId": "note_marcos_1",
+      "taggedRole": "REP"
+    },
+    {
+      "id": "ntag_marcos_social",
+      "noteId": "note_marcos_1",
+      "taggedRole": "SOCIAL_WORKER"
+    }
   ],
-
   "noteAcknowledgements": [
-    { "id": "nack_marcos_jennifer", "noteId": "note_marcos_1", "userId": "usr_jennifer", "seenAt": "2026-07-03T16:40:00Z" }
+    {
+      "id": "nack_marcos_jennifer",
+      "noteId": "note_marcos_1",
+      "userId": "usr_jennifer",
+      "seenAt": "2026-07-03T16:40:00Z"
+    }
   ],
-
   "notifications": [
-    { "id": "ntf_marcos_deliver", "patientId": "pat_marcos", "flavor": "ACTIONABLE", "type": "CONFIRM_DELIVERY", "title": "Confirm your delivery", "body": "Your July order is out for delivery. Confirm when it arrives.", "deepLink": "/deliveries/ord_marcos_july", "channels": ["IN_APP", "SMS"], "seenAt": null, "resolvedAt": null, "createdAt": "2026-07-12T06:05:00Z" },
-    { "id": "ntf_marcos_dose", "patientId": "pat_marcos", "flavor": "ACTIONABLE", "type": "DOSE_REMINDER", "title": "Time for your dose", "body": "Your prophylaxis dose is scheduled today.", "deepLink": "/logs/new?type=prophylaxis", "channels": ["IN_APP", "SMS"], "seenAt": "2026-07-12T08:10:00Z", "resolvedAt": "2026-07-12T08:16:00Z", "createdAt": "2026-07-12T07:00:00Z" },
-    { "id": "ntf_marcos_msg", "patientId": "pat_marcos", "flavor": "INFORMATIONAL", "type": "NEW_MESSAGE", "title": "Message from your nurse", "body": "Glad it's improving. I'll check in tomorrow…", "deepLink": "/messages/thr_marcos_nurse", "channels": ["IN_APP"], "seenAt": "2026-07-03T15:30:00Z", "resolvedAt": null, "createdAt": "2026-07-03T15:22:00Z" },
-    { "id": "ntf_david_orderdue", "patientId": "pat_david", "flavor": "ACTIONABLE", "type": "ORDER_DUE", "title": "Time to order", "body": "Your monthly order is due. Start it now.", "deepLink": "/order/ord_david_july", "channels": ["IN_APP", "SMS"], "seenAt": null, "resolvedAt": null, "createdAt": "2026-07-12T06:00:00Z" },
-    { "id": "ntf_james_onboard", "patientId": "pat_james", "flavor": "ACTIONABLE", "type": "ONBOARDING_STEP_NEEDED", "title": "We need your records", "body": "Your doctor's records are still needed to continue setup.", "deepLink": "/onboarding", "channels": ["IN_APP", "SMS"], "seenAt": null, "resolvedAt": null, "createdAt": "2026-07-09T14:10:00Z" },
-    { "id": "ntf_marcos_shipped", "patientId": "pat_marcos", "flavor": "INFORMATIONAL", "type": "DELIVERY_STATUS", "title": "Your order shipped", "body": "FedEx · tracking 794612385521.", "deepLink": "/deliveries/ord_marcos_july", "channels": ["IN_APP", "SMS"], "seenAt": "2026-07-10T15:00:00Z", "resolvedAt": null, "createdAt": "2026-07-10T14:14:00Z" }
+    {
+      "id": "ntf_marcos_deliver",
+      "patientId": "pat_marcos",
+      "flavor": "ACTIONABLE",
+      "type": "CONFIRM_DELIVERY",
+      "title": "Confirm your delivery",
+      "body": "Your July order is out for delivery. Confirm when it arrives.",
+      "deepLink": "/deliveries/ord_marcos_july",
+      "channels": [
+        "IN_APP",
+        "SMS"
+      ],
+      "seenAt": null,
+      "resolvedAt": null,
+      "createdAt": "2026-07-12T06:05:00Z"
+    },
+    {
+      "id": "ntf_marcos_dose",
+      "patientId": "pat_marcos",
+      "flavor": "ACTIONABLE",
+      "type": "DOSE_REMINDER",
+      "title": "Time for your dose",
+      "body": "Your prophylaxis dose is scheduled today.",
+      "deepLink": "/logs/new?type=prophylaxis",
+      "channels": [
+        "IN_APP",
+        "SMS"
+      ],
+      "seenAt": "2026-07-12T08:10:00Z",
+      "resolvedAt": "2026-07-12T08:16:00Z",
+      "createdAt": "2026-07-12T07:00:00Z"
+    },
+    {
+      "id": "ntf_marcos_msg",
+      "patientId": "pat_marcos",
+      "flavor": "INFORMATIONAL",
+      "type": "NEW_MESSAGE",
+      "title": "Message from your nurse",
+      "body": "Glad it's improving. I'll check in tomorrow…",
+      "deepLink": "/messages/thr_marcos_nurse",
+      "channels": [
+        "IN_APP"
+      ],
+      "seenAt": "2026-07-03T15:30:00Z",
+      "resolvedAt": null,
+      "createdAt": "2026-07-03T15:22:00Z"
+    },
+    {
+      "id": "ntf_david_orderdue",
+      "patientId": "pat_david",
+      "flavor": "ACTIONABLE",
+      "type": "ORDER_DUE",
+      "title": "Time to order",
+      "body": "Your monthly order is due. Start it now.",
+      "deepLink": "/order/ord_david_july",
+      "channels": [
+        "IN_APP",
+        "SMS"
+      ],
+      "seenAt": null,
+      "resolvedAt": null,
+      "createdAt": "2026-07-12T06:00:00Z"
+    },
+    {
+      "id": "ntf_james_onboard",
+      "patientId": "pat_james",
+      "flavor": "ACTIONABLE",
+      "type": "ONBOARDING_STEP_NEEDED",
+      "title": "We need your records",
+      "body": "Your doctor's records are still needed to continue setup.",
+      "deepLink": "/onboarding",
+      "channels": [
+        "IN_APP",
+        "SMS"
+      ],
+      "seenAt": null,
+      "resolvedAt": null,
+      "createdAt": "2026-07-09T14:10:00Z"
+    },
+    {
+      "id": "ntf_marcos_shipped",
+      "patientId": "pat_marcos",
+      "flavor": "INFORMATIONAL",
+      "type": "DELIVERY_STATUS",
+      "title": "Your order shipped",
+      "body": "FedEx · tracking 794612385521.",
+      "deepLink": "/deliveries/ord_marcos_july",
+      "channels": [
+        "IN_APP",
+        "SMS"
+      ],
+      "seenAt": "2026-07-10T15:00:00Z",
+      "resolvedAt": null,
+      "createdAt": "2026-07-10T14:14:00Z"
+    }
   ],
-
   "auditEvents": [
-    { "id": "aud_1", "patientId": "pat_marcos", "actorId": "usr_sofia", "roleExercised": "PHARMACIST", "action": "order:clinical-check:approved", "detail": "ord_marcos_july approved to tech queue", "createdAt": "2026-07-08T18:00:00Z" },
-    { "id": "aud_2", "patientId": "pat_marcos", "actorId": "usr_daniel", "roleExercised": "TECH", "action": "order:shipped", "detail": "ord_marcos_july tracking 794612385521", "createdAt": "2026-07-10T14:14:00Z" },
-    { "id": "aud_3", "patientId": "pat_james", "actorId": "usr_sofia", "roleExercised": "NURSE", "action": "gate:clinical-records:incomplete", "detail": "records requested from Dr. Nair", "createdAt": "2026-07-09T14:05:00Z" },
-    { "id": "aud_4", "patientId": "pat_theo", "actorId": "usr_gabe", "roleExercised": "MANAGEMENT", "action": "gate:assistance:bypassed", "detail": "management override — active but unenrolled, finance follow-up", "createdAt": "2026-07-01T11:00:00Z" },
-    { "id": "aud_5", "patientId": "pat_angel", "actorId": "usr_sofia", "roleExercised": "NURSE", "action": "bleed:severe:nudge", "detail": "severe knee bleed → rep check-in nudge fired", "createdAt": "2026-07-12T06:50:00Z" }
+    {
+      "id": "aud_1",
+      "patientId": "pat_marcos",
+      "actorId": "usr_sofia",
+      "roleExercised": "PHARMACIST",
+      "action": "order:clinical-check:approved",
+      "detail": "ord_marcos_july approved to tech queue",
+      "createdAt": "2026-07-08T18:00:00Z"
+    },
+    {
+      "id": "aud_2",
+      "patientId": "pat_marcos",
+      "actorId": "usr_daniel",
+      "roleExercised": "TECH",
+      "action": "order:shipped",
+      "detail": "ord_marcos_july tracking 794612385521",
+      "createdAt": "2026-07-10T14:14:00Z"
+    },
+    {
+      "id": "aud_3",
+      "patientId": "pat_james",
+      "actorId": "usr_sofia",
+      "roleExercised": "NURSE",
+      "action": "gate:clinical-records:incomplete",
+      "detail": "records requested from Dr. Nair",
+      "createdAt": "2026-07-09T14:05:00Z"
+    },
+    {
+      "id": "aud_4",
+      "patientId": "pat_theo",
+      "actorId": "usr_gabe",
+      "roleExercised": "MANAGEMENT",
+      "action": "gate:assistance:bypassed",
+      "detail": "management override — active but unenrolled, finance follow-up",
+      "createdAt": "2026-07-01T11:00:00Z"
+    },
+    {
+      "id": "aud_5",
+      "patientId": "pat_angel",
+      "actorId": "usr_sofia",
+      "roleExercised": "NURSE",
+      "action": "bleed:severe:nudge",
+      "detail": "severe knee bleed → rep check-in nudge fired",
+      "createdAt": "2026-07-12T06:50:00Z"
+    }
+  ],
+  "intakeTasks": [
+    {
+      "id": "itk_lagging_docs",
+      "patientId": "pat_intake_lagging",
+      "type": "NEEDS_DOCS",
+      "status": "SURFACED",
+      "detail": "Insurance card and prescription still needed",
+      "createdAt": "2026-07-07T15:25:00Z",
+      "resolvedAt": null
+    },
+    {
+      "id": "itk_awaiting_open",
+      "patientId": "pat_intake_awaiting",
+      "type": "AWAITING_PATIENT",
+      "status": "SURFACED",
+      "detail": "Master link sent 07/09 — patient has not opened it yet",
+      "createdAt": "2026-07-09T18:45:00Z",
+      "resolvedAt": null
+    }
+  ],
+  "referralTokens": [
+    {
+      "id": "rt_lagging",
+      "token": "asap-intake-diego-7a3f",
+      "referringRepId": "usr_jennifer",
+      "expiresAt": "2026-07-08T15:00:00Z",
+      "consumedAt": "2026-07-07T15:05:00Z",
+      "patientDraftRef": "pat_intake_lagging",
+      "createdAt": "2026-07-07T14:55:00Z"
+    },
+    {
+      "id": "rt_awaiting",
+      "token": "asap-intake-karen-2b9c",
+      "referringRepId": "usr_jennifer",
+      "expiresAt": "2026-07-13T18:40:00Z",
+      "consumedAt": null,
+      "patientDraftRef": "pat_intake_awaiting",
+      "createdAt": "2026-07-09T18:40:00Z"
+    }
+  ],
+  "documentSlots": [
+    {
+      "id": "ds_lag_id",
+      "patientId": "pat_intake_lagging",
+      "type": "GOV_ID",
+      "required": true,
+      "status": "UPLOADED",
+      "fileRef": "r2/diego/gov-id.jpg",
+      "requestedDuringOnboarding": true,
+      "uploadedAt": "2026-07-07T15:18:00Z"
+    },
+    {
+      "id": "ds_lag_ins",
+      "patientId": "pat_intake_lagging",
+      "type": "INSURANCE_CARD",
+      "required": true,
+      "status": "PENDING",
+      "fileRef": null,
+      "requestedDuringOnboarding": true,
+      "uploadedAt": null
+    },
+    {
+      "id": "ds_lag_rx",
+      "patientId": "pat_intake_lagging",
+      "type": "RX_PHOTO",
+      "required": true,
+      "status": "PENDING",
+      "fileRef": null,
+      "requestedDuringOnboarding": true,
+      "uploadedAt": null
+    },
+    {
+      "id": "ds_lag_dx",
+      "patientId": "pat_intake_lagging",
+      "type": "DIAGNOSIS_LETTER",
+      "required": false,
+      "status": "PENDING",
+      "fileRef": null,
+      "requestedDuringOnboarding": true,
+      "uploadedAt": null
+    },
+    {
+      "id": "ds_awa_id",
+      "patientId": "pat_intake_awaiting",
+      "type": "GOV_ID",
+      "required": true,
+      "status": "PENDING",
+      "fileRef": null,
+      "requestedDuringOnboarding": true,
+      "uploadedAt": null
+    },
+    {
+      "id": "ds_awa_ins",
+      "patientId": "pat_intake_awaiting",
+      "type": "INSURANCE_CARD",
+      "required": true,
+      "status": "PENDING",
+      "fileRef": null,
+      "requestedDuringOnboarding": true,
+      "uploadedAt": null
+    },
+    {
+      "id": "ds_awa_rx",
+      "patientId": "pat_intake_awaiting",
+      "type": "RX_PHOTO",
+      "required": true,
+      "status": "PENDING",
+      "fileRef": null,
+      "requestedDuringOnboarding": true,
+      "uploadedAt": null
+    },
+    {
+      "id": "ds_awa_dx",
+      "patientId": "pat_intake_awaiting",
+      "type": "DIAGNOSIS_LETTER",
+      "required": false,
+      "status": "PENDING",
+      "fileRef": null,
+      "requestedDuringOnboarding": true,
+      "uploadedAt": null
+    }
   ]
 }

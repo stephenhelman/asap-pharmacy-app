@@ -51,6 +51,7 @@ model User {
   authoredNotes     InternalNote[]       @relation("NoteAuthor")
   noteAcks          NoteAcknowledgement[]
   auditEvents       AuditEvent[]
+  referralTokens    ReferralToken[]      @relation("ReferralRep")
 }
 
 // Join: which roles a user holds. Role-held vs person-held attribution (§7.1).
@@ -68,10 +69,18 @@ model UserRole {
 // ============================================================================
 
 enum LifecycleStage {
+  INTAKE            // record created; patient still providing info/docs/consent — pharmacy gates NOT started (§5.1)
   ONBOARDING
   ACTIVE
   TRANSFERRED_OUT   // viability not-viable → transfer-out
   INACTIVE
+}
+
+// Patient's chosen contact channel among the ones they consented to (§5.1.1).
+enum PreferredChannel {
+  SMS
+  EMAIL
+  CALL
 }
 
 enum HemophiliaType {
@@ -96,7 +105,26 @@ model Patient {
   email          String?
   hemophiliaType HemophiliaType
   severity       Severity
-  lifecycle      LifecycleStage  @default(ONBOARDING)
+  lifecycle      LifecycleStage  @default(INTAKE)
+
+  // ── Consent + channel routing (§5.1.1) ──────────────────────────────────
+  // Captured on the patient-facing confirm-info screen; the rep NEVER completes
+  // a consent. DND is the pre-consent safe state — ON at contact creation, lifted
+  // iff the patient SMS-consents. A landline / SMS-decline keeps DND ON (email-only).
+  smsConsent       Boolean          @default(false)
+  emailConsent     Boolean          @default(false)
+  preferredChannel PreferredChannel @default(SMS)
+  dndEnabled       Boolean          @default(true)
+  // HIPAA consent = a flag with timestamp + signer (patient-only eSign). Null = not yet given.
+  hipaaConsentedAt DateTime?
+  hipaaSignedBy    String?
+
+  // mailing address (captured during intake, §5.1.1). Nullable — patient-led
+  // intake fills these; a fresh draft starts empty.
+  addressLine1   String?
+  city           String?
+  state          String?
+  zip            String?
 
   // guardian holds the account for minors (§13); null for adults
   isMinor        Boolean         @default(false)
@@ -126,6 +154,8 @@ model Patient {
   threads         Thread[]
   notifications   Notification[]
   auditEvents     AuditEvent[]
+  intakeTasks     IntakeTask[]
+  documentSlots   DocumentSlot[]
 
   createdAt       DateTime        @default(now())
   updatedAt       DateTime        @updatedAt
@@ -152,6 +182,77 @@ model AuthorizedUser {
   name      String
   relation  String?
   phone     String?
+}
+
+// ============================================================================
+// INTAKE — the creation phase, BEFORE onboarding gates (§5.1, §5.1.1)
+// Rep-owned, patient-resolved, stall-surfaced work items + the invite token +
+// the itemized document slots seeded during intake.
+// ============================================================================
+
+// The "third flavor" of work-queue item (§5.1): resolved by the PATIENT doing,
+// surfaced to the REP only when stalled. Auto-satisfy, stall-surface.
+enum IntakeTaskType {
+  NEEDS_DOCS      // ID/insurance/Rx not uploaded
+  NEEDS_CONSENT   // HIPAA/SMS not completed
+  NEEDS_INFO      // an intake field incomplete (e.g. prescriber the patient didn't have)
+  AWAITING_PATIENT // rep-led: master link sent, patient hasn't opened it
+}
+
+enum IntakeTaskStatus {
+  LATENT     // tracked but invisible — the normal state
+  SURFACED   // escalated to the rep's queue because it stalled
+  RESOLVED   // the patient did the thing
+}
+
+model IntakeTask {
+  id         String           @id @default(cuid())
+  patient    Patient          @relation(fields: [patientId], references: [id])
+  patientId  String
+  type       IntakeTaskType
+  status     IntakeTaskStatus @default(LATENT)
+  detail     String?          // e.g. "Insurance card + Rx still pending"
+  createdAt  DateTime         @default(now())
+  resolvedAt DateTime?
+}
+
+// The rep-generated, signed, single-use, 24h invite (§5.1.1). Modeled at the
+// demo level (not cryptographically real); carries the referring rep for attribution.
+model ReferralToken {
+  id              String    @id @default(cuid())
+  token           String    @unique
+  referringRep    User      @relation("ReferralRep", fields: [referringRepId], references: [id])
+  referringRepId  String
+  expiresAt       DateTime
+  consumedAt      DateTime?
+  patientDraftRef String?   // the transient draft id this invite is bound to (prototype)
+  createdAt       DateTime  @default(now())
+}
+
+// An itemized document request/slot seeded during intake → becomes the permanent
+// Documents screen (§5.1.1). The system names what it needs; each is a labeled slot.
+enum DocumentSlotType {
+  GOV_ID
+  INSURANCE_CARD
+  RX_PHOTO          // reference only — original collected from the prescriber
+  DIAGNOSIS_LETTER  // optional / nice-to-have
+}
+
+enum DocumentSlotStatus {
+  PENDING
+  UPLOADED
+}
+
+model DocumentSlot {
+  id                       String             @id @default(cuid())
+  patient                  Patient            @relation(fields: [patientId], references: [id])
+  patientId                String
+  type                     DocumentSlotType
+  required                 Boolean            @default(true)
+  status                   DocumentSlotStatus @default(PENDING)
+  fileRef                  String?            // R2 key once uploaded (faked in prototype)
+  requestedDuringOnboarding Boolean           @default(true)
+  uploadedAt               DateTime?
 }
 
 // ============================================================================

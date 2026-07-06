@@ -8,6 +8,7 @@ import {
   getNextOrder,
   getActiveDelivery,
   getUnreadFromTeam,
+  getIntakeChecklist,
 } from "@/lib/dataProvider";
 import type { DeliveryStatus } from "@/lib/types";
 import {
@@ -50,6 +51,8 @@ export function PatientDashboard({ patientId }: { patientId: string }) {
       <main className="flex-1 min-h-0 overflow-y-auto px-4 pb-6 pt-3">
         {p.lifecycle === "ACTIVE" ? (
           <ActiveDashboard patientId={patientId} />
+        ) : p.lifecycle === "INTAKE" ? (
+          <IntakeDashboard patientId={patientId} />
         ) : p.lifecycle === "ONBOARDING" ? (
           <OnboardingDashboard patientId={patientId} />
         ) : (
@@ -254,6 +257,87 @@ function DeliveryCard({
       </div>
       <StepperHorizontal steps={nodeStates} />
     </div>
+  );
+}
+
+// ── Intake state — the patient's to-do checklist (§5.1.1) ───────────────────
+// Shown until the patient's part of intake is complete; then the lifecycle
+// advances to ONBOARDING and they see the tracker instead. Checklist ≠ tracker.
+function IntakeDashboard({ patientId }: { patientId: string }) {
+  const p = getPatient(patientId)!;
+  const checklist = getIntakeChecklist(p);
+  const doneCount = checklist.items.filter((i) => i.done).length;
+
+  return (
+    <>
+      <div className="mb-3.5 flex flex-wrap gap-1.5">
+        <StatusPill tone="warning" icon="ti-progress">
+          Finishing your setup
+        </StatusPill>
+      </div>
+
+      {/* Polite, specific callout naming exactly what's still needed */}
+      {checklist.callout && (
+        <div className="mb-3.5">
+          <NoticeInfo icon="ti-alert-circle">{checklist.callout}</NoticeInfo>
+        </div>
+      )}
+
+      {/* The intake checklist — complete items show complete; incomplete ones
+          deep-link to where they're finished. */}
+      <div className="mb-3 rounded-card border border-border bg-card p-4 shadow-card">
+        <div className="mb-3 flex items-center justify-between">
+          <span className="text-title-card text-navy">Your checklist</span>
+          <span className="text-label text-text-muted">
+            {doneCount} of {checklist.items.length}
+          </span>
+        </div>
+        <div className="mb-4">
+          <ProgressBar
+            total={checklist.items.length}
+            done={doneCount}
+            showCount={false}
+          />
+        </div>
+        <div className="[&>*+*]:border-t [&>*+*]:border-border">
+          {checklist.items.map((item) =>
+            item.done ? (
+              <div key={item.key} className="flex items-center gap-3 py-2.5">
+                <Icon name="ti-circle-check" size={20} className="text-teal" />
+                <div className="min-w-0 flex-1">
+                  <p className="text-body-strong text-text-primary">{item.label}</p>
+                  <p className="truncate text-micro text-text-muted">{item.sub}</p>
+                </div>
+                <span className="text-micro text-teal-dark">Done</span>
+              </div>
+            ) : (
+              <Link
+                key={item.key}
+                href={item.href}
+                className="flex items-center gap-3 py-2.5 active:opacity-70"
+              >
+                <Icon name="ti-circle" size={20} className="text-border-strong" />
+                <div className="min-w-0 flex-1">
+                  <p className="text-body-strong text-navy">{item.label}</p>
+                  <p className="truncate text-micro text-text-muted">{item.sub}</p>
+                </div>
+                <Icon name="ti-chevron-right" size={18} className="text-text-muted" />
+              </Link>
+            ),
+          )}
+        </div>
+      </div>
+
+      <RowCard>
+        <NavRow
+          icon="ti-message-2"
+          iconTone="teal"
+          title="Message your team"
+          sub="Questions? We're here to help."
+          href="/messages"
+        />
+      </RowCard>
+    </>
   );
 }
 

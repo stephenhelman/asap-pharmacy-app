@@ -22,7 +22,8 @@ const DEFAULT_CATEGORY: Partial<Record<StaffRole, string>> = {
   TECH: "Fulfillment",
   VERIFICATION: "Renewals",
   SOCIAL_WORKER: "Renewals",
-  REP: "Orders",
+  // Intake is rep-owned (§5.1) — a rep lands on their stalled intake tasks.
+  REP: "Intake",
 };
 
 export function WorkQueue() {

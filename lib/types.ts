@@ -13,6 +13,9 @@ import type {
   Patient,
   CareTeamAssignment,
   AuthorizedUser,
+  IntakeTask,
+  ReferralToken,
+  DocumentSlot,
   Prescription,
   AssayComponent,
   Onboarding,
@@ -41,6 +44,11 @@ import type {
 export type {
   StaffRole,
   LifecycleStage,
+  PreferredChannel,
+  IntakeTaskType,
+  IntakeTaskStatus,
+  DocumentSlotType,
+  DocumentSlotStatus,
   HemophiliaType,
   Severity,
   DoseType,
@@ -77,6 +85,9 @@ export type UserRoleRow = DateToString<UserRole>;
 export type PatientRow = DateToString<Patient>;
 export type CareTeamRow = DateToString<CareTeamAssignment>;
 export type AuthorizedUserRow = DateToString<AuthorizedUser>;
+export type IntakeTaskRow = DateToString<IntakeTask>;
+export type ReferralTokenRow = DateToString<ReferralToken>;
+export type DocumentSlotRow = DateToString<DocumentSlot>;
 export type PrescriptionRow = DateToString<Prescription>;
 export type AssayComponentRow = DateToString<AssayComponent>;
 export type OnboardingRow = DateToString<Onboarding>;
@@ -107,6 +118,9 @@ export interface FixturesDB {
   patients: PatientRow[];
   careTeamAssignments: CareTeamRow[];
   authorizedUsers: AuthorizedUserRow[];
+  intakeTasks: IntakeTaskRow[];
+  referralTokens: ReferralTokenRow[];
+  documentSlots: DocumentSlotRow[];
   prescriptions: PrescriptionRow[];
   assayComponents: AssayComponentRow[];
   onboardings: OnboardingRow[];
@@ -172,6 +186,8 @@ export type PatientDetail = PatientRow & {
   onboarding: OnboardingDetail | null;
   careTeam: CareTeamMember[];
   authorizedUsers: AuthorizedUserRow[];
+  intakeTasks: IntakeTaskRow[];
+  documentSlots: DocumentSlotRow[];
 };
 
 export type StaffUser = UserRow & {
