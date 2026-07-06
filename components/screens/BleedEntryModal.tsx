@@ -246,7 +246,9 @@ function BodyMap({
       viewBox="0 0 84 300"
       className="h-[220px] w-[70px] shrink-0 rounded-card border border-border bg-page"
     >
-      {/* simple mirrored silhouette */}
+      {/* Simple mirrored silhouette. SVG attributes can't take utility classes,
+          so these literals mirror design tokens: #EDF2F7 fill-control,
+          #CBD5E0 border-strong, #C53030 red, #64748B text-muted, #fff card. */}
       <g fill="#EDF2F7" stroke="#CBD5E0" strokeWidth="1">
         <circle cx="42" cy="26" r="13" />
         <rect x="27" y="42" width="30" height="60" rx="12" />
@@ -266,7 +268,7 @@ function BodyMap({
             cy={j.cy}
             r={on ? 7 : 5}
             className="cursor-pointer"
-            fill={on ? "#C53030" : "#A0AEC0"}
+            fill={on ? "#C53030" : "#64748B"}
             stroke="#fff"
             strokeWidth="1.5"
             onClick={() => onSelect(j.key)}
