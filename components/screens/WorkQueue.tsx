@@ -1,0 +1,269 @@
+"use client";
+
+import { useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
+import { getWorkQueue, type QueueRow } from "@/lib/dataProvider";
+import { useSession, roleSummary } from "@/lib/session";
+import type { StaffRole } from "@/lib/types";
+import {
+  Avatar,
+  Icon,
+  ChipFilter,
+  ChipWork,
+  BottomNav,
+} from "@/components/ui";
+import { STAFF_NAV } from "./nav-config";
+import { RecordPane } from "./RecordPane";
+
+// Role-derived default filter (§S2): nurse → Clinicals, pharmacist → All, …
+const DEFAULT_CATEGORY: Partial<Record<StaffRole, string>> = {
+  NURSE: "Clinicals",
+  TECH: "Fulfillment",
+  VERIFICATION: "Renewals",
+  SOCIAL_WORKER: "Renewals",
+  REP: "Orders",
+};
+
+export function WorkQueue() {
+  const { session } = useSession();
+  const [selected, setSelected] = useState<string | null>(null);
+
+  const rows = useMemo(
+    () => getWorkQueue(session.roles),
+    [session.roles],
+  );
+
+  const categories = useMemo(() => {
+    const set = new Set<string>();
+    rows.forEach((r) => r.items.forEach((i) => set.add(i.category)));
+    return Array.from(set);
+  }, [rows]);
+
+  const defaultFilter =
+    session.roles.length === 1 && DEFAULT_CATEGORY[session.roles[0]]
+      ? DEFAULT_CATEGORY[session.roles[0]]!
+      : "all";
+
+  const [filter, setFilter] = useState<string>(defaultFilter);
+  const activeFilter = categories.includes(filter) || filter === "all" ? filter : "all";
+
+  const visible = rows
+    .map((r) => ({
+      ...r,
+      items:
+        activeFilter === "all"
+          ? r.items
+          : r.items.filter((i) => i.category === activeFilter),
+    }))
+    .filter((r) => r.items.length > 0);
+
+  const totalItems = visible.reduce((s, r) => s + r.items.length, 0);
+
+  return (
+    <div className="relative flex min-h-[100dvh] flex-col md:min-h-[844px]">
+      <header className="border-b border-border bg-card px-4 pt-4">
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="text-display text-navy">Work queue</h1>
+            <p className="mt-1 text-micro text-text-muted">
+              {roleSummary(session.roles) || "Staff"} · {totalItems} open item
+              {totalItems === 1 ? "" : "s"}
+            </p>
+          </div>
+        </div>
+        <div className="scroll-x -mx-4 mt-3 flex gap-1.5 px-4 pb-3">
+          <ChipFilter
+            active={activeFilter === "all"}
+            count={rows.reduce((s, r) => s + r.items.length, 0)}
+            onClick={() => setFilter("all")}
+          >
+            All
+          </ChipFilter>
+          {categories.map((c) => (
+            <ChipFilter
+              key={c}
+              active={activeFilter === c}
+              count={rows.reduce(
+                (s, r) => s + r.items.filter((i) => i.category === c).length,
+                0,
+              )}
+              onClick={() => setFilter(c)}
+            >
+              {c}
+            </ChipFilter>
+          ))}
+        </div>
+      </header>
+
+      <main className="flex-1 overflow-y-auto">
+        {visible.length === 0 ? (
+          <div className="flex flex-col items-center gap-2 py-16 text-center">
+            <Icon name="ti-checks" size={34} className="text-teal" />
+            <p className="text-title-card text-navy">Queue clear</p>
+            <p className="max-w-[240px] text-body text-text-secondary">
+              No open work for this role right now. Nice.
+            </p>
+          </div>
+        ) : (
+          <>
+            {/* mobile: patients-as-rows, chips indented */}
+            <div className="lg:hidden">
+              {visible.map((r) => (
+                <QueueRowItem
+                  key={r.patient.id}
+                  row={r}
+                  onOpen={() => setSelected(r.patient.id)}
+                />
+              ))}
+            </div>
+            {/* desktop: reflow to a patients × work-types matrix */}
+            <QueueTable
+              rows={visible}
+              columns={
+                activeFilter === "all"
+                  ? categories
+                  : categories.filter((c) => c === activeFilter)
+              }
+              onOpen={setSelected}
+            />
+          </>
+        )}
+      </main>
+
+      <BottomNav items={STAFF_NAV} activeKey="queue" />
+      <RecordPane patientId={selected} onClose={() => setSelected(null)} />
+    </div>
+  );
+}
+
+const COLUMN_ORDER = ["Intake", "Clinicals", "Orders", "Fulfillment", "Renewals"];
+
+function QueueTable({
+  rows,
+  columns,
+  onOpen,
+}: {
+  rows: QueueRow[];
+  columns: string[];
+  onOpen: (id: string) => void;
+}) {
+  const router = useRouter();
+  const cols = COLUMN_ORDER.filter((c) => columns.includes(c));
+
+  return (
+    <div className="hidden overflow-x-auto lg:block">
+      <table className="w-full border-collapse">
+        <thead>
+          <tr className="border-b border-border bg-page">
+            <th className="sticky left-0 z-10 bg-page px-6 py-3 text-left text-section uppercase text-text-muted">
+              Patient
+            </th>
+            {cols.map((c) => (
+              <th key={c} className="px-4 py-3 text-left text-section uppercase text-text-muted">
+                {c}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((r) => (
+            <tr
+              key={r.patient.id}
+              className="group border-b border-border transition-colors hover:bg-fill-control/50"
+            >
+              <td className="sticky left-0 z-10 bg-card px-6 py-3 group-hover:bg-fill-control/50">
+                <button
+                  onClick={() => onOpen(r.patient.id)}
+                  className="flex items-center gap-2.5 text-left"
+                >
+                  <Avatar name={`${r.patient.firstName} ${r.patient.lastName}`} size={32} />
+                  <div>
+                    <p className="text-title-card text-text-primary">
+                      {r.patient.firstName} {r.patient.lastName}
+                    </p>
+                    <p className="text-micro text-text-muted">{r.lifecycleLabel}</p>
+                  </div>
+                </button>
+              </td>
+              {cols.map((c) => {
+                const cell = r.items.filter((i) => i.category === c);
+                return (
+                  <td key={c} className="px-4 py-3 align-top">
+                    {cell.length === 0 ? (
+                      <span className="text-text-muted">—</span>
+                    ) : (
+                      <div className="flex flex-wrap gap-1.5">
+                        {cell.map((it) => (
+                          <ChipWork
+                            key={it.id}
+                            triage={it.triage}
+                            icon={
+                              it.triage === "danger"
+                                ? "ti-alert-triangle"
+                                : it.triage === "warning"
+                                  ? "ti-clock"
+                                  : "ti-circle-dot"
+                            }
+                            onClick={() => router.push(it.href)}
+                          >
+                            {it.label}
+                          </ChipWork>
+                        ))}
+                      </div>
+                    )}
+                  </td>
+                );
+              })}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+function QueueRowItem({
+  row,
+  onOpen,
+}: {
+  row: QueueRow;
+  onOpen: () => void;
+}) {
+  const router = useRouter();
+  const { patient, lifecycleLabel, items } = row;
+  return (
+    <div className="border-b border-border px-4 py-3.5">
+      <button
+        onClick={onOpen}
+        className="mb-2 flex w-full items-center gap-3 text-left"
+      >
+        <Avatar name={`${patient.firstName} ${patient.lastName}`} size={30} />
+        <div className="min-w-0 flex-1">
+          <p className="truncate text-title-card text-text-primary">
+            {patient.firstName} {patient.lastName}
+          </p>
+          <p className="text-micro text-text-muted">{lifecycleLabel}</p>
+        </div>
+        <Icon name="ti-chevron-right" size={18} className="text-text-muted" />
+      </button>
+      <div className="ml-[42px] flex flex-wrap gap-1.5">
+        {items.map((it) => (
+          <ChipWork
+            key={it.id}
+            triage={it.triage}
+            icon={
+              it.triage === "danger"
+                ? "ti-alert-triangle"
+                : it.triage === "warning"
+                  ? "ti-clock"
+                  : "ti-circle-dot"
+            }
+            onClick={() => router.push(it.href)}
+          >
+            {it.label}
+          </ChipWork>
+        ))}
+      </div>
+    </div>
+  );
+}

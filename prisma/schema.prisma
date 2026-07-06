@@ -1,0 +1,640 @@
+// ASAP Pharmacy — Patient Management Platform
+// Prisma schema · derived from ASAP_Application_Architecture.md (the locked source of truth).
+// This is the CONTRACT: the prototype's dummy-data.json conforms to these shapes so that
+// swapping fixtures → live Prisma is a data-source change, not a component rewrite.
+//
+// Scope notes baked in:
+//  - Postgres is the source of truth; GHL mirrors (tags/comms). No GHL-owned state here.
+//  - Business inventory is OUT of scope (§5.2.5). We track PATIENT doses-on-hand only, derived
+//    from the ledger (shipped − consumed), not a managed stock table.
+//  - Roles are modeled independently but may all be held by one person today (§13.A2) — hiring
+//    re-routes queues (CareTeamAssignment / UserRole), not code.
+//  - Enums use forward-compatible values; v1.1/v2 items flagged in comments.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ============================================================================
+// PEOPLE, ROLES, AUTH
+// ============================================================================
+
+enum StaffRole {
+  REP
+  NURSE            // RN
+  PHARMACIST
+  TECH
+  SOCIAL_WORKER
+  VERIFICATION     // insurance/benefits verification
+  MANAGEMENT
+}
+
+// A staff user. One human may hold MANY roles today (one-person-many-hats).
+model User {
+  id            String    @id @default(cuid())
+  fullName      String
+  email         String    @unique
+  phone         String?   // work line; internal notes never use this (portal-only)
+  active        Boolean   @default(true)
+  roles         UserRole[]
+  createdAt     DateTime  @default(now())
+
+  // reverse relations
+  careTeamLinks     CareTeamAssignment[]
+  gateActions       GateEvent[]          @relation("GateActor")
+  authoredMessages  Message[]            @relation("MessageStaffAuthor")
+  authoredNotes     InternalNote[]       @relation("NoteAuthor")
+  noteAcks          NoteAcknowledgement[]
+  auditEvents       AuditEvent[]
+}
+
+// Join: which roles a user holds. Role-held vs person-held attribution (§7.1).
+model UserRole {
+  id     String    @id @default(cuid())
+  user   User      @relation(fields: [userId], references: [id])
+  userId String
+  role   StaffRole
+
+  @@unique([userId, role])
+}
+
+// ============================================================================
+// PATIENT + CARE TEAM
+// ============================================================================
+
+enum LifecycleStage {
+  ONBOARDING
+  ACTIVE
+  TRANSFERRED_OUT   // viability not-viable → transfer-out
+  INACTIVE
+}
+
+enum HemophiliaType {
+  A
+  B
+  OTHER
+}
+
+enum Severity {
+  MILD
+  MODERATE
+  SEVERE
+}
+
+model Patient {
+  id             String          @id @default(cuid())
+  // identity
+  firstName      String
+  lastName       String
+  dob            DateTime
+  phone          String          @unique   // JOIN KEY for inbound SMS → thread (§14.3)
+  email          String?
+  hemophiliaType HemophiliaType
+  severity       Severity
+  lifecycle      LifecycleStage  @default(ONBOARDING)
+
+  // guardian holds the account for minors (§13); null for adults
+  isMinor        Boolean         @default(false)
+  guardianName   String?
+  guardianPhone  String?
+
+  // prescriber / doctor info — read-only reference, inside PHI boundary (§5.3.2)
+  prescriberName     String?
+  prescriberPractice String?
+  prescriberPhone    String?
+  prescriberFax      String?
+  prescriberNpi      String?
+
+  // reorder cadence (§5.2). Per-patient timer fires ~15–20d after delivery.
+  nextOrderDueDate   DateTime?
+  leadTimeDays       Int?        // pharmacy-set source/lead-time for projection (§5.2.1)
+
+  // relations
+  careTeam        CareTeamAssignment[]
+  authorizedUsers AuthorizedUser[]
+  prescriptions   Prescription[]
+  onboarding      Onboarding?
+  orders          Order[]
+  infusions       InfusionEntry[]
+  bleeds          Bleed[]
+  authorizations  Authorization[]
+  threads         Thread[]
+  notifications   Notification[]
+  auditEvents     AuditEvent[]
+
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+}
+
+// Which staff (by role) are responsible for THIS patient. Sources the tag-selector
+// (care team + management chain) and the roster/queue scoping.
+model CareTeamAssignment {
+  id        String    @id @default(cuid())
+  patient   Patient   @relation(fields: [patientId], references: [id])
+  patientId String
+  user      User      @relation(fields: [userId], references: [id])
+  userId    String
+  role      StaffRole // the role this user plays FOR this patient (e.g. assigned rep)
+
+  @@unique([patientId, role])   // one holder per role per patient (v1)
+}
+
+// Patient-managed authorized users (§ onboarding sub-decisions).
+model AuthorizedUser {
+  id        String   @id @default(cuid())
+  patient   Patient  @relation(fields: [patientId], references: [id])
+  patientId String
+  name      String
+  relation  String?
+  phone     String?
+}
+
+// ============================================================================
+// PRESCRIPTION + DOSE MODEL (§5.2.3, §5.3.1)
+// ============================================================================
+// Dose-as-assay-recipe: a target IU built from assay components. Doctor-set, read-only.
+// Prophylaxis and PRN are SEPARATE prescriptions (insurance requirement).
+
+enum DoseType {
+  PROPHYLAXIS
+  PRN            // on-demand / bleed treatment
+}
+
+model Prescription {
+  id           String    @id @default(cuid())
+  patient      Patient   @relation(fields: [patientId], references: [id])
+  patientId    String
+  productName  String    // e.g. "Advate"
+  factorType   String    // e.g. "Factor VIII"
+  doseType     DoseType
+  active       Boolean   @default(true)
+
+  // prophylaxis cadence (drives the infusion-schedule reminder v1, §15.3)
+  frequencyPerWeek Int?   // e.g. 2  (null for PRN)
+
+  // PRN tiers: pharmacy-defined mild/moderate/severe, each its own target IU (§5.3.1)
+  prnTier      PrnTier?  // null for prophylaxis
+
+  targetIu     Int       // total target IU for this dose
+  assayComponents AssayComponent[]  // the recipe: e.g. 2000 + 500 + 500 = 3000
+
+  createdAt    DateTime  @default(now())
+}
+
+enum PrnTier {
+  MILD
+  MODERATE
+  SEVERE
+}
+
+// One assay vial-size in a dose recipe. Sum of components = Prescription.targetIu.
+model AssayComponent {
+  id             String       @id @default(cuid())
+  prescription   Prescription @relation(fields: [prescriptionId], references: [id])
+  prescriptionId String
+  iu             Int          // vial size, e.g. 2000
+  quantity       Int          @default(1)   // how many of this vial size
+}
+
+// ============================================================================
+// ONBOARDING — micro-pipeline model + gate primitive (§5.1)
+// ============================================================================
+
+enum GateType {
+  BENEFITS_VERIFICATION
+  VIABILITY
+  CLINICAL_RECORDS
+  PRIOR_AUTHORIZATION
+  ASSISTANCE_ENROLLMENT
+  PATIENT_INTAKE
+}
+
+enum GateStatus {
+  NOT_STARTED
+  IN_PROGRESS
+  SATISFIED      // includes bypass variants for master-completion
+  BLOCKED
+}
+
+// Master onboarding record; flips patient → ACTIVE when required flags satisfied.
+model Onboarding {
+  id           String    @id @default(cuid())
+  patient      Patient   @relation(fields: [patientId], references: [id])
+  patientId    String    @unique
+  gates        Gate[]
+  completedAt  DateTime?
+  createdAt    DateTime  @default(now())
+}
+
+// A gate instance = one sub-pipeline terminus. `role` (owning role) is TEMPLATE-level
+// config, stored here for the instance but re-assignable without migration (§7.1).
+model Gate {
+  id           String     @id @default(cuid())
+  onboarding   Onboarding @relation(fields: [onboardingId], references: [id])
+  onboardingId String
+  type         GateType
+  ownerRole    StaffRole  // gate.role — who may act (× session.roles, or MANAGEMENT)
+  status       GateStatus @default(NOT_STARTED)
+  outcome      String?    // typed outcome, e.g. "verified" | "viable" | "bypassed"
+  outcomeNote  String?
+  isStanding   Boolean    @default(false)  // PA + Assistance recur (§5.1)
+  events       GateEvent[]
+  updatedAt    DateTime   @updatedAt
+
+  @@unique([onboardingId, type])
+}
+
+// Audit trail of gate actions (actor + role exercised + outcome). Role-aware (§7.1).
+model GateEvent {
+  id          String     @id @default(cuid())
+  gate        Gate       @relation(fields: [gateId], references: [id])
+  gateId      String
+  actor       User       @relation("GateActor", fields: [actorId], references: [id])
+  actorId     String
+  roleExercised StaffRole
+  outcome     String
+  note        String?
+  createdAt   DateTime   @default(now())
+}
+
+// ============================================================================
+// AUTHORIZATIONS & RENEWALS — standing pipelines (§7.4, §13.C)
+// PA + Assistance, post-onboarding, with expiry clocks. Renewals tracker = these.
+// ============================================================================
+
+enum AuthorizationType {
+  PRIOR_AUTHORIZATION
+  ASSISTANCE          // copay / HOPE
+}
+
+enum AuthorizationStatus {
+  ACTIVE
+  EXPIRING            // within pharmacist-set threshold
+  LAPSED
+  PENDING             // in renewal
+  BYPASSED            // management override (assistance), logged
+}
+
+model Authorization {
+  id          String              @id @default(cuid())
+  patient     Patient             @relation(fields: [patientId], references: [id])
+  patientId   String
+  type        AuthorizationType
+  status      AuthorizationStatus @default(ACTIVE)
+  programName String?             // e.g. "HOPE"
+  effectiveAt DateTime?
+  expiresAt   DateTime?           // drives the renewal clock / queue predictive surfacing
+  updatedAt   DateTime            @updatedAt
+}
+
+// ============================================================================
+// ORDERS — linear fulfillment pipeline (§5.2). NOT a gate primitive (design note).
+// ============================================================================
+
+enum OrderStage {
+  ORDER_DUE
+  SUBMITTED
+  CONFIRMED          // hard rep gate
+  CLINICAL_CHECK     // mandatory pharmacist stage 3.5
+  PROCESSING         // tech pack
+  SHIPPED
+  DELIVERED
+}
+
+enum OrderStatus {
+  IN_PROGRESS
+  ON_HOLD
+  COMPLETE
+  SHIPPED_INCOMPLETE // partial ship; outstanding items become a NEW order, not a backorder
+}
+
+enum HoldReason {
+  PRIOR_AUTH
+  STOCK_ISSUE
+  INSURANCE_HOLD
+  PATIENT_UNRESPONSIVE
+  RX_PARTIAL_REFILLS
+  OTHER
+}
+
+model Order {
+  id            String       @id @default(cuid())
+  patient       Patient      @relation(fields: [patientId], references: [id])
+  patientId     String
+  cycleLabel    String       // e.g. "July 2026"
+  stage         OrderStage   @default(ORDER_DUE)
+  status        OrderStatus  @default(IN_PROGRESS)
+  holdReason    HoldReason?
+  holdNote      String?
+
+  // check-in answers (§5.2.1) — the clinical picture that feeds the order
+  checkinIssues       String?
+  missedDoses         Boolean?
+  medAllergyChanges   String?
+
+  // dose math (projection, §5.2.1) — snapshot recorded at order time
+  dosesOnHandReported Int?    // patient-reported (editable, human-final)
+  dosesProjectedAtDelivery Int?
+
+  lineItems     OrderLineItem[]
+  packedManifest PackedVial[]   // tech documents ACTUAL vials pulled (data capture)
+  signature     OrderSignature?
+  delivery      Delivery?
+  clinicalCheck ClinicalCheck?
+
+  submittedAt   DateTime?
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+}
+
+enum LineItemKind {
+  PROPHYLAXIS_DOSE
+  PRN_REPLACEMENT
+  SUPPLY
+}
+
+model OrderLineItem {
+  id          String       @id @default(cuid())
+  order       Order        @relation(fields: [orderId], references: [id])
+  orderId     String
+  kind        LineItemKind
+  label       String       // "Advate 3,000 IU · prophylaxis" | "Gauze pads (large)"
+  quantity    Int
+  // PRN replacement lines trace to the bleed that consumed the doses (§5.2.1)
+  sourceBleedId String?
+  supplyItemId  String?
+}
+
+// Tech pack: the actual vials/lots pulled — documentation, NOT inventory draw-down.
+model PackedVial {
+  id          String   @id @default(cuid())
+  order       Order    @relation(fields: [orderId], references: [id])
+  orderId     String
+  doseIndex   Int      // which dose-bag in this order (per-dose bagging reality)
+  productName String
+  assayIu     Int      // vial size
+  lotNumber   String
+  expiration  DateTime?
+}
+
+// Single eSignature covering BOTH the monthly log attestation AND order authorization (§5.2 / P3).
+model OrderSignature {
+  id          String   @id @default(cuid())
+  order       Order    @relation(fields: [orderId], references: [id])
+  orderId     String   @unique
+  signedByName String
+  signedAt    DateTime @default(now())
+  // covers: "this month's log is accurate AND I authorize this order"
+}
+
+// Mandatory pharmacist clinical check (§5.2 stage 3.5). Linear stage, not a gate.
+model ClinicalCheck {
+  id            String    @id @default(cuid())
+  order         Order     @relation(fields: [orderId], references: [id])
+  orderId       String    @unique
+  doseMatchesRx Boolean?
+  assayValid    Boolean?
+  withinAllowance Boolean?
+  bleedFlag     Boolean   @default(false)  // bleeds/PRN this cycle → review before approve
+  approved      Boolean?
+  heldReason    HoldReason?
+  reviewedAt    DateTime?
+}
+
+// ============================================================================
+// DELIVERY — reconciliation + tracker (§5.2.4)
+// Ordered (line items) vs Shipped (packed manifest) vs Received (this confirmation).
+// ============================================================================
+
+enum DeliveryStatus {
+  PENDING
+  SHIPPED
+  OUT_FOR_DELIVERY
+  DELIVERED
+}
+
+model Delivery {
+  id            String         @id @default(cuid())
+  order         Order          @relation(fields: [orderId], references: [id])
+  orderId       String         @unique
+  status        DeliveryStatus @default(PENDING)
+  carrier       String?
+  trackingNumber String?
+  trackingUrl   String?
+  ticketId      String?        // opaque ID for authed-scan delivery ticket (§10)
+  shippedAt     DateTime?
+  deliveredAt   DateTime?
+  confirmedByPatientAt DateTime?
+  confirmedMethod String?      // "scan" | "manual"
+  exceptionNote String?        // missing/damaged → flags to rep/tech
+  photoR2Key    String?        // optional delivery photo (R2)
+}
+
+// ============================================================================
+// INFUSION LOG — the SINGLE consumption ledger (§5.3.1). Prophy + PRN in one table.
+// Bleed tracker READS from here; never duplicates. doses-on-hand = shipped − consumed.
+// ============================================================================
+
+model InfusionEntry {
+  id          String   @id @default(cuid())
+  patient     Patient  @relation(fields: [patientId], references: [id])
+  patientId   String
+  doseType    DoseType // PROPHYLAXIS | PRN
+  productName String
+  targetIu    Int
+  lotNumber   String?
+  expiration  DateTime?
+  infusedAt   DateTime           // retroactive allowed; defaults to now in UI
+  enteredViaScan Boolean @default(false)
+
+  // PRN entries link to a bleed (existing or new). Null for prophylaxis.
+  bleed       Bleed?   @relation(fields: [bleedId], references: [id])
+  bleedId     String?
+
+  createdAt   DateTime @default(now())
+}
+
+// ============================================================================
+// BLEED TRACKER — clinical wrapper over the PRN entries (§5.3.1)
+// Severity inferred from the linked PRN dose tier. Human-confirmed closure, no timers.
+// ============================================================================
+
+enum BleedCause {
+  SPONTANEOUS
+  INJURY
+  POST_ACTIVITY
+  OTHER
+}
+
+model Bleed {
+  id          String      @id @default(cuid())
+  patient     Patient     @relation(fields: [patientId], references: [id])
+  patientId   String
+  site        String      // e.g. "Right ankle" — taxonomy/body-map fidelity is OPEN
+  cause       BleedCause?
+  tier        PrnTier?    // severity = tier of the PRN dose(s) treating it
+  onsetAt     DateTime
+  closedAt    DateTime?   // null = open; closed manually or via order questionnaire
+  // treatment = the linked infusion entries; NO separate treatment fields
+  treatments  InfusionEntry[]
+  createdAt   DateTime    @default(now())
+}
+
+// ============================================================================
+// SUPPLIES — global catalog + per-patient history recommender (§5.2.2)
+// ============================================================================
+
+model SupplyItem {
+  id        String  @id @default(cuid())
+  name      String  // "Gauze pads (large)"
+  category  String  // "gauze" | "wipes" | "needles" ...
+  unit      String? // "box" | "each"
+  active    Boolean @default(true)
+}
+
+// ============================================================================
+// COMMUNICATION HUB (§14) — one message store, rendered per role by scope.
+// Patient hub is READ-ONLY; staff compose. Internal notes are DB-only (not GHL-mirrored).
+// ============================================================================
+
+// A per-patient, per-role conversation thread (separate threads per role, §14.1).
+model Thread {
+  id         String   @id @default(cuid())
+  patient    Patient  @relation(fields: [patientId], references: [id])
+  patientId  String
+  role       StaffRole // which role's number/thread (nurse, pharmacy, rep...)
+  roleNumber String?   // the GHL role-pool number bound to this patient+role
+  messages   Message[]
+  notes      InternalNote[]
+  createdAt  DateTime @default(now())
+
+  @@unique([patientId, role])
+}
+
+enum MessageSender {
+  PATIENT    // from the patient (SMS captured via webhook, or a logged call event)
+  STAFF      // from a staff user acting in a role
+  SYSTEM     // system-generated (e.g. "document received" confirmation) — not a person
+}
+
+enum MessageKind {
+  SMS
+  CALL_EVENT   // "patient called nurse" — logged, no text body (sender = PATIENT)
+  SYSTEM       // e.g. "document received" confirmation posted back (sender = SYSTEM)
+}
+
+model Message {
+  id          String        @id @default(cuid())
+  thread      Thread        @relation(fields: [threadId], references: [id])
+  threadId    String
+  sender      MessageSender // ABSOLUTE authorship — not relative direction. UI decides alignment.
+  kind        MessageKind   @default(SMS)
+  body        String?       // null for CALL_EVENT
+  // when sender = STAFF, this is the authoring staff user (which staffer, acting in a role)
+  staffAuthor User?         @relation("MessageStaffAuthor", fields: [staffAuthorId], references: [id])
+  staffAuthorId String?     // null when sender = PATIENT or SYSTEM
+  sentAt      DateTime      @default(now())
+}
+
+// Internal staff note = information relay w/ read-receipts (§14.6).
+// Lives IN the thread, patient never sees it. DB-only (NOT mirrored to GHL). No phone numbers.
+model InternalNote {
+  id          String   @id @default(cuid())
+  thread      Thread   @relation(fields: [threadId], references: [id])
+  threadId    String
+  author      User     @relation("NoteAuthor", fields: [authorId], references: [id])
+  authorId    String
+  body        String
+  tags        NoteTag[]              // multi-tag in v1; each is an independent receipt
+  acks        NoteAcknowledgement[]  // "seen by" receipts
+  createdAt   DateTime @default(now())
+}
+
+// A tag on a note = routes an acknowledgment work-queue item to a role/person (§14.6).
+model NoteTag {
+  id            String       @id @default(cuid())
+  note          InternalNote @relation(fields: [noteId], references: [id])
+  noteId        String
+  taggedRole    StaffRole
+  // resolved when the tagged party VIEWS it (ack), not by doing a task
+}
+
+// Read-receipt: who has seen the note. Absence = a visible gap staff can chase.
+model NoteAcknowledgement {
+  id        String       @id @default(cuid())
+  note      InternalNote @relation(fields: [noteId], references: [id])
+  noteId    String
+  user      User         @relation(fields: [userId], references: [id])
+  userId    String
+  seenAt    DateTime     @default(now())
+
+  @@unique([noteId, userId])
+}
+
+// ============================================================================
+// NOTIFICATIONS (§15) — patient-facing projection of events. Derived, not authored.
+// Two flavors: INFORMATIONAL (resolved by seeing) | ACTIONABLE (resolved by doing).
+// ============================================================================
+
+enum NotificationFlavor {
+  INFORMATIONAL
+  ACTIONABLE
+}
+
+enum NotificationType {
+  // actionable
+  ORDER_DUE
+  CONFIRM_DELIVERY
+  SIGNATURE_REQUESTED
+  ONBOARDING_STEP_NEEDED
+  ORDER_INCOMPLETE
+  DOSE_REMINDER          // infusion-schedule reminder → pre-filled log entry
+  // informational
+  NEW_MESSAGE
+  DELIVERY_STATUS
+  ONBOARDING_PROGRESS
+  ORDER_STATUS
+  DATA_CHANGED           // transparency: staff changed patient data on their behalf
+  RENEWAL_REMINDER
+}
+
+enum NotificationChannel {
+  IN_APP
+  SMS
+}
+
+model Notification {
+  id         String             @id @default(cuid())
+  patient    Patient            @relation(fields: [patientId], references: [id])
+  patientId  String
+  flavor     NotificationFlavor
+  type       NotificationType
+  title      String
+  body       String?
+  deepLink   String             // route to the surface (thing to do / thing to see)
+  channels   NotificationChannel[]
+  seenAt     DateTime?          // informational: resolved on seen
+  resolvedAt DateTime?          // actionable: resolved on done
+  createdAt  DateTime           @default(now())
+}
+
+// ============================================================================
+// AUDIT — every action on a patient record (§2). Actor + role + patient + what.
+// ============================================================================
+
+model AuditEvent {
+  id          String    @id @default(cuid())
+  patient     Patient   @relation(fields: [patientId], references: [id])
+  patientId   String
+  actor       User?     @relation(fields: [actorId], references: [id])
+  actorId     String?
+  roleExercised StaffRole?
+  action      String    // "viewed" | "edited:address" | "gate:viability:viable" ...
+  detail      String?
+  createdAt   DateTime  @default(now())
+}
