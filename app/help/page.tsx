@@ -1,15 +1,14 @@
 "use client";
 
-import { ComingSoon } from "@/components/screens/ComingSoon";
+import { SectionStub } from "@/components/screens/SectionStub";
 
 export default function HelpPage() {
   return (
-    <ComingSoon
+    <SectionStub
       title="Help & support"
       icon="ti-help-circle"
-      milestone="Milestone 3+"
-      activeKey="help"
-      note="Guides, FAQs, and a direct line to your care team."
+      activeKey="more"
+      blurb="Guides, FAQs, and a direct line to your care team will live here."
     />
   );
 }

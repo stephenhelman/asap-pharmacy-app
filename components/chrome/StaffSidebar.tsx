@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useSession, roleSummary } from "@/lib/session";
 import { Avatar, Icon, cn } from "@/components/ui";
+import { STAFF_MORE_NAV } from "@/components/screens/nav-config";
 
 interface Item {
   key: string;
@@ -21,11 +22,11 @@ const PRIMARY: Item[] = [
   { key: "queue", label: "Work queue", icon: "ti-list-check", href: "/queue", match: (p) => p.startsWith("/queue") },
   { key: "messages", label: "Messages", icon: "ti-messages", href: "/messages", match: (p) => p.startsWith("/messages") },
 ];
-const SECONDARY: Item[] = [
-  { key: "reports", label: "Reports", icon: "ti-chart-bar", href: "/more", match: () => false },
-  { key: "fulfillment", label: "Fulfillment", icon: "ti-package", href: "/queue", match: () => false },
-  { key: "settings", label: "Settings", icon: "ti-settings", href: "/more", match: (p) => p.startsWith("/more") },
-];
+// Sidebar "More" section — same source of truth as the mobile More menu.
+const SECONDARY: Item[] = STAFF_MORE_NAV.map((it) => ({
+  ...it,
+  match: (p: string) => p.startsWith(it.href),
+}));
 
 /** Desktop-only navy collapsible sidebar (icons+labels → icons). Replaces the
  *  bottom nav at ≥lg; the record still opens as the slide-in pane over the table. */

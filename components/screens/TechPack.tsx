@@ -85,7 +85,7 @@ export function TechPack({ orderId }: { orderId: string }) {
   }
 
   return (
-    <div className="flex h-full flex-col xl:h-auto lg:mx-auto lg:w-full lg:max-w-[680px]">
+    <div className="flex h-full flex-col xl:h-auto md:mx-auto md:w-full md:max-w-[680px]">
       <TopBarNav
         title="Pack & ship"
         onDismiss={() => router.back()}

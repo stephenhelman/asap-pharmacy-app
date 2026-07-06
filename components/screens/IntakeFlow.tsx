@@ -84,7 +84,7 @@ export function IntakeFlow() {
   const totalProgress = steps.length - 1;
 
   return (
-    <div className="flex h-full flex-col xl:h-auto lg:mx-auto lg:w-full lg:max-w-[600px]">
+    <div className="flex h-full flex-col xl:h-auto md:mx-auto md:w-full md:max-w-[600px]">
       <TopBarNav
         title={draft.onRamp === "rep_led" ? "New patient · rep-led" : "New patient"}
         mode={idx === 0 ? "close" : "back"}

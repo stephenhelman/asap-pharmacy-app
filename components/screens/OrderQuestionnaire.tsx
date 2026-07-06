@@ -69,7 +69,7 @@ export function OrderQuestionnaire({ orderId }: { orderId: string }) {
   const cycleBleeds = p.bleeds.filter((b) => thisMonth(b.onsetAt));
 
   return (
-    <div className="flex h-full flex-col xl:h-auto lg:mx-auto lg:w-full lg:max-w-[600px]">
+    <div className="flex h-full flex-col xl:h-auto md:mx-auto md:w-full md:max-w-[600px]">
       <TopBarNav
         title="Monthly order"
         onDismiss={() => (stage > 1 && !submitted ? setStage(stage - 1) : router.push("/"))}

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { cn } from "./cn";
 import { Icon } from "./primitives";
+import { useMoreSheet } from "@/lib/moreSheet";
 
 export interface NavItem {
   key: string;
@@ -21,16 +22,15 @@ export function BottomNav({
   items: NavItem[];
   activeKey: string;
 }) {
+  const { open } = useMoreSheet();
+  const cls = "flex min-w-[56px] flex-col items-center gap-1 py-1 md:min-w-[72px]";
+
   return (
     <nav className="z-40 flex shrink-0 items-stretch justify-around border-t border-border bg-card px-2 pb-3 pt-2.5 md:px-8 md:pb-4 md:pt-3 xl:hidden">
       {items.map((it) => {
         const active = it.key === activeKey;
-        return (
-          <Link
-            key={it.key}
-            href={it.href}
-            className="flex min-w-[56px] flex-col items-center gap-1 py-1 md:min-w-[72px]"
-          >
+        const inner = (
+          <>
             <Icon
               name={active ? (it.activeIcon ?? it.icon) : it.icon}
               size={20}
@@ -44,6 +44,18 @@ export function BottomNav({
             >
               {it.label}
             </span>
+          </>
+        );
+
+        // "More" lifts the bottom sheet over the current screen rather than
+        // navigating away; every other tab is a normal route.
+        return it.key === "more" ? (
+          <button key={it.key} type="button" onClick={open} className={cls}>
+            {inner}
+          </button>
+        ) : (
+          <Link key={it.key} href={it.href} className={cls}>
+            {inner}
           </Link>
         );
       })}

@@ -1,15 +1,14 @@
 "use client";
 
-import { ComingSoon } from "@/components/screens/ComingSoon";
+import { SectionStub } from "@/components/screens/SectionStub";
 
 export default function ScanPage() {
   return (
-    <ComingSoon
+    <SectionStub
       title="Scan"
       icon="ti-scan"
-      milestone="Milestone 2"
-      activeKey="scan"
-      note="Scan a vial to accelerate an infusion log or confirm a delivery ticket. The inline scan accelerator lives inside those flows too."
+      activeKey="more"
+      blurb="Scan a vial or delivery barcode to jump straight to the right log or receipt. For now, scanning lives inside the infusion and delivery flows."
     />
   );
 }

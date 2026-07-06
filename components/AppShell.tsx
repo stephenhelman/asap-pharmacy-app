@@ -5,6 +5,7 @@ import { LoginSwitcher } from "./LoginSwitcher";
 import { PatientContactWidget } from "./PatientContactWidget";
 import { StaffSidebar } from "./chrome/StaffSidebar";
 import { PatientBrandBar, PatientSpine } from "./chrome/PatientDesktop";
+import { MoreSheet } from "./screens/MoreSheet";
 
 /**
  * Responsive app-shell + tablet ladder.
@@ -31,6 +32,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         <PatientShell patientId={session.patientId}>{children}</PatientShell>
       )}
       <LoginSwitcher />
+      <MoreSheet />
     </div>
   );
 }
@@ -39,7 +41,7 @@ function StaffShell({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex h-full xl:min-h-[100dvh]">
       <StaffSidebar className="hidden xl:flex" />
-      <div className="mx-auto h-full w-full bg-page md:max-w-[680px] md:border-x md:border-border-strong lg:max-w-[960px] xl:h-auto xl:max-w-none xl:flex-1 xl:border-0">
+      <div className="mx-auto h-full w-full bg-page lg:max-w-[960px] lg:border-x lg:border-border-strong xl:h-auto xl:max-w-none xl:flex-1 xl:border-0">
         {children}
       </div>
     </div>
@@ -57,7 +59,7 @@ function PatientShell({
     <div className="h-full xl:mx-auto xl:h-auto xl:max-w-[880px] xl:px-4">
       {patientId && <PatientBrandBar patientId={patientId} />}
       <div className="h-full xl:flex xl:items-start xl:gap-6 xl:pb-8 xl:pt-6">
-        <div className="relative mx-auto h-full w-full bg-page md:max-w-[680px] md:border-x md:border-border-strong lg:max-w-[960px] xl:h-auto xl:max-w-[500px] xl:rounded-card xl:border xl:border-border xl:shadow-card">
+        <div className="relative mx-auto h-full w-full bg-page lg:max-w-[960px] lg:border-x lg:border-border-strong xl:h-auto xl:max-w-[500px] xl:rounded-card xl:border xl:border-border xl:shadow-card">
           {children}
           <PatientContactWidget />
         </div>

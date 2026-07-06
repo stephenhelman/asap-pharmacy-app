@@ -1,15 +1,14 @@
 "use client";
 
-import { ComingSoon } from "@/components/screens/ComingSoon";
+import { SectionStub } from "@/components/screens/SectionStub";
 
 export default function DeliveriesIndexPage() {
   return (
-    <ComingSoon
+    <SectionStub
       title="Deliveries"
       icon="ti-truck-delivery"
-      milestone="Milestone 2+"
       activeKey="deliveries"
-      note="All your deliveries in one place. Open a specific delivery from your dashboard tracker to confirm receipt."
+      blurb="Every delivery in one place. For now, open a delivery from the tracker on your dashboard to confirm receipt."
     />
   );
 }

@@ -129,7 +129,7 @@ export function DeliveryConfirm({ orderId }: { orderId: string }) {
   }[bigStatus.tone];
 
   return (
-    <div className="flex h-full flex-col xl:h-auto lg:mx-auto lg:w-full lg:max-w-[600px]">
+    <div className="flex h-full flex-col xl:h-auto md:mx-auto md:w-full md:max-w-[600px]">
       <TopBarNav title={order.cycleLabel + " delivery"} onDismiss={() => router.push("/")} />
       <main className="flex-1 min-h-0 overflow-y-auto p-4">
         {/* Big status */}

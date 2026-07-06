@@ -1,15 +1,14 @@
 "use client";
 
-import { ComingSoon } from "@/components/screens/ComingSoon";
+import { SectionStub } from "@/components/screens/SectionStub";
 
 export default function ProfilePage() {
   return (
-    <ComingSoon
+    <SectionStub
       title="Profile"
       icon="ti-user-circle"
-      milestone="Milestone 3+"
-      activeKey="profile"
-      note="Your details, authorized users, and preferences."
+      activeKey="more"
+      blurb="Your details, authorized users, and notification preferences will live here."
     />
   );
 }
