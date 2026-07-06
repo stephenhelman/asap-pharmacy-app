@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { getPatient, getPatientMetrics, TODAY } from "@/lib/dataProvider";
 import { useSession } from "@/lib/session";
@@ -49,14 +49,12 @@ export function LogsScreen() {
   const m = useMutations();
 
   const [tab, setTab] = useState<"all" | "infusions" | "bleeds">("all");
-  const [modal, setModal] = useState<null | "infusion" | "bleed" | "choose">(null);
-
-  // auto-open from dashboard quick actions (?new=infusion|bleed)
-  useEffect(() => {
-    const n = search.get("new");
-    if (n === "infusion") setModal("infusion");
-    else if (n === "bleed") setModal("bleed");
-  }, [search]);
+  // auto-open from dashboard quick actions (?new=infusion|bleed) — derived from
+  // the URL at mount, no setState-in-effect.
+  const initialNew = search.get("new");
+  const [modal, setModal] = useState<null | "infusion" | "bleed" | "choose">(
+    initialNew === "infusion" ? "infusion" : initialNew === "bleed" ? "bleed" : null,
+  );
 
   const p = getPatient(patientId)!;
   const metrics = getPatientMetrics(p);

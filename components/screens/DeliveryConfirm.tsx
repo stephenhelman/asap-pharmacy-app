@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { getOrder, getPatient } from "@/lib/dataProvider";
+import { getOrder } from "@/lib/dataProvider";
 import { useMutations } from "@/lib/mutations";
 import type { DeliveryStatus } from "@/lib/types";
 import {
@@ -44,7 +44,6 @@ export function DeliveryConfirm({ orderId }: { orderId: string }) {
   }
 
   const d = order.delivery;
-  const patient = getPatient(order.patientId);
   const confirmedMethod = confirmedDeliveries[orderId] ?? justConfirmed;
   const isConfirmed = !!confirmedMethod || !!d.confirmedByPatientAt;
 

@@ -24,7 +24,6 @@ import {
   NoticeInfo,
   NavRow,
   RowCard,
-  cn,
   type Step,
 } from "@/components/ui";
 import { PATIENT_NAV } from "./nav-config";
@@ -68,7 +67,6 @@ function ActiveDashboard({ patientId }: { patientId: string }) {
   const router = useRouter();
   const p = getPatient(patientId)!;
   const metrics = getPatientMetrics(p);
-  const next = getNextOrder(p);
   const delivery = getActiveDelivery(p);
   const unread = getUnreadFromTeam(patientId);
 

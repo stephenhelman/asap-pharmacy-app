@@ -76,6 +76,18 @@ export function MessageBubble({
   );
 }
 
+/** Pure helper (no render-phase mutation): returns, per entry, whether it starts
+ *  a new calendar day — so callers render a DayDivider before it. */
+export function computeDayDividers(isos: string[]): boolean[] {
+  let prev = "";
+  return isos.map((iso) => {
+    const d = new Date(iso).toISOString().slice(0, 10);
+    const show = d !== prev;
+    prev = d;
+    return show;
+  });
+}
+
 export function DayDivider({ iso }: { iso: string }) {
   return (
     <div className="my-2 flex items-center justify-center">

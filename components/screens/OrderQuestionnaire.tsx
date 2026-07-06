@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import {
   getOrder,
@@ -28,7 +28,6 @@ import {
   NotePrefill,
   SignaturePad,
   NoticeInfo,
-  cn,
 } from "@/components/ui";
 
 const fmtDate = (iso: string) =>
@@ -86,7 +85,6 @@ export function OrderQuestionnaire({ orderId }: { orderId: string }) {
           <SubmittedView patientName={p.firstName} onDone={() => router.push("/")} />
         ) : stage === 1 ? (
           <Stage1
-            p={p}
             prophyName={prophyRx?.productName ?? "Your medication"}
             prophyIu={prophyRx?.targetIu ?? 0}
             openBleeds={openBleeds}
@@ -124,14 +122,12 @@ export function OrderQuestionnaire({ orderId }: { orderId: string }) {
 
 // ── Stage 1 — Check-in ──────────────────────────────────────────────────────
 function Stage1({
-  p,
   prophyName,
   prophyIu,
   openBleeds,
   cycleInfusions,
   onContinue,
 }: {
-  p: PatientDetail;
   prophyName: string;
   prophyIu: number;
   openBleeds: BleedDetail[];

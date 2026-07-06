@@ -1,10 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { useSession } from "@/lib/session";
 import { getPatientThreads, getThreadDetail, type ThreadSummary } from "@/lib/dataProvider";
 import {
-  Avatar,
   Icon,
   BottomNav,
   TopBarNav,
@@ -12,7 +10,7 @@ import {
   cn,
 } from "@/components/ui";
 import { PATIENT_NAV } from "./nav-config";
-import { MessageBubble, DayDivider } from "./comms/MessageThread";
+import { MessageBubble, DayDivider, computeDayDividers } from "./comms/MessageThread";
 
 const ROLE_ICON: Record<string, string> = {
   NURSE: "ti-stethoscope",
@@ -93,7 +91,7 @@ function ThreadView({ threadId, onBack }: { threadId: string; onBack: () => void
     ? number.replace(/^\+1/, "").replace(/(\d{3})(\d{3})(\d{4})/, "($1) $2-$3")
     : null;
 
-  let lastDay = "";
+  const showDays = computeDayDividers(messages.map((m) => m.sentAt));
 
   return (
     <div className="flex min-h-[100dvh] flex-col md:min-h-[844px]">
@@ -111,17 +109,12 @@ function ThreadView({ threadId, onBack }: { threadId: string; onBack: () => void
       />
 
       <main className="flex flex-1 flex-col gap-1 overflow-y-auto bg-page px-4 py-4">
-        {messages.map((m) => {
-          const d = new Date(m.sentAt).toISOString().slice(0, 10);
-          const showDay = d !== lastDay;
-          lastDay = d;
-          return (
-            <div key={m.id}>
-              {showDay && <DayDivider iso={m.sentAt} />}
-              <MessageBubble msg={m} authorName={detail.roleLabel} />
-            </div>
-          );
-        })}
+        {messages.map((m, i) => (
+          <div key={m.id}>
+            {showDays[i] && <DayDivider iso={m.sentAt} />}
+            <MessageBubble msg={m} authorName={detail.roleLabel} />
+          </div>
+        ))}
       </main>
 
       {/* Read-only footer with launchers (mobile) / number (desktop) */}

@@ -1,8 +1,18 @@
 @import "@tabler/icons-webfont/dist/tabler-icons.min.css";
+@import "tailwindcss";
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* Keep the existing token config (colors/type/spacing/etc.) — no class changes. */
+@config "../tailwind.config.ts";
+
+/* Tailwind v4 dropped v3's default gray border color; restore it so bare
+   `border` and our `border-border` hairlines look identical to before. */
+@layer base {
+  *,
+  ::before,
+  ::after {
+    border-color: theme("colors.border.DEFAULT", currentColor);
+  }
+}
 
 :root {
   color-scheme: light;

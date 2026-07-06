@@ -4,7 +4,6 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { getOrder, getPatient } from "@/lib/dataProvider";
 import { useMutations } from "@/lib/mutations";
-import type { HoldReason } from "@/lib/types";
 import {
   Button,
   Icon,

@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useSession } from "@/lib/session";
 import { getPatientThreads } from "@/lib/dataProvider";
-import { Icon, cn } from "@/components/ui";
+import { Icon } from "@/components/ui";
 
 const ROLE_ICON: Record<string, string> = {
   NURSE: "ti-stethoscope",

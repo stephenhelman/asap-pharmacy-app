@@ -17,11 +17,10 @@ import {
   BottomNav,
   TopBarNav,
   ChipFilter,
-  Button,
   cn,
 } from "@/components/ui";
 import { STAFF_NAV } from "./nav-config";
-import { MessageBubble, DayDivider, NoteCard } from "./comms/MessageThread";
+import { MessageBubble, DayDivider, NoteCard, computeDayDividers } from "./comms/MessageThread";
 
 const preview = (iso: string) =>
   new Date(iso).toLocaleDateString("en-US", { month: "short", day: "numeric", timeZone: "UTC" });
@@ -101,13 +100,12 @@ function Conversation({
     return Array.from(roles);
   }, [patient]);
 
-  const me: UserRow | null = session.staffId
-    ? { id: session.staffId, fullName: session.user.name } as UserRow
-    : null;
-
   // merged, filtered timeline
   const items = useMemo(() => {
     if (!detail) return [];
+    const me: UserRow | null = session.staffId
+      ? ({ id: session.staffId, fullName: session.user.name } as UserRow)
+      : null;
     const baseMsgs = detail.messages;
     const sentMsgs: MessageRow[] = m.sentMessages
       .filter((x) => x.threadId === threadId)
@@ -140,7 +138,7 @@ function Conversation({
     type Item =
       | { t: "msg"; at: string; msg: MessageRow; author?: string }
       | { t: "note"; at: string; note: (typeof notes)[number] };
-    let list: Item[] = [];
+    const list: Item[] = [];
     if (filter !== "notes")
       list.push(
         ...msgs.map((msg) => ({
@@ -153,7 +151,7 @@ function Conversation({
     if (filter !== "messages")
       list.push(...notes.map((note) => ({ t: "note" as const, at: note.createdAt, note })));
     return list.sort((a, b) => a.at.localeCompare(b.at));
-  }, [detail, filter, m.sentMessages, m.addedNotes, threadId, me]);
+  }, [detail, filter, m.sentMessages, m.addedNotes, threadId, session]);
 
   function send() {
     if (!draft.trim() || !session.staffId) return;
@@ -179,7 +177,7 @@ function Conversation({
     setTags([]);
   }
 
-  let lastDay = "";
+  const showDays = computeDayDividers(items.map((it) => it.at));
 
   return (
     <div className="flex min-h-[100dvh] flex-col md:min-h-[844px] lg:mx-auto lg:min-h-[100dvh] lg:w-full lg:max-w-[760px] lg:border-x lg:border-border">
@@ -229,12 +227,9 @@ function Conversation({
           </p>
         ) : (
           items.map((it, i) => {
-            const d = new Date(it.at).toISOString().slice(0, 10);
-            const showDay = d !== lastDay;
-            lastDay = d;
             return (
               <div key={i}>
-                {showDay && <DayDivider iso={it.at} />}
+                {showDays[i] && <DayDivider iso={it.at} />}
                 {it.t === "msg" ? (
                   <MessageBubble msg={it.msg} authorName={it.author} />
                 ) : (

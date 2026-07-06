@@ -10,7 +10,6 @@ import {
   TopBarNav,
   SectionLabel,
   StatusPill,
-  Card,
   cn,
 } from "@/components/ui";
 import { PatientContextRow } from "./ClinicalCheck";
