@@ -59,14 +59,14 @@ export function RecordPane({
           <div className="flex items-center gap-1">
             <button
               onClick={openFullProfile}
-              className="flex h-9 w-9 items-center justify-center rounded-control text-navy active:bg-fill-control"
+              className="flex h-9 w-9 items-center justify-center rounded-control text-navy transition-[transform,background-color] duration-150 ease-out hover:bg-fill-control active:bg-fill-control active:scale-[0.95] outline-none focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-navy"
               title="Open full profile in new tab"
             >
               <Icon name="ti-arrows-diagonal" size={18} />
             </button>
             <button
               onClick={onClose}
-              className="flex h-9 w-9 items-center justify-center rounded-control text-navy active:bg-fill-control"
+              className="flex h-9 w-9 items-center justify-center rounded-control text-navy transition-[transform,background-color] duration-150 ease-out hover:bg-fill-control active:bg-fill-control active:scale-[0.95] outline-none focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-navy"
               title="Close"
             >
               <Icon name="ti-x" size={18} />

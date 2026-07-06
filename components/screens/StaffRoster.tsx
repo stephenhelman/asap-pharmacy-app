@@ -66,13 +66,16 @@ export function StaffRoster() {
             {canAdd && (
               <button
                 onClick={() => setAddOpen(true)}
-                className="inline-flex h-9 items-center gap-1.5 rounded-control bg-accent px-3 text-label-strong text-white active:bg-navy-dark"
+                className="inline-flex h-9 items-center gap-1.5 rounded-control bg-accent px-3 text-label-strong text-white transition-[transform,background-color] duration-150 ease-out hover:bg-navy-dark active:bg-navy-dark active:scale-[0.98] outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-navy"
               >
                 <Icon name="ti-plus" size={16} />
                 Add new
               </button>
             )}
-            <button className="flex h-9 w-9 items-center justify-center rounded-control text-navy active:bg-fill-control">
+            <button
+              aria-label="Search roster"
+              className="flex h-9 w-9 items-center justify-center rounded-control text-navy transition-[transform,background-color] duration-150 ease-out hover:bg-fill-control active:bg-fill-control active:scale-[0.95] outline-none focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-navy"
+            >
               <Icon name="ti-search" size={20} />
             </button>
           </div>
