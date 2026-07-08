@@ -21,7 +21,13 @@ import type {
   DocumentSlotType,
   DocumentSlotStatus,
 } from "./types";
-import { registerDraftPatient, isIntakeComplete, TODAY } from "./dataProvider";
+import {
+  registerDraftPatient,
+  isIntakeComplete,
+  getPatients,
+  getPatient,
+  TODAY,
+} from "./dataProvider";
 
 export type OnRamp = "rep_led" | "patient_led";
 
@@ -32,6 +38,8 @@ export interface Draft {
   referringRepId: string | null;
   /** true once the patient has passed OTP (account "created") */
   accountCreated: boolean;
+  /** step the flow opens at; null = the on-ramp's first step (normal intake). */
+  entryStep: string | null;
 }
 
 // The three required + one optional doc slots seeded at intake (§5.1.1).
@@ -105,6 +113,17 @@ function freshSlots(patientId: string): DocumentSlotRow[] {
 interface DraftContextValue {
   draft: Draft | null;
   startDraft: (onRamp: OnRamp, referringRepId: string | null) => string;
+  /**
+   * Seed a draft FROM an existing fixture patient (tour entry points, §5.1.1):
+   * the switcher drops a tester into the intake flow scoped to that patient's
+   * data and opens it at `entryStep`. Reuses the patient's own id so `commitDraft`
+   * upserts over the fixture on finish (promotes to ONBOARDING like any intake).
+   */
+  startDraftFromExisting: (
+    patientId: string,
+    onRamp: OnRamp,
+    entryStep: string,
+  ) => void;
   updatePatient: (patch: Partial<PatientRow>) => void;
   setDocSlot: (
     type: DocumentSlotType,
@@ -133,8 +152,30 @@ export function DraftProvider({ children }: { children: React.ReactNode }) {
           onRamp,
           referringRepId,
           accountCreated: false,
+          entryStep: null,
         });
         return id;
+      },
+      startDraftFromExisting: (patientId, onRamp, entryStep) => {
+        const row = getPatients().find((p) => p.id === patientId);
+        if (!row) return;
+        // Its persisted doc slots (all pending on the tour fixtures) become the
+        // draft's slots; fall back to a fresh set if none were authored.
+        const detail = getPatient(patientId);
+        const docSlots =
+          detail && detail.documentSlots.length > 0
+            ? detail.documentSlots.map((s) => ({ ...s }))
+            : freshSlots(patientId);
+        const referringRepId =
+          detail?.careTeam.find((c) => c.role === "REP")?.userId ?? null;
+        setDraft({
+          patient: { ...row },
+          docSlots,
+          onRamp,
+          referringRepId,
+          accountCreated: false,
+          entryStep,
+        });
       },
       updatePatient: (patch) =>
         setDraft((d) =>

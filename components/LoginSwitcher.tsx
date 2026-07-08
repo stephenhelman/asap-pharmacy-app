@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useSession, roleSummary } from "@/lib/session";
 import { useDraft } from "@/lib/draft";
+import { getTourEntry } from "@/lib/tour";
 import { getPatients, getStaff } from "@/lib/dataProvider";
 import { Avatar, Button, Icon, cn } from "@/components/ui";
 
@@ -15,7 +16,7 @@ import { Avatar, Button, Icon, cn } from "@/components/ui";
  */
 export function LoginSwitcher() {
   const { session, loginAsPatient, loginAsStaff } = useSession();
-  const { discardDraft } = useDraft();
+  const { discardDraft, startDraftFromExisting } = useDraft();
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const [collapsed, setCollapsed] = useState(true);
@@ -38,8 +39,21 @@ export function LoginSwitcher() {
     // Switching identity mid-draft discards the half-built draft (no ceremony —
     // it's a demo). Don't try to preserve it across identity switches.
     discardDraft();
-    if (type === "patient") loginAsPatient(choice);
-    else loginAsStaff(choice);
+    if (type === "patient") {
+      // Tour fixtures (§5.1.1) drop the tester straight into the intake flow at
+      // their entry step instead of loading a dashboard — data-driven via
+      // getTourEntry, so the switcher stays generic. Everyone else loads home.
+      const tour = getTourEntry(choice);
+      if (tour) {
+        startDraftFromExisting(choice, tour.onRamp, tour.entryStep);
+        setOpen(false);
+        router.push("/intake");
+        return;
+      }
+      loginAsPatient(choice);
+    } else {
+      loginAsStaff(choice);
+    }
     setOpen(false);
     router.push("/");
   }
@@ -162,6 +176,7 @@ export function LoginSwitcher() {
                                 ? "Transferred out"
                                 : "Inactive"
                       }
+                      badge={getTourEntry(p.id) ? "Tour" : undefined}
                       selected={choice === p.id}
                       onClick={() => setChoice(p.id)}
                     />

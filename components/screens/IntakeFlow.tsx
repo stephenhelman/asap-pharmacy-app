@@ -72,27 +72,44 @@ export function IntakeFlow() {
     () => (draft ? STEPS[draft.onRamp] : STEPS.patient_led),
     [draft],
   );
-  const [idx, setIdx] = useState(0);
+  // Tour entry points (§5.1.1) open the flow partway in (e.g. at "confirm"),
+  // skipping the rep/send steps ahead of it. Normal intake starts at index 0.
+  const startIdx = useMemo(() => {
+    const s = draft?.entryStep;
+    if (!s) return 0;
+    const i = steps.indexOf(s as Step);
+    return i >= 0 ? i : 0;
+  }, [draft, steps]);
+  const [idx, setIdx] = useState(startIdx);
 
   if (!draft) return null;
 
   const step = steps[idx];
   const next = () => setIdx((i) => Math.min(steps.length - 1, i + 1));
-  const back = () => (idx > 0 ? setIdx((i) => i - 1) : router.push("/"));
+  // Back never reveals steps before the entry point — there it exits home.
+  const back = () => (idx > startIdx ? setIdx((i) => i - 1) : router.push("/"));
 
-  // Progress excludes the terminal "done" confirmation.
-  const totalProgress = steps.length - 1;
+  // Progress is measured from the entry point and excludes the terminal "done".
+  const totalProgress = steps.length - 1 - startIdx;
 
   return (
     <div className="flex h-full flex-col xl:h-auto md:mx-auto md:w-full md:max-w-[600px]">
       <TopBarNav
-        title={draft.onRamp === "rep_led" ? "New patient · rep-led" : "New patient"}
-        mode={idx === 0 ? "close" : "back"}
+        title={
+          // Tour master-link landings (entryStep set) read as the patient's own
+          // start — not "rep-led", which is a rep-side origin label.
+          draft.entryStep
+            ? "New patient"
+            : draft.onRamp === "rep_led"
+              ? "New patient · rep-led"
+              : "New patient"
+        }
+        mode={idx === startIdx ? "close" : "back"}
         onDismiss={back}
       />
       {step !== "done" && (
         <div className="border-b border-border bg-card px-4 py-2.5">
-          <ProgressBar total={totalProgress} done={idx + 1} showCount={false} />
+          <ProgressBar total={totalProgress} done={idx - startIdx + 1} showCount={false} />
         </div>
       )}
 

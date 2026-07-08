@@ -551,6 +551,70 @@
       "prescriberPractice": "Rio Grande Hematology",
       "prescriberPhone": "+19155554480",
       "createdAt": "2026-07-09T18:40:00Z"
+    },
+    {
+      "isMinor": false,
+      "guardianName": null,
+      "guardianPhone": null,
+      "prescriberFax": null,
+      "prescriberNpi": null,
+      "nextOrderDueDate": null,
+      "leadTimeDays": null,
+      "addressLine1": null,
+      "city": null,
+      "state": null,
+      "zip": null,
+      "smsConsent": false,
+      "emailConsent": false,
+      "preferredChannel": "SMS",
+      "dndEnabled": true,
+      "hipaaConsentedAt": null,
+      "hipaaSignedBy": null,
+      "id": "pat_tour_new",
+      "firstName": "Alex",
+      "lastName": "Demo",
+      "dob": "",
+      "phone": "+19155550142",
+      "email": "alex.demo@example.com",
+      "hemophiliaType": "A",
+      "severity": "MODERATE",
+      "lifecycle": "INTAKE",
+      "prescriberName": null,
+      "prescriberPractice": null,
+      "prescriberPhone": null,
+      "createdAt": "2026-07-11T16:30:00Z"
+    },
+    {
+      "isMinor": false,
+      "guardianName": null,
+      "guardianPhone": null,
+      "prescriberFax": null,
+      "prescriberNpi": null,
+      "nextOrderDueDate": null,
+      "leadTimeDays": null,
+      "addressLine1": "5500 N Mesa St",
+      "city": "El Paso",
+      "state": "TX",
+      "zip": "79912",
+      "smsConsent": false,
+      "emailConsent": false,
+      "preferredChannel": "SMS",
+      "dndEnabled": true,
+      "hipaaConsentedAt": null,
+      "hipaaSignedBy": null,
+      "id": "pat_tour_docs",
+      "firstName": "Jordan",
+      "lastName": "Demo",
+      "dob": "1988-09-22T00:00:00Z",
+      "phone": "+19155550188",
+      "email": "jordan.demo@example.com",
+      "hemophiliaType": "B",
+      "severity": "MODERATE",
+      "lifecycle": "INTAKE",
+      "prescriberName": "Dr. Lucia Ramos",
+      "prescriberPractice": "Franklin Mountain Hematology",
+      "prescriberPhone": "+19155557710",
+      "createdAt": "2026-07-11T14:10:00Z"
     }
   ],
   "careTeamAssignments": [
@@ -683,6 +747,18 @@
     {
       "id": "cta_awaiting_rep",
       "patientId": "pat_intake_awaiting",
+      "userId": "usr_jennifer",
+      "role": "REP"
+    },
+    {
+      "id": "cta_tour_new_rep",
+      "patientId": "pat_tour_new",
+      "userId": "usr_jennifer",
+      "role": "REP"
+    },
+    {
+      "id": "cta_tour_docs_rep",
+      "patientId": "pat_tour_docs",
       "userId": "usr_jennifer",
       "role": "REP"
     }
@@ -2078,6 +2154,24 @@
       "detail": "Master link sent 07/09 — patient has not opened it yet",
       "createdAt": "2026-07-09T18:45:00Z",
       "resolvedAt": null
+    },
+    {
+      "id": "itk_tour_docs_docs",
+      "patientId": "pat_tour_docs",
+      "type": "NEEDS_DOCS",
+      "status": "SURFACED",
+      "detail": "ID, insurance card and prescription photo not yet uploaded",
+      "createdAt": "2026-07-11T14:15:00Z",
+      "resolvedAt": null
+    },
+    {
+      "id": "itk_tour_docs_consent",
+      "patientId": "pat_tour_docs",
+      "type": "NEEDS_CONSENT",
+      "status": "SURFACED",
+      "detail": "HIPAA and SMS consent not yet given by the patient",
+      "createdAt": "2026-07-11T14:15:00Z",
+      "resolvedAt": null
     }
   ],
   "referralTokens": [
@@ -2098,6 +2192,24 @@
       "consumedAt": null,
       "patientDraftRef": "pat_intake_awaiting",
       "createdAt": "2026-07-09T18:40:00Z"
+    },
+    {
+      "id": "rt_tour_new",
+      "token": "asap-intake-alex-demo",
+      "referringRepId": "usr_jennifer",
+      "expiresAt": "2026-07-12T16:30:00Z",
+      "consumedAt": null,
+      "patientDraftRef": "pat_tour_new",
+      "createdAt": "2026-07-11T16:30:00Z"
+    },
+    {
+      "id": "rt_tour_docs",
+      "token": "asap-intake-jordan-demo",
+      "referringRepId": "usr_jennifer",
+      "expiresAt": "2026-07-12T14:10:00Z",
+      "consumedAt": null,
+      "patientDraftRef": "pat_tour_docs",
+      "createdAt": "2026-07-11T14:10:00Z"
     }
   ],
   "documentSlots": [
@@ -2174,6 +2286,86 @@
     {
       "id": "ds_awa_dx",
       "patientId": "pat_intake_awaiting",
+      "type": "DIAGNOSIS_LETTER",
+      "required": false,
+      "status": "PENDING",
+      "fileRef": null,
+      "requestedDuringOnboarding": true,
+      "uploadedAt": null
+    },
+    {
+      "id": "ds_tour_new_id",
+      "patientId": "pat_tour_new",
+      "type": "GOV_ID",
+      "required": true,
+      "status": "PENDING",
+      "fileRef": null,
+      "requestedDuringOnboarding": true,
+      "uploadedAt": null
+    },
+    {
+      "id": "ds_tour_new_ins",
+      "patientId": "pat_tour_new",
+      "type": "INSURANCE_CARD",
+      "required": true,
+      "status": "PENDING",
+      "fileRef": null,
+      "requestedDuringOnboarding": true,
+      "uploadedAt": null
+    },
+    {
+      "id": "ds_tour_new_rx",
+      "patientId": "pat_tour_new",
+      "type": "RX_PHOTO",
+      "required": true,
+      "status": "PENDING",
+      "fileRef": null,
+      "requestedDuringOnboarding": true,
+      "uploadedAt": null
+    },
+    {
+      "id": "ds_tour_new_dx",
+      "patientId": "pat_tour_new",
+      "type": "DIAGNOSIS_LETTER",
+      "required": false,
+      "status": "PENDING",
+      "fileRef": null,
+      "requestedDuringOnboarding": true,
+      "uploadedAt": null
+    },
+    {
+      "id": "ds_tour_docs_id",
+      "patientId": "pat_tour_docs",
+      "type": "GOV_ID",
+      "required": true,
+      "status": "PENDING",
+      "fileRef": null,
+      "requestedDuringOnboarding": true,
+      "uploadedAt": null
+    },
+    {
+      "id": "ds_tour_docs_ins",
+      "patientId": "pat_tour_docs",
+      "type": "INSURANCE_CARD",
+      "required": true,
+      "status": "PENDING",
+      "fileRef": null,
+      "requestedDuringOnboarding": true,
+      "uploadedAt": null
+    },
+    {
+      "id": "ds_tour_docs_rx",
+      "patientId": "pat_tour_docs",
+      "type": "RX_PHOTO",
+      "required": true,
+      "status": "PENDING",
+      "fileRef": null,
+      "requestedDuringOnboarding": true,
+      "uploadedAt": null
+    },
+    {
+      "id": "ds_tour_docs_dx",
+      "patientId": "pat_tour_docs",
       "type": "DIAGNOSIS_LETTER",
       "required": false,
       "status": "PENDING",
