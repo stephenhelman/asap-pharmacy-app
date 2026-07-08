@@ -619,148 +619,274 @@
   ],
   "careTeamAssignments": [
     {
-      "id": "cta_marcos_rep",
+      "id": "cta_pat_marcos_rep",
       "patientId": "pat_marcos",
       "userId": "usr_jennifer",
       "role": "REP"
     },
     {
-      "id": "cta_marcos_pharm",
+      "id": "cta_pat_marcos_pharm",
       "patientId": "pat_marcos",
-      "userId": "usr_sofia",
+      "userId": "usr_nadia",
       "role": "PHARMACIST"
     },
     {
-      "id": "cta_marcos_nurse",
+      "id": "cta_pat_marcos_nurse",
       "patientId": "pat_marcos",
-      "userId": "usr_sofia",
+      "userId": "usr_priest",
       "role": "NURSE"
     },
     {
-      "id": "cta_marcos_social",
-      "patientId": "pat_marcos",
-      "userId": "usr_sofia",
-      "role": "SOCIAL_WORKER"
-    },
-    {
-      "id": "cta_james_rep",
+      "id": "cta_pat_james_rep",
       "patientId": "pat_james",
       "userId": "usr_jennifer",
       "role": "REP"
     },
     {
-      "id": "cta_james_pharm",
+      "id": "cta_pat_james_pharm",
       "patientId": "pat_james",
-      "userId": "usr_sofia",
+      "userId": "usr_nadia",
       "role": "PHARMACIST"
     },
     {
-      "id": "cta_robert_rep",
-      "patientId": "pat_robert",
-      "userId": "usr_jennifer",
-      "role": "REP"
-    },
-    {
-      "id": "cta_robert_pharm",
-      "patientId": "pat_robert",
-      "userId": "usr_sofia",
-      "role": "PHARMACIST"
-    },
-    {
-      "id": "cta_elton_rep",
-      "patientId": "pat_elton",
-      "userId": "usr_jennifer",
-      "role": "REP"
-    },
-    {
-      "id": "cta_elton_pharm",
-      "patientId": "pat_elton",
-      "userId": "usr_sofia",
-      "role": "PHARMACIST"
-    },
-    {
-      "id": "cta_angel_rep",
-      "patientId": "pat_angel",
-      "userId": "usr_jennifer",
-      "role": "REP"
-    },
-    {
-      "id": "cta_angel_nurse",
-      "patientId": "pat_angel",
-      "userId": "usr_sofia",
+      "id": "cta_pat_james_nurse",
+      "patientId": "pat_james",
+      "userId": "usr_priest",
       "role": "NURSE"
     },
     {
-      "id": "cta_david_rep",
+      "id": "cta_pat_robert_rep",
+      "patientId": "pat_robert",
+      "userId": "usr_jennifer",
+      "role": "REP"
+    },
+    {
+      "id": "cta_pat_robert_pharm",
+      "patientId": "pat_robert",
+      "userId": "usr_nadia",
+      "role": "PHARMACIST"
+    },
+    {
+      "id": "cta_pat_robert_nurse",
+      "patientId": "pat_robert",
+      "userId": "usr_priest",
+      "role": "NURSE"
+    },
+    {
+      "id": "cta_pat_elton_rep",
+      "patientId": "pat_elton",
+      "userId": "usr_jennifer",
+      "role": "REP"
+    },
+    {
+      "id": "cta_pat_elton_pharm",
+      "patientId": "pat_elton",
+      "userId": "usr_nadia",
+      "role": "PHARMACIST"
+    },
+    {
+      "id": "cta_pat_elton_nurse",
+      "patientId": "pat_elton",
+      "userId": "usr_priest",
+      "role": "NURSE"
+    },
+    {
+      "id": "cta_pat_angel_rep",
+      "patientId": "pat_angel",
+      "userId": "usr_jennifer",
+      "role": "REP"
+    },
+    {
+      "id": "cta_pat_angel_pharm",
+      "patientId": "pat_angel",
+      "userId": "usr_nadia",
+      "role": "PHARMACIST"
+    },
+    {
+      "id": "cta_pat_angel_nurse",
+      "patientId": "pat_angel",
+      "userId": "usr_priest",
+      "role": "NURSE"
+    },
+    {
+      "id": "cta_pat_david_rep",
       "patientId": "pat_david",
       "userId": "usr_jennifer",
       "role": "REP"
     },
     {
-      "id": "cta_luis_rep",
+      "id": "cta_pat_david_pharm",
+      "patientId": "pat_david",
+      "userId": "usr_nadia",
+      "role": "PHARMACIST"
+    },
+    {
+      "id": "cta_pat_david_nurse",
+      "patientId": "pat_david",
+      "userId": "usr_priest",
+      "role": "NURSE"
+    },
+    {
+      "id": "cta_pat_luis_rep",
       "patientId": "pat_luis",
       "userId": "usr_jennifer",
       "role": "REP"
     },
     {
-      "id": "cta_luis_pharm",
+      "id": "cta_pat_luis_pharm",
       "patientId": "pat_luis",
-      "userId": "usr_sofia",
+      "userId": "usr_nadia",
       "role": "PHARMACIST"
     },
     {
-      "id": "cta_samuel_rep",
+      "id": "cta_pat_luis_nurse",
+      "patientId": "pat_luis",
+      "userId": "usr_priest",
+      "role": "NURSE"
+    },
+    {
+      "id": "cta_pat_samuel_rep",
       "patientId": "pat_samuel",
       "userId": "usr_jennifer",
       "role": "REP"
     },
     {
-      "id": "cta_theo_rep",
+      "id": "cta_pat_samuel_pharm",
+      "patientId": "pat_samuel",
+      "userId": "usr_nadia",
+      "role": "PHARMACIST"
+    },
+    {
+      "id": "cta_pat_samuel_nurse",
+      "patientId": "pat_samuel",
+      "userId": "usr_priest",
+      "role": "NURSE"
+    },
+    {
+      "id": "cta_pat_theo_rep",
       "patientId": "pat_theo",
       "userId": "usr_jennifer",
       "role": "REP"
     },
     {
-      "id": "cta_theo_social",
+      "id": "cta_pat_theo_pharm",
       "patientId": "pat_theo",
-      "userId": "usr_sofia",
-      "role": "SOCIAL_WORKER"
+      "userId": "usr_nadia",
+      "role": "PHARMACIST"
     },
     {
-      "id": "cta_ruben_rep",
+      "id": "cta_pat_theo_nurse",
+      "patientId": "pat_theo",
+      "userId": "usr_priest",
+      "role": "NURSE"
+    },
+    {
+      "id": "cta_pat_ruben_rep",
       "patientId": "pat_ruben",
       "userId": "usr_jennifer",
       "role": "REP"
     },
     {
-      "id": "cta_ruben_tech",
+      "id": "cta_pat_ruben_pharm",
       "patientId": "pat_ruben",
-      "userId": "usr_daniel",
-      "role": "TECH"
+      "userId": "usr_nadia",
+      "role": "PHARMACIST"
     },
     {
-      "id": "cta_lagging_rep",
+      "id": "cta_pat_ruben_nurse",
+      "patientId": "pat_ruben",
+      "userId": "usr_priest",
+      "role": "NURSE"
+    },
+    {
+      "id": "cta_pat_omar_rep",
+      "patientId": "pat_omar",
+      "userId": "usr_jennifer",
+      "role": "REP"
+    },
+    {
+      "id": "cta_pat_omar_pharm",
+      "patientId": "pat_omar",
+      "userId": "usr_nadia",
+      "role": "PHARMACIST"
+    },
+    {
+      "id": "cta_pat_omar_nurse",
+      "patientId": "pat_omar",
+      "userId": "usr_priest",
+      "role": "NURSE"
+    },
+    {
+      "id": "cta_pat_intake_lagging_rep",
       "patientId": "pat_intake_lagging",
       "userId": "usr_jennifer",
       "role": "REP"
     },
     {
-      "id": "cta_awaiting_rep",
+      "id": "cta_pat_intake_lagging_pharm",
+      "patientId": "pat_intake_lagging",
+      "userId": "usr_nadia",
+      "role": "PHARMACIST"
+    },
+    {
+      "id": "cta_pat_intake_lagging_nurse",
+      "patientId": "pat_intake_lagging",
+      "userId": "usr_priest",
+      "role": "NURSE"
+    },
+    {
+      "id": "cta_pat_intake_awaiting_rep",
       "patientId": "pat_intake_awaiting",
       "userId": "usr_jennifer",
       "role": "REP"
     },
     {
-      "id": "cta_tour_new_rep",
+      "id": "cta_pat_intake_awaiting_pharm",
+      "patientId": "pat_intake_awaiting",
+      "userId": "usr_nadia",
+      "role": "PHARMACIST"
+    },
+    {
+      "id": "cta_pat_intake_awaiting_nurse",
+      "patientId": "pat_intake_awaiting",
+      "userId": "usr_priest",
+      "role": "NURSE"
+    },
+    {
+      "id": "cta_pat_tour_new_rep",
       "patientId": "pat_tour_new",
       "userId": "usr_jennifer",
       "role": "REP"
     },
     {
-      "id": "cta_tour_docs_rep",
+      "id": "cta_pat_tour_new_pharm",
+      "patientId": "pat_tour_new",
+      "userId": "usr_nadia",
+      "role": "PHARMACIST"
+    },
+    {
+      "id": "cta_pat_tour_new_nurse",
+      "patientId": "pat_tour_new",
+      "userId": "usr_priest",
+      "role": "NURSE"
+    },
+    {
+      "id": "cta_pat_tour_docs_rep",
       "patientId": "pat_tour_docs",
       "userId": "usr_jennifer",
       "role": "REP"
+    },
+    {
+      "id": "cta_pat_tour_docs_pharm",
+      "patientId": "pat_tour_docs",
+      "userId": "usr_nadia",
+      "role": "PHARMACIST"
+    },
+    {
+      "id": "cta_pat_tour_docs_nurse",
+      "patientId": "pat_tour_docs",
+      "userId": "usr_priest",
+      "role": "NURSE"
     }
   ],
   "authorizedUsers": [
@@ -1914,6 +2040,293 @@
       "role": "NURSE",
       "roleNumber": "+19155550142",
       "createdAt": "2026-07-12T07:00:00Z"
+    },
+    {
+      "id": "thr_james_rep",
+      "patientId": "pat_james",
+      "role": "REP",
+      "roleNumber": "+19155550164",
+      "createdAt": "2026-07-01T00:00:00Z"
+    },
+    {
+      "id": "thr_james_pharm",
+      "patientId": "pat_james",
+      "role": "PHARMACIST",
+      "roleNumber": "+19155550180",
+      "createdAt": "2026-07-01T00:00:00Z"
+    },
+    {
+      "id": "thr_james_nurse",
+      "patientId": "pat_james",
+      "role": "NURSE",
+      "roleNumber": "+19155550142",
+      "createdAt": "2026-07-01T00:00:00Z"
+    },
+    {
+      "id": "thr_robert_rep",
+      "patientId": "pat_robert",
+      "role": "REP",
+      "roleNumber": "+19155550164",
+      "createdAt": "2026-07-01T00:00:00Z"
+    },
+    {
+      "id": "thr_robert_pharm",
+      "patientId": "pat_robert",
+      "role": "PHARMACIST",
+      "roleNumber": "+19155550180",
+      "createdAt": "2026-07-01T00:00:00Z"
+    },
+    {
+      "id": "thr_robert_nurse",
+      "patientId": "pat_robert",
+      "role": "NURSE",
+      "roleNumber": "+19155550142",
+      "createdAt": "2026-07-01T00:00:00Z"
+    },
+    {
+      "id": "thr_elton_rep",
+      "patientId": "pat_elton",
+      "role": "REP",
+      "roleNumber": "+19155550164",
+      "createdAt": "2026-07-01T00:00:00Z"
+    },
+    {
+      "id": "thr_elton_pharm",
+      "patientId": "pat_elton",
+      "role": "PHARMACIST",
+      "roleNumber": "+19155550180",
+      "createdAt": "2026-07-01T00:00:00Z"
+    },
+    {
+      "id": "thr_elton_nurse",
+      "patientId": "pat_elton",
+      "role": "NURSE",
+      "roleNumber": "+19155550142",
+      "createdAt": "2026-07-01T00:00:00Z"
+    },
+    {
+      "id": "thr_angel_rep",
+      "patientId": "pat_angel",
+      "role": "REP",
+      "roleNumber": "+19155550164",
+      "createdAt": "2026-07-01T00:00:00Z"
+    },
+    {
+      "id": "thr_angel_pharm",
+      "patientId": "pat_angel",
+      "role": "PHARMACIST",
+      "roleNumber": "+19155550180",
+      "createdAt": "2026-07-01T00:00:00Z"
+    },
+    {
+      "id": "thr_david_rep",
+      "patientId": "pat_david",
+      "role": "REP",
+      "roleNumber": "+19155550164",
+      "createdAt": "2026-07-01T00:00:00Z"
+    },
+    {
+      "id": "thr_david_pharm",
+      "patientId": "pat_david",
+      "role": "PHARMACIST",
+      "roleNumber": "+19155550180",
+      "createdAt": "2026-07-01T00:00:00Z"
+    },
+    {
+      "id": "thr_david_nurse",
+      "patientId": "pat_david",
+      "role": "NURSE",
+      "roleNumber": "+19155550142",
+      "createdAt": "2026-07-01T00:00:00Z"
+    },
+    {
+      "id": "thr_luis_rep",
+      "patientId": "pat_luis",
+      "role": "REP",
+      "roleNumber": "+19155550164",
+      "createdAt": "2026-07-01T00:00:00Z"
+    },
+    {
+      "id": "thr_luis_pharm",
+      "patientId": "pat_luis",
+      "role": "PHARMACIST",
+      "roleNumber": "+19155550180",
+      "createdAt": "2026-07-01T00:00:00Z"
+    },
+    {
+      "id": "thr_luis_nurse",
+      "patientId": "pat_luis",
+      "role": "NURSE",
+      "roleNumber": "+19155550142",
+      "createdAt": "2026-07-01T00:00:00Z"
+    },
+    {
+      "id": "thr_samuel_rep",
+      "patientId": "pat_samuel",
+      "role": "REP",
+      "roleNumber": "+19155550164",
+      "createdAt": "2026-07-01T00:00:00Z"
+    },
+    {
+      "id": "thr_samuel_pharm",
+      "patientId": "pat_samuel",
+      "role": "PHARMACIST",
+      "roleNumber": "+19155550180",
+      "createdAt": "2026-07-01T00:00:00Z"
+    },
+    {
+      "id": "thr_samuel_nurse",
+      "patientId": "pat_samuel",
+      "role": "NURSE",
+      "roleNumber": "+19155550142",
+      "createdAt": "2026-07-01T00:00:00Z"
+    },
+    {
+      "id": "thr_theo_rep",
+      "patientId": "pat_theo",
+      "role": "REP",
+      "roleNumber": "+19155550164",
+      "createdAt": "2026-07-01T00:00:00Z"
+    },
+    {
+      "id": "thr_theo_pharm",
+      "patientId": "pat_theo",
+      "role": "PHARMACIST",
+      "roleNumber": "+19155550180",
+      "createdAt": "2026-07-01T00:00:00Z"
+    },
+    {
+      "id": "thr_theo_nurse",
+      "patientId": "pat_theo",
+      "role": "NURSE",
+      "roleNumber": "+19155550142",
+      "createdAt": "2026-07-01T00:00:00Z"
+    },
+    {
+      "id": "thr_ruben_rep",
+      "patientId": "pat_ruben",
+      "role": "REP",
+      "roleNumber": "+19155550164",
+      "createdAt": "2026-07-01T00:00:00Z"
+    },
+    {
+      "id": "thr_ruben_pharm",
+      "patientId": "pat_ruben",
+      "role": "PHARMACIST",
+      "roleNumber": "+19155550180",
+      "createdAt": "2026-07-01T00:00:00Z"
+    },
+    {
+      "id": "thr_ruben_nurse",
+      "patientId": "pat_ruben",
+      "role": "NURSE",
+      "roleNumber": "+19155550142",
+      "createdAt": "2026-07-01T00:00:00Z"
+    },
+    {
+      "id": "thr_omar_rep",
+      "patientId": "pat_omar",
+      "role": "REP",
+      "roleNumber": "+19155550164",
+      "createdAt": "2026-07-01T00:00:00Z"
+    },
+    {
+      "id": "thr_omar_pharm",
+      "patientId": "pat_omar",
+      "role": "PHARMACIST",
+      "roleNumber": "+19155550180",
+      "createdAt": "2026-07-01T00:00:00Z"
+    },
+    {
+      "id": "thr_omar_nurse",
+      "patientId": "pat_omar",
+      "role": "NURSE",
+      "roleNumber": "+19155550142",
+      "createdAt": "2026-07-01T00:00:00Z"
+    },
+    {
+      "id": "thr_intake_lagging_rep",
+      "patientId": "pat_intake_lagging",
+      "role": "REP",
+      "roleNumber": "+19155550164",
+      "createdAt": "2026-07-01T00:00:00Z"
+    },
+    {
+      "id": "thr_intake_lagging_pharm",
+      "patientId": "pat_intake_lagging",
+      "role": "PHARMACIST",
+      "roleNumber": "+19155550180",
+      "createdAt": "2026-07-01T00:00:00Z"
+    },
+    {
+      "id": "thr_intake_lagging_nurse",
+      "patientId": "pat_intake_lagging",
+      "role": "NURSE",
+      "roleNumber": "+19155550142",
+      "createdAt": "2026-07-01T00:00:00Z"
+    },
+    {
+      "id": "thr_intake_awaiting_rep",
+      "patientId": "pat_intake_awaiting",
+      "role": "REP",
+      "roleNumber": "+19155550164",
+      "createdAt": "2026-07-01T00:00:00Z"
+    },
+    {
+      "id": "thr_intake_awaiting_pharm",
+      "patientId": "pat_intake_awaiting",
+      "role": "PHARMACIST",
+      "roleNumber": "+19155550180",
+      "createdAt": "2026-07-01T00:00:00Z"
+    },
+    {
+      "id": "thr_intake_awaiting_nurse",
+      "patientId": "pat_intake_awaiting",
+      "role": "NURSE",
+      "roleNumber": "+19155550142",
+      "createdAt": "2026-07-01T00:00:00Z"
+    },
+    {
+      "id": "thr_tour_new_rep",
+      "patientId": "pat_tour_new",
+      "role": "REP",
+      "roleNumber": "+19155550164",
+      "createdAt": "2026-07-01T00:00:00Z"
+    },
+    {
+      "id": "thr_tour_new_pharm",
+      "patientId": "pat_tour_new",
+      "role": "PHARMACIST",
+      "roleNumber": "+19155550180",
+      "createdAt": "2026-07-01T00:00:00Z"
+    },
+    {
+      "id": "thr_tour_new_nurse",
+      "patientId": "pat_tour_new",
+      "role": "NURSE",
+      "roleNumber": "+19155550142",
+      "createdAt": "2026-07-01T00:00:00Z"
+    },
+    {
+      "id": "thr_tour_docs_rep",
+      "patientId": "pat_tour_docs",
+      "role": "REP",
+      "roleNumber": "+19155550164",
+      "createdAt": "2026-07-01T00:00:00Z"
+    },
+    {
+      "id": "thr_tour_docs_pharm",
+      "patientId": "pat_tour_docs",
+      "role": "PHARMACIST",
+      "roleNumber": "+19155550180",
+      "createdAt": "2026-07-01T00:00:00Z"
+    },
+    {
+      "id": "thr_tour_docs_nurse",
+      "patientId": "pat_tour_docs",
+      "role": "NURSE",
+      "roleNumber": "+19155550142",
+      "createdAt": "2026-07-01T00:00:00Z"
     }
   ],
   "messages": [

@@ -65,6 +65,8 @@ interface MutationState {
   closedBleeds: Record<string, string>; // bleedId → closedAt
   sentMessages: SentMessage[];
   addedNotes: AddedNote[];
+  /** internal-note read receipts, keyed `${noteId}:${userId}` → seenAt ISO (§14.6) */
+  seenNoteAcks: Record<string, string>;
   seenNotifications: Record<string, boolean>;
 }
 
@@ -79,6 +81,7 @@ const EMPTY: MutationState = {
   closedBleeds: {},
   sentMessages: [],
   addedNotes: [],
+  seenNoteAcks: {},
   seenNotifications: {},
 };
 
@@ -97,6 +100,8 @@ interface MutationContextValue extends MutationState {
   closeBleed: (bleedId: string, closedAt: string) => void;
   sendMessage: (m: SentMessage) => void;
   addNote: (n: AddedNote) => void;
+  /** record a note read-receipt for a viewer; idempotent (first view wins). */
+  seeNote: (noteId: string, userId: string, seenAt: string) => void;
   seeNotification: (id: string) => void;
   reset: () => void;
 }
@@ -153,6 +158,13 @@ export function MutationProvider({ children }: { children: React.ReactNode }) {
         setState((s) => ({ ...s, sentMessages: [...s.sentMessages, m] })),
       addNote: (n) =>
         setState((s) => ({ ...s, addedNotes: [...s.addedNotes, n] })),
+      seeNote: (noteId, userId, seenAt) =>
+        setState((s) => {
+          const key = `${noteId}:${userId}`;
+          // First view wins — return the same state (no re-render) if already seen.
+          if (s.seenNoteAcks[key]) return s;
+          return { ...s, seenNoteAcks: { ...s.seenNoteAcks, [key]: seenAt } };
+        }),
       seeNotification: (id) =>
         setState((s) => ({
           ...s,

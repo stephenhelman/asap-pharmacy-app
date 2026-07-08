@@ -1,6 +1,7 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { useSession, ROLE_LABELS } from "@/lib/session";
 import { useMutations } from "@/lib/mutations";
 import {
@@ -8,6 +9,8 @@ import {
   getThreadDetail,
   getPatientThreads,
   getPatient,
+  getUser,
+  resolveNoteAcks,
   TODAY,
 } from "@/lib/dataProvider";
 import type { MessageRow, StaffRole, UserRow } from "@/lib/types";
@@ -54,11 +57,23 @@ const ROLE_TINT: Record<string, { active: string; idle: string }> = {
 };
 
 export function StaffCommsHub() {
-  const [openPatient, setOpenPatient] = useState<string | null>(null);
+  // Deep-link from a work-queue acknowledgment item: /messages?patient=…&note=…
+  // opens straight into that conversation, focused on (and acknowledging) the note.
+  const search = useSearchParams();
+  const patientParam = search.get("patient");
+  const noteParam = search.get("note");
+
+  const [openPatient, setOpenPatient] = useState<string | null>(patientParam);
   const convos = getStaffConversations();
 
   if (openPatient)
-    return <Conversation patientId={openPatient} onBack={() => setOpenPatient(null)} />;
+    return (
+      <Conversation
+        patientId={openPatient}
+        focusNoteId={openPatient === patientParam ? noteParam : null}
+        onBack={() => setOpenPatient(null)}
+      />
+    );
 
   return (
     <div className="flex h-full flex-col xl:h-auto md:mx-auto md:w-full md:max-w-[760px] md:border-x md:border-border">
@@ -102,9 +117,11 @@ type Filter = "both" | "messages" | "notes";
 
 function Conversation({
   patientId,
+  focusNoteId,
   onBack,
 }: {
   patientId: string;
+  focusNoteId?: string | null;
   onBack: () => void;
 }) {
   const { session } = useSession();
@@ -112,11 +129,31 @@ function Conversation({
   const threads = getPatientThreads(patientId);
   const patient = getPatient(patientId)!;
 
-  const [threadId, setThreadId] = useState(threads[0]?.id ?? "");
-  const [filter, setFilter] = useState<Filter>("both");
+  // A deep-linked note opens its own thread, focused on notes.
+  const focusThreadId = focusNoteId
+    ? m.addedNotes.find((n) => n.id === focusNoteId)?.threadId ?? null
+    : null;
+
+  const [threadId, setThreadId] = useState(
+    focusThreadId ?? threads[0]?.id ?? "",
+  );
+  const [filter, setFilter] = useState<Filter>(focusNoteId ? "notes" : "both");
   const [mode, setMode] = useState<"message" | "note">("message");
   const [draft, setDraft] = useState("");
   const [tags, setTags] = useState<StaffRole[]>([]);
+
+  // Resolve-on-view (§14.6): opening the note records THIS viewer's read-receipt.
+  // Fire once per focused note; do NOT re-fire if the session identity changes
+  // while this view stays mounted (the dev identity switcher), which would wrongly
+  // acknowledge the note on the newly-selected person's behalf.
+  const ackedNote = useRef<string | null>(null);
+  useEffect(() => {
+    if (focusNoteId && session.staffId && ackedNote.current !== focusNoteId) {
+      ackedNote.current = focusNoteId;
+      m.seeNote(focusNoteId, session.staffId, new Date(TODAY.getTime()).toISOString());
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [focusNoteId, session.staffId]);
 
   const detail = getThreadDetail(threadId);
   const activeThread = threads.find((t) => t.id === threadId);
@@ -131,9 +168,6 @@ function Conversation({
   // merged, filtered timeline
   const items = useMemo(() => {
     if (!detail) return [];
-    const me: UserRow | null = session.staffId
-      ? ({ id: session.staffId, fullName: session.user.name } as UserRow)
-      : null;
     const baseMsgs = detail.messages;
     const sentMsgs: MessageRow[] = m.sentMessages
       .filter((x) => x.threadId === threadId)
@@ -157,9 +191,11 @@ function Conversation({
         authorId: x.authorId,
         body: x.body,
         createdAt: x.createdAt,
-        author: me,
+        // Resolve the real author (not the current viewer) so the byline is
+        // correct when a tagged teammate opens the note.
+        author: getUser(x.authorId) as UserRow | null,
         tags: x.tags as StaffRole[],
-        acks: [] as { user: UserRow; seenAt: string }[],
+        acks: resolveNoteAcks(x.id, m.seenNoteAcks),
       }));
     const notes = [...baseNotes, ...addedNotes];
 
@@ -179,7 +215,7 @@ function Conversation({
     if (filter !== "messages")
       list.push(...notes.map((note) => ({ t: "note" as const, at: note.createdAt, note })));
     return list.sort((a, b) => a.at.localeCompare(b.at));
-  }, [detail, filter, m.sentMessages, m.addedNotes, threadId, session]);
+  }, [detail, filter, m.sentMessages, m.addedNotes, m.seenNoteAcks, threadId]);
 
   function send() {
     if (!draft.trim() || !session.staffId) return;

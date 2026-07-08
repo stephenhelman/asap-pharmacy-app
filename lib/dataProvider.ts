@@ -845,13 +845,106 @@ export const GATE_LABELS: Record<string, string> = {
   PATIENT_INTAKE: "Patient intake",
 };
 
+// ── Internal-note acknowledgments (§14.6) ─────────────────────────────────────
+// An internal note tagging care-team members is *information, not a task*: each
+// tagged person gets an independent work-queue item that resolves the moment
+// they view the note ("seen by" receipt). Tags are ROLES; they route to the
+// person holding that role for THIS patient (care team), or the management chain.
+
+/** Everyone globally holding a role (used as the management-chain / fallback). */
+function roleHoldersGlobal(role: StaffRole): string[] {
+  return db.userRoles.filter((r) => r.role === role).map((r) => r.userId);
+}
+
+/**
+ * Resolve a tagged role on a patient to the specific person(s) it routes to:
+ * the care-team holder for this patient if assigned, else the global role-holders
+ * (covers MANAGEMENT — the escalation chain — and any unassigned role).
+ */
+export function resolveTagTargets(patientId: string, role: StaffRole): string[] {
+  const onTeam = db.careTeamAssignments
+    .filter((c) => c.patientId === patientId && c.role === role)
+    .map((c) => c.userId);
+  return onTeam.length > 0 ? onTeam : roleHoldersGlobal(role);
+}
+
+/** The shape the queue needs from a saved internal note (roles it tagged). */
+export interface AckNoteInput {
+  id: string;
+  threadId: string;
+  authorId: string;
+  tags: string[]; // StaffRole values (mutation store types them loosely)
+  createdAt: string;
+}
+
+/** Who's viewing, plus the live (in-memory) notes + read-receipts to score. */
+export interface QueueViewer {
+  userId: string | null;
+  notes: AckNoteInput[];
+  seenAcks: Record<string, string>; // `${noteId}:${userId}` → seenAt
+}
+
+/** Acknowledgment work-items for the viewer, grouped by patient. */
+function ackItemsByPatient(v: QueueViewer): Map<string, WorkItem[]> {
+  const map = new Map<string, WorkItem[]>();
+  if (!v.userId) return map;
+  for (const note of v.notes) {
+    const thread = db.threads.find((t) => t.id === note.threadId);
+    if (!thread) continue;
+    const patientId = thread.patientId;
+
+    // Resolve every tagged role → person, dedupe, drop the author (self-tag
+    // suppression — you never get an ack item for your own note, §14.6).
+    const targets = new Set<string>();
+    for (const role of note.tags)
+      for (const uid of resolveTagTargets(patientId, role as StaffRole))
+        targets.add(uid);
+    targets.delete(note.authorId);
+
+    if (!targets.has(v.userId)) continue; // only the viewer's own item
+    if (v.seenAcks[`${note.id}:${v.userId}`]) continue; // resolved on view
+
+    const arr = map.get(patientId) ?? [];
+    arr.push({
+      id: `ack-${note.id}-${v.userId}`,
+      label: "Review note",
+      category: "Notes",
+      triage: "neutral",
+      ownerRoles: [],
+      href: `/messages?patient=${patientId}&note=${note.id}`,
+    });
+    map.set(patientId, arr);
+  }
+  return map;
+}
+
+/** Resolve a note's read-receipts (from the mutation store) to users + times. */
+export function resolveNoteAcks(
+  noteId: string,
+  seenAcks: Record<string, string>,
+): { user: UserRow; seenAt: string }[] {
+  const prefix = `${noteId}:`;
+  return Object.entries(seenAcks)
+    .filter(([k]) => k.startsWith(prefix))
+    .map(([k, seenAt]) => {
+      const user = db.users.find((u) => u.id === k.slice(prefix.length));
+      return user ? { user, seenAt } : null;
+    })
+    .filter((x): x is { user: UserRow; seenAt: string } => x !== null);
+}
+
 /**
  * The role-scoped work queue. MANAGEMENT (and multi-role) sees the union;
  * a single-role user sees only items their role owns. Same component, different
- * session — the portal-collapse proof.
+ * session — the portal-collapse proof. When a `viewer` is passed, internal-note
+ * acknowledgment items (person-targeted, §14.6) are merged in for that person.
  */
-export function getWorkQueue(roles: StaffRole[]): QueueRow[] {
+export function getWorkQueue(
+  roles: StaffRole[],
+  viewer?: QueueViewer,
+): QueueRow[] {
   const isManagement = roles.includes("MANAGEMENT");
+  const ackMap = viewer ? ackItemsByPatient(viewer) : new Map<string, WorkItem[]>();
   const rows: QueueRow[] = [];
 
   for (const p of db.patients) {
@@ -859,7 +952,8 @@ export function getWorkQueue(roles: StaffRole[]): QueueRow[] {
     const scoped = isManagement
       ? all
       : all.filter((it) => it.ownerRoles.some((r) => roles.includes(r)));
-    if (scoped.length === 0) continue;
+    const items = [...scoped, ...(ackMap.get(p.id) ?? [])];
+    if (items.length === 0) continue;
     rows.push({
       patient: p,
       lifecycleLabel:
@@ -870,7 +964,7 @@ export function getWorkQueue(roles: StaffRole[]): QueueRow[] {
             : p.lifecycle === "ONBOARDING"
               ? "Onboarding"
               : "—",
-      items: scoped,
+      items,
     });
   }
 

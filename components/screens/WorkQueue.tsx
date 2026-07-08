@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { getWorkQueue, type QueueRow } from "@/lib/dataProvider";
 import { useSession, roleSummary } from "@/lib/session";
+import { useMutations } from "@/lib/mutations";
 import type { StaffRole } from "@/lib/types";
 import {
   Avatar,
@@ -28,6 +29,7 @@ const DEFAULT_CATEGORY: Partial<Record<StaffRole, string>> = {
 
 export function WorkQueue() {
   const { session } = useSession();
+  const m = useMutations();
   const router = useRouter();
   const isDesktop = useIsDesktop();
   const [selected, setSelected] = useState<string | null>(null);
@@ -37,9 +39,16 @@ export function WorkQueue() {
   const openRecord = (id: string) =>
     isDesktop ? setSelected(id) : router.push(`/patients/${id}`);
 
+  // Pass the viewer + live notes/receipts so internal-note acknowledgment items
+  // (§14.6) surface in the tagged person's own queue and clear once viewed.
   const rows = useMemo(
-    () => getWorkQueue(session.roles),
-    [session.roles],
+    () =>
+      getWorkQueue(session.roles, {
+        userId: session.staffId,
+        notes: m.addedNotes,
+        seenAcks: m.seenNoteAcks,
+      }),
+    [session.roles, session.staffId, m.addedNotes, m.seenNoteAcks],
   );
 
   const categories = useMemo(() => {
@@ -48,8 +57,12 @@ export function WorkQueue() {
     return Array.from(set);
   }, [rows]);
 
+  // A tagged person's note-ack is perishable — don't let a role-narrowed default
+  // (e.g. nurse → Clinicals) hide it. If the viewer has any acknowledgment items,
+  // land on "all" so the review item is visible immediately.
+  const hasAcks = rows.some((r) => r.items.some((i) => i.category === "Notes"));
   const defaultFilter =
-    session.roles.length === 1 && DEFAULT_CATEGORY[session.roles[0]]
+    !hasAcks && session.roles.length === 1 && DEFAULT_CATEGORY[session.roles[0]]
       ? DEFAULT_CATEGORY[session.roles[0]]!
       : "all";
 
@@ -147,7 +160,7 @@ export function WorkQueue() {
   );
 }
 
-const COLUMN_ORDER = ["Intake", "Clinicals", "Orders", "Fulfillment", "Renewals"];
+const COLUMN_ORDER = ["Intake", "Clinicals", "Orders", "Fulfillment", "Renewals", "Notes"];
 
 function QueueTable({
   rows,
