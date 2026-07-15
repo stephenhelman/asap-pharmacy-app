@@ -8,7 +8,7 @@ export default function ScanPage() {
       title="Scan"
       icon="ti-scan"
       activeKey="more"
-      blurb="Scan a vial or delivery barcode to jump straight to the right log or receipt. For now, scanning lives inside the infusion and delivery flows."
+      blurb="Scan a vial or delivery barcode. For now, scanning lives inside the infusion and delivery flows."
     />
   );
 }

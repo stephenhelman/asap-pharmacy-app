@@ -8,3 +8,4 @@ export type { Step, StepState } from "./stepper";
 export * from "./form";
 export { NavRow, RowCard } from "./rows";
 export { Modal } from "./modal";
+export { Overlay } from "./overlay";

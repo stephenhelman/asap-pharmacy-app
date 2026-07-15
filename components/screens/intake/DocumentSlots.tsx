@@ -22,12 +22,12 @@ const DOC_META: Record<
   RX_PHOTO: {
     label: "Prescription photo",
     icon: "ti-prescription",
-    note: "Reference only — the original is collected from your prescriber.",
+    note: "Reference only. The original is collected from your prescriber.",
   },
   DIAGNOSIS_LETTER: {
     label: "Diagnosis letter",
     icon: "ti-file-text",
-    note: "Optional — helps us move faster if you have one.",
+    note: "Optional. Helps us move faster if you have one.",
   },
 };
 

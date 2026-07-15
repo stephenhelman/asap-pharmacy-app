@@ -203,7 +203,7 @@ export function PatientRecordContent({ patientId }: { patientId: string }) {
         <EmptyState
           icon="ti-lock"
           title="Onboarding not started"
-          body="Onboarding gates begin once the patient finishes intake. Intake must complete first."
+          body="Onboarding gates begin once the patient finishes intake."
         />
       );
 
@@ -330,7 +330,7 @@ export function PatientRecordContent({ patientId }: { patientId: string }) {
             <EmptyState
               icon="ti-mood-smile"
               title="No open bleeds"
-              body="Good news — nothing active right now."
+              body="Nothing active right now."
             />
           ) : (
             <RowCard>

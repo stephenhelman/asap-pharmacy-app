@@ -145,8 +145,7 @@ function Stage1({
   return (
     <div className="flex flex-col">
       <p className="mb-3.5 text-body text-text-secondary">
-        Quick check-in for {CYCLE_LABEL}. This takes about a minute — your answers
-        shape the order.
+        Quick check-in for {CYCLE_LABEL}. Takes about a minute.
       </p>
 
       {/* Medication card (read-only, locked dose) */}
@@ -169,18 +168,18 @@ function Stage1({
       <Prompt>Any issues or side effects this month?</Prompt>
       <FieldText
         multiline
-        placeholder="Optional — anything you'd want your team to know"
+        placeholder="Optional. Anything you'd want your team to know."
         value={issues}
         onChange={setIssues}
       />
       <Spacer />
 
       {/* Open-bleed reconciliation */}
-      <Prompt>Open bleeds — where do these stand?</Prompt>
+      <Prompt>Open bleeds: where do these stand?</Prompt>
       {openBleeds.length === 0 ? (
         <div className="rounded-card border border-border bg-teal-light p-3.5 text-body text-teal-dark">
           <Icon name="ti-mood-smile" size={16} className="mr-1.5 inline" />
-          No open bleeds — that's good news. Nothing to reconcile.
+          No open bleeds. Nothing to reconcile.
         </div>
       ) : (
         openBleeds.map((b) => (
@@ -198,7 +197,7 @@ function Stage1({
             <TogglePair
               options={[
                 { key: "affected", label: "Still affected" },
-                { key: "resolved", label: "Resolved — close" },
+                { key: "resolved", label: "Resolved · close" },
               ]}
               value={bleedState[b.id] ?? "affected"}
               onChange={(v) => setBleedState((s) => ({ ...s, [b.id]: v }))}
@@ -221,7 +220,7 @@ function Stage1({
       <div className="mt-1.5">
         <NotePrefill>
           {cycleInfusions} infusion{cycleInfusions === 1 ? "" : "s"} logged this
-          month — pre-filled from your log
+          month · pre-filled from your log
         </NotePrefill>
       </div>
       <Spacer />
@@ -230,7 +229,7 @@ function Stage1({
       <Prompt>Any medication or allergy changes?</Prompt>
       <FieldText
         multiline
-        placeholder="Optional — new meds, reactions, anything new"
+        placeholder="Optional. New meds, reactions, anything else."
         value={changes}
         onChange={setChanges}
       />
@@ -474,10 +473,7 @@ function Stage3({
         signedName={fullName}
         onSign={() => setSigned((s) => !s)}
       />
-      <p className="mb-5.5 mt-1.5 flex items-center gap-1.5 text-micro text-text-muted">
-        <Icon name="ti-lock" size={13} />
-        One signature covers both the log attestation and the order.
-      </p>
+      <div className="mb-5.5" />
 
       <Button
         variant="primary"
@@ -510,7 +506,7 @@ function SubmittedView({
       <div>
         <p className="text-h2 text-navy">Order submitted</p>
         <p className="mt-1 max-w-[280px] text-body text-text-secondary">
-          Thanks, {patientName}. Your rep will review it shortly — you'll get a
+          Thanks, {patientName}. Your rep will review it shortly. You'll get a
           notification at each step.
         </p>
       </div>

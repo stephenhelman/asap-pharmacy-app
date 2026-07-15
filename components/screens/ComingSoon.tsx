@@ -35,7 +35,7 @@ export function ComingSoon({
         </div>
         <p className="text-title-name text-navy">{title}</p>
         <p className="max-w-[280px] text-body text-text-secondary">
-          {note ?? `This surface is part of ${milestone}. The design system and data are ready for it.`}
+          {note ?? `${milestone} is coming soon.`}
         </p>
         <span className="rounded-pill bg-teal-light px-3 py-1 text-label-strong text-teal-dark">
           {milestone}

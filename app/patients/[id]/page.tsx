@@ -34,7 +34,7 @@ export default function PatientPage({
   }
 
   return (
-    <div className="flex h-full flex-col xl:h-auto lg:mx-auto lg:w-full lg:max-w-[680px]">
+    <div className="flex h-full flex-col xl:h-auto">
       <TopBarNav
         title="Patient record"
         mode={deepLinked ? "close" : "back"}

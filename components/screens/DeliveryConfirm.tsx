@@ -84,7 +84,7 @@ export function DeliveryConfirm({ orderId }: { orderId: string }) {
   ];
 
   const bigStatus = isConfirmed
-    ? { icon: "ti-circle-check", tone: "teal", title: "Delivery confirmed", sub: "Your cycle timer has reset." }
+    ? { icon: "ti-circle-check", tone: "teal", title: "Delivery confirmed", sub: "Your next order cycle starts now." }
     : d.status === "OUT_FOR_DELIVERY"
       ? { icon: "ti-truck-delivery", tone: "amber", title: "Out for delivery", sub: "Arriving today" }
       : d.status === "DELIVERED"
@@ -113,7 +113,7 @@ export function DeliveryConfirm({ orderId }: { orderId: string }) {
   function buildExceptionNote(): string | null {
     if (uncheckedItems.length === 0) return null;
     return uncheckedItems
-      .map((li) => `${li.label} ×${li.quantity} — ${reasons[li.id] ?? "missing"}`)
+      .map((li) => `${li.label} ×${li.quantity} · ${reasons[li.id] ?? "missing"}`)
       .join("; ");
   }
 
@@ -162,7 +162,7 @@ export function DeliveryConfirm({ orderId }: { orderId: string }) {
           <div className="rounded-card border border-border bg-teal-light p-4 text-center">
             <Icon name="ti-circle-check" size={24} className="mb-1 text-teal" />
             <p className="text-title-card text-navy">
-              Received — confirmed by {confirmedMethod === "scan" ? "scan" : "you"}
+              Received · confirmed by {confirmedMethod === "scan" ? "scan" : "you"}
             </p>
             {confirmedException ? (
               <p className="mx-auto mt-1 max-w-[280px] text-body text-amber">
@@ -180,7 +180,7 @@ export function DeliveryConfirm({ orderId }: { orderId: string }) {
         ) : canConfirm ? (
           <>
             <SectionLabel className="mb-2">
-              Confirm receipt — check against what shipped
+              Confirm receipt · check against what shipped
             </SectionLabel>
 
             {/* Manifest */}
@@ -212,7 +212,7 @@ export function DeliveryConfirm({ orderId }: { orderId: string }) {
                       {/* discrepancy reason for unchecked items (manual) */}
                       {interactive && !on && (
                         <div className="mt-2 flex items-center gap-2 pl-8">
-                          <span className="text-micro text-amber">Not received —</span>
+                          <span className="text-micro text-amber">Not received:</span>
                           {(["missing", "damaged"] as const).map((r) => (
                             <button
                               key={r}
@@ -238,8 +238,8 @@ export function DeliveryConfirm({ orderId }: { orderId: string }) {
             {method === null ? (
               <>
                 <p className="mb-2.5 text-body text-text-secondary">
-                  When your package arrives, confirm what's inside — scan the ticket
-                  to auto-check everything, or check each item yourself.
+                  When your package arrives, confirm what's inside. Scan the ticket
+                  to check everything at once, or go item by item.
                 </p>
                 <Button variant="primary" block icon="ti-scan" className="mb-2" onClick={chooseScan}>
                   Scan delivery ticket
@@ -255,7 +255,7 @@ export function DeliveryConfirm({ orderId }: { orderId: string }) {
                     <Icon name="ti-alert-triangle" size={18} className="mt-px shrink-0 text-amber" />
                     <p className="text-body text-amber">
                       {uncheckedItems.length} item{uncheckedItems.length === 1 ? "" : "s"} not
-                      received — we'll flag this to your rep and tech.
+                      received. We'll flag this to your rep and tech.
                     </p>
                   </div>
                 )}

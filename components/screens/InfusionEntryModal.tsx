@@ -12,7 +12,6 @@ import {
   StepperInput,
   FieldInline,
   NotePrefill,
-  NoticeCareteam,
   cn,
 } from "@/components/ui";
 
@@ -142,7 +141,7 @@ export function InfusionEntryModal({
           <p className="max-w-[260px] text-body text-text-secondary">
             {productName} {runningIu.toLocaleString()} IU ·{" "}
             {type === "PROPHYLAXIS" ? "prophylaxis" : "on-demand"} · added to your
-            ledger.
+            log.
           </p>
           <Button variant="primary" block icon="ti-check" onClick={onClose}>
             Done
@@ -210,7 +209,7 @@ export function InfusionEntryModal({
       </div>
       <p className="mb-2.5 text-micro text-text-muted">
         {productName} · pre-filled to your recipe. Adjust if the actual vials
-        differ — or scan to fill.
+        differ, or scan to fill.
       </p>
 
       <div className="overflow-hidden rounded-card border border-border bg-card">
@@ -282,7 +281,7 @@ export function InfusionEntryModal({
       </div>
       {scanned && (
         <div className="mt-1.5">
-          <NotePrefill>Scanned — vials, lot &amp; dose filled from the label</NotePrefill>
+          <NotePrefill>Scanned · vials, lot &amp; dose filled from the label</NotePrefill>
         </div>
       )}
       <div className="mb-4.5" />
@@ -333,12 +332,8 @@ export function InfusionEntryModal({
         <FieldInline icon="ti-clock">8:15 AM</FieldInline>
       </div>
       <p className="mb-4.5 mt-1.5 text-micro text-text-muted">
-        Defaults to now — retroactive entries are allowed.
+        Defaults to now. You can back-date it.
       </p>
-
-      <NoticeCareteam>
-        Your care team sees every logged dose. Log honestly — it protects you.
-      </NoticeCareteam>
     </Modal>
   );
 }

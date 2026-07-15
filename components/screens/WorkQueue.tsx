@@ -123,7 +123,7 @@ export function WorkQueue() {
             <Icon name="ti-checks" size={34} className="text-teal" />
             <p className="text-title-card text-navy">Queue clear</p>
             <p className="max-w-[240px] text-body text-text-secondary">
-              No open work for this role right now. Nice.
+              No open work for this role right now.
             </p>
           </div>
         ) : (

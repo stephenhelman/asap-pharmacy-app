@@ -39,7 +39,7 @@ export function AddPatientModal({ onClose }: { onClose: () => void }) {
         <OnRampCard
           icon="ti-send"
           title="Send to patient"
-          sub="Generate a link and text it from your work phone — the patient fills everything in."
+          sub="Generate a link and text it from your work phone. The patient fills everything in."
           tag="Patient-led"
           onClick={() => begin("patient_led")}
         />
