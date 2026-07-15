@@ -38,7 +38,7 @@ export function PatientCommsHub({ patientId }: { patientId: string }) {
       <header className="border-b border-border bg-card px-4 pb-3 pt-4">
         <h1 className="text-display text-navy">Your care team</h1>
         <p className="text-micro text-text-muted">
-          Message history — reply anytime by text or call
+          Message history. Reply anytime by text or call.
         </p>
       </header>
       <main className="flex-1 min-h-0 overflow-y-auto">

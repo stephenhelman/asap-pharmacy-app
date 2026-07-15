@@ -8,7 +8,7 @@ export default function ReportsPage() {
       title="Reports"
       icon="ti-chart-bar"
       activeKey="more"
-      blurb="Roster and fulfillment analytics — throughput, aging, and exports — will live here."
+      blurb="Roster and fulfillment analytics: throughput, aging, and exports."
     />
   );
 }

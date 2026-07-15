@@ -81,11 +81,8 @@ function ActiveDashboard({ patientId }: { patientId: string }) {
         <StatusPill tone="success" icon="ti-circle-check">
           Active
         </StatusPill>
-        <StatusPill
-          tone={metrics.bleedsThisMonth > 0 ? "warning" : "success"}
-          icon={metrics.bleedsThisMonth > 0 ? "ti-activity" : "ti-mood-smile"}
-        >
-          {metrics.bleedsThisMonth > 0 ? "Recovering well" : "On schedule"}
+        <StatusPill tone="success" icon="ti-mood-smile">
+          On schedule
         </StatusPill>
       </div>
 
@@ -333,7 +330,7 @@ function IntakeDashboard({ patientId }: { patientId: string }) {
           icon="ti-message-2"
           iconTone="teal"
           title="Message your team"
-          sub="Questions? We're here to help."
+          sub="Reach your nurse, pharmacist, or rep."
           href="/messages"
         />
       </RowCard>
@@ -400,8 +397,8 @@ function OnboardingDashboard({ patientId }: { patientId: string }) {
 
       <div className="mb-3">
         <NoticeInfo>
-          We're working on your setup behind the scenes — nothing needed from you
-          right now. We'll reach out if we need anything.
+          We're working on your setup. Nothing needed from you right now. We'll
+          reach out if anything comes up.
         </NoticeInfo>
       </div>
 
@@ -410,7 +407,7 @@ function OnboardingDashboard({ patientId }: { patientId: string }) {
           icon="ti-message-2"
           iconTone="teal"
           title="Message your team"
-          sub="Questions? We're here."
+          sub="Nurse, pharmacist & rep."
           href="/messages"
         />
       </RowCard>
@@ -425,7 +422,7 @@ function InactiveDashboard() {
       <p className="text-title-name text-navy">Care transferred</p>
       <p className="max-w-[280px] text-body text-text-secondary">
         Your care has been transferred to a specialty partner. This account is no
-        longer active — reach out if you need anything.
+        longer active. Reach out if you need anything.
       </p>
     </div>
   );

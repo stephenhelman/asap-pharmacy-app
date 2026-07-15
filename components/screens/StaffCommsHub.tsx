@@ -61,7 +61,7 @@ export function StaffCommsHub() {
     return <Conversation patientId={openPatient} onBack={() => setOpenPatient(null)} />;
 
   return (
-    <div className="flex h-full flex-col xl:h-auto md:mx-auto md:w-full md:max-w-[760px] md:border-x md:border-border">
+    <div className="flex h-full flex-col xl:h-auto">
       <header className="border-b border-border bg-card px-4 pb-3 pt-4">
         <h1 className="text-display text-navy">Messages</h1>
         <p className="text-micro text-text-muted">{convos.length} conversations</p>
@@ -208,7 +208,7 @@ function Conversation({
   const showDays = computeDayDividers(items.map((it) => it.at));
 
   return (
-    <div className="flex h-full flex-col xl:h-auto md:mx-auto md:w-full md:max-w-[760px] md:border-x md:border-border">
+    <div className="flex h-full flex-col xl:h-auto">
       <TopBarNav
         title={`${patient.firstName} ${patient.lastName}`}
         onDismiss={onBack}

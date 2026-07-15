@@ -85,7 +85,7 @@ export function TechPack({ orderId }: { orderId: string }) {
   }
 
   return (
-    <div className="flex h-full flex-col xl:h-auto md:mx-auto md:w-full md:max-w-[680px]">
+    <div className="flex h-full flex-col xl:h-auto">
       <TopBarNav
         title="Pack & ship"
         onDismiss={() => router.back()}
@@ -120,7 +120,7 @@ export function TechPack({ orderId }: { orderId: string }) {
               </Button>
             </div>
             <p className="mb-3 text-micro text-text-muted">
-              Dose-as-recipe: scan each vial to document the actual lot pulled.
+              Scan each vial to record the actual lot pulled.
             </p>
 
             {/* Dose cards */}
@@ -155,7 +155,7 @@ export function TechPack({ orderId }: { orderId: string }) {
               />
             </div>
             <p className="mb-4 text-micro text-text-muted">
-              A delivery ticket + digitized packing slip generate on ship.
+              A delivery ticket and packing slip generate when you ship.
             </p>
 
             {/* Actions */}
@@ -176,7 +176,7 @@ export function TechPack({ orderId }: { orderId: string }) {
               className="mt-2 border-amber-light text-amber"
               onClick={() => router.push("/queue")}
             >
-              Hold — partial / stock issue
+              Hold · partial or stock issue
             </Button>
           </>
         )}

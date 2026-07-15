@@ -59,7 +59,7 @@ export function DocumentsScreen({ patientId }: { patientId: string }) {
             <Icon name="ti-files-off" size={32} className="text-text-muted" />
             <p className="text-title-card text-navy">No documents yet</p>
             <p className="max-w-[260px] text-body text-text-secondary">
-              Documents you share during setup and beyond live here.
+              Documents you share with us live here.
             </p>
           </div>
         ) : (

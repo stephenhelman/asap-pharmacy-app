@@ -1,11 +1,15 @@
 "use client";
 
-import { useEffect } from "react";
 import { Icon } from "./primitives";
+import { Overlay } from "./overlay";
 
 /**
  * Full-cover modal sheet (P5/P6 entry flows): X + title, no bottom nav. Renders
- * absolutely within the phone frame and slides up. Drill-down convention.
+ * through the shared {@link Overlay} — the same portal-to-<body> + `100dvh`
+ * viewport contract as the slide-in record pane, so a mobile address-bar white
+ * bar can't reappear here. Full-cover on mobile; a centered single-column panel
+ * on tablet+ (entry is a "doing" surface — never stretched across the wide
+ * shell). Slides up. Drill-down convention.
  */
 export function Modal({
   title,
@@ -18,16 +22,11 @@ export function Modal({
   children: React.ReactNode;
   footer?: React.ReactNode;
 }) {
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [onClose]);
-
   return (
-    // Full-cover on mobile; a centered single-column panel on tablet+ (entry is
-    // a "doing" surface — never stretched across the wide shell).
-    <div className="absolute inset-0 z-40 flex justify-center bg-page md:bg-navy-dark/25 md:p-6">
+    <Overlay
+      onClose={onClose}
+      className="z-40 flex justify-center bg-page md:bg-navy-dark/25 md:p-6"
+    >
       <div className="flex h-full w-full flex-col overflow-hidden bg-page animate-sheet-up md:max-w-[560px] md:rounded-frame md:border md:border-border-strong md:shadow-float">
         <header className="flex shrink-0 items-center gap-2 border-b border-border bg-card px-4 py-3.5">
           <button
@@ -44,6 +43,6 @@ export function Modal({
           <div className="shrink-0 border-t border-border bg-card p-4">{footer}</div>
         )}
       </div>
-    </div>
+    </Overlay>
   );
 }

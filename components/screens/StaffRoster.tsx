@@ -104,7 +104,7 @@ export function StaffRoster() {
         {visible.length === 0 && (
           <div className="flex flex-col items-center gap-2 py-16 text-center lg:col-span-full">
             <Icon name="ti-checks" size={32} className="text-teal" />
-            <p className="text-title-card text-navy">You're all caught up</p>
+            <p className="text-title-card text-navy">No matches</p>
             <p className="text-body text-text-secondary">Nobody matches this filter.</p>
           </div>
         )}

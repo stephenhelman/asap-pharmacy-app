@@ -72,7 +72,7 @@ export function ClinicalCheck({ orderId }: { orderId: string }) {
   }
 
   return (
-    <div className="flex h-full flex-col xl:h-auto md:mx-auto md:w-full md:max-w-[680px]">
+    <div className="flex h-full flex-col xl:h-auto">
       <TopBarNav
         title="Clinical check"
         onDismiss={() => router.back()}
@@ -164,7 +164,7 @@ export function ClinicalCheck({ orderId }: { orderId: string }) {
         ) : (
           <>
             <Button variant="primary" block icon="ti-circle-check" onClick={approve}>
-              Approve — send to tech
+              Approve · send to tech
             </Button>
             <Button
               variant="secondary"
@@ -173,7 +173,7 @@ export function ClinicalCheck({ orderId }: { orderId: string }) {
               className="mt-2 border-amber-light text-amber"
               onClick={() => setHolding(true)}
             >
-              Hold — add reason
+              Hold · add reason
             </Button>
             <p className="mt-3 text-center text-micro text-text-muted">
               Every order passes this check before packing. Logged to the audit trail.
@@ -263,7 +263,7 @@ function DecisionState({
         className={cn("mb-1", approved ? "text-teal" : "text-amber")}
       />
       <p className="text-title-card text-navy">
-        {approved ? "Approved — sent to tech" : "Order held"}
+        {approved ? "Approved · sent to tech" : "Order held"}
       </p>
       {!approved && reason && (
         <p className="mt-1 text-body text-text-secondary">"{reason}"</p>

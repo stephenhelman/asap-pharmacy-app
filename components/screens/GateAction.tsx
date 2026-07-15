@@ -118,8 +118,8 @@ export function GateAction({ gateId }: { gateId: string }) {
         </Card>
         <div className="mb-4.5">
           <NoticeInfo icon="ti-database-search">
-            Reimbursement &amp; acquisition are checked in your adjudication system.
-            v1 records the decision; v1.1 computes margin inline.
+            Reimbursement and acquisition are checked in your adjudication system.
+            This records the decision.
           </NoticeInfo>
         </div>
 
@@ -133,7 +133,7 @@ export function GateAction({ gateId }: { gateId: string }) {
             </p>
             <FieldText
               multiline
-              placeholder="Context for the record — reasoning, who you consulted…"
+              placeholder="Context for the record: reasoning, who you consulted…"
               value={note}
               onChange={setNote}
             />
@@ -164,7 +164,7 @@ export function GateAction({ gateId }: { gateId: string }) {
                 icon="ti-arrow-right-circle"
                 onClick={() => decide("not-viable-transfer-out")}
               >
-                Not viable — transfer out
+                Not viable · transfer out
               </Button>
             </div>
 

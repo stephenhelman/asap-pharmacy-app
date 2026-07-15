@@ -14,7 +14,7 @@ export default function DocumentsPage() {
       icon="ti-files"
       milestone="Patient view"
       activeKey="documents"
-      note="The patient-facing Documents screen renders when logged in as a patient."
+      note="The patient Documents screen appears when you're logged in as a patient."
     />
   );
 }

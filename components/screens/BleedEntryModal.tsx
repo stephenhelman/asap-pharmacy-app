@@ -205,8 +205,7 @@ export function BleedEntryModal({
               Also log a PRN dose for this bleed
             </p>
             <p className="text-micro text-text-muted">
-              {productName} {prnIu.toLocaleString()} IU · one ledger, linked to this
-              bleed
+              {productName} {prnIu.toLocaleString()} IU · linked to this bleed
             </p>
           </div>
         </button>
@@ -228,7 +227,7 @@ export function BleedEntryModal({
       <div className="mb-4.5" />
 
       <NoticeCareteam>
-        A logged bleed alerts your nurse and rep. You're never handling this alone.
+        A logged bleed alerts your nurse and rep.
       </NoticeCareteam>
     </Modal>
   );

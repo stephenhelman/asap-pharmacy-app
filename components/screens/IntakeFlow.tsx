@@ -26,7 +26,6 @@ import {
   FieldText,
   SignaturePad,
   NoticeInfo,
-  NoticeCareteam,
   StatusPill,
   cn,
 } from "@/components/ui";
@@ -152,23 +151,23 @@ function PrimerStep({ onContinue }: { onContinue: () => void }) {
 
       <RuleCard
         icon="ti-user-check"
-        title="You complete data — never a consent"
+        title="You complete data, never a consent"
         body="Enter their details on their behalf. HIPAA and SMS consent can only be given by the patient themselves."
       />
       <RuleCard
         icon="ti-photo-up"
         title="The patient uploads their own documents"
-        body="ID, insurance card, and prescription photo are captured after you send the link — the patient must be available for that."
+        body="ID, insurance card, and prescription photo are captured after you send the link. The patient needs to be available for that."
       />
       <RuleCard
         icon="ti-shield-lock"
         title="Contact stays on Do-Not-Disturb until they consent"
-        body="The system can never text a not-yet-consented number. DND lifts only when the patient opts in."
+        body="We can't text a number until the patient consents. Do-Not-Disturb lifts when they opt in."
       />
 
       <div className="mt-4">
         <Button variant="primary" block icon="ti-arrow-right" onClick={onContinue}>
-          I understand — start
+          Got it
         </Button>
       </div>
     </div>
@@ -339,7 +338,7 @@ function SendStep({ onOpenAsPatient }: { onOpenAsPatient: () => void }) {
         <p className="text-h2 text-navy">Send to patient</p>
         <p className="max-w-[320px] text-body text-text-secondary">
           Generate a secure, single-use link. Send it from your work phone or
-          email — the patient completes their consents and documents.
+          email. The patient completes their consents and documents.
         </p>
       </div>
 
@@ -387,7 +386,7 @@ function SendStep({ onOpenAsPatient }: { onOpenAsPatient: () => void }) {
           </div>
 
           <p className="mt-4 text-center text-micro text-text-muted">
-            Your part is done — the contact was created with Do-Not-Disturb on.
+            Your part is done. The contact was created with Do-Not-Disturb on.
           </p>
         </>
       )}
@@ -445,7 +444,7 @@ function ConfirmInfoStep({ onContinue }: { onContinue: () => void }) {
       <div className="mb-3 flex flex-col items-center gap-1.5 py-1 text-center">
         <p className="text-h2 text-navy">Confirm your details</p>
         <p className="max-w-[300px] text-body text-text-secondary">
-          Make sure this is right — you can edit anything here.
+          You can change anything here.
         </p>
       </div>
 
@@ -508,11 +507,6 @@ function ConfirmInfoStep({ onContinue }: { onContinue: () => void }) {
         >
           Confirm &amp; continue
         </Button>
-      </div>
-      <div className="mt-3">
-        <NoticeCareteam>
-          Your consent is yours to give — no one can give it for you.
-        </NoticeCareteam>
       </div>
     </div>
   );
@@ -606,7 +600,6 @@ function OtpStep({ onContinue }: { onContinue: () => void }) {
         <p className="text-h2 text-navy">Verify it&apos;s you</p>
         <p className="max-w-[300px] text-body text-text-secondary">
           We sent a code to <span className="text-text-primary">{target}</span>.
-          Enter it below.
         </p>
       </div>
 
@@ -680,8 +673,8 @@ function IntakeDataStep({ onContinue }: { onContinue: () => void }) {
 
       <div className="mt-3">
         <NoticeInfo icon="ti-cards">
-          Insurance: your card photo (next step) is the record. You can add card
-          details manually later — we don&apos;t auto-read the image in v1.
+          Your insurance card photo is the record. You can add the details
+          manually later if you&apos;d like.
         </NoticeInfo>
       </div>
 
@@ -710,7 +703,7 @@ function DocsStep({ onContinue }: { onContinue: () => void }) {
       <div className="mb-3">
         <p className="mb-1 text-h2 text-navy">Your documents</p>
         <p className="text-body text-text-secondary">
-          Upload what you have now — you can add the rest later.
+          Upload what you have now. You can add the rest later.
         </p>
       </div>
 
@@ -729,7 +722,7 @@ function DocsStep({ onContinue }: { onContinue: () => void }) {
 
       <div className="mt-5">
         <Button variant="primary" block icon="ti-arrow-right" onClick={onContinue}>
-          {allRequired ? "Continue" : "Continue — I'll add the rest later"}
+          {allRequired ? "Continue" : "I'll add the rest later"}
         </Button>
       </div>
       {!allRequired && (
@@ -753,7 +746,7 @@ function HipaaStep({ onContinue }: { onContinue: () => void }) {
       <div className="mb-3">
         <p className="mb-1 text-h2 text-navy">Privacy consent</p>
         <p className="text-body text-text-secondary">
-          One last thing — your HIPAA acknowledgment.
+          One last thing: your HIPAA acknowledgment.
         </p>
       </div>
 
@@ -766,9 +759,7 @@ function HipaaStep({ onContinue }: { onContinue: () => void }) {
           any time. This acknowledges receipt of ASAP Pharmacy&apos;s Notice of
           Privacy Practices.
         </p>
-        <p className="mt-2 text-micro text-text-muted">
-          The pharmacy&apos;s full consent paragraph is swapped in here at launch.
-        </p>
+        {/* Launch: swap in the pharmacy's own consent paragraph above. */}
       </Card>
 
       <SectionLabel className="mb-2">Sign to consent</SectionLabel>

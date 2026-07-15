@@ -151,11 +151,9 @@ export function LogsScreen() {
           <div className="flex flex-col items-center gap-2 py-16 text-center">
             <Icon name="ti-mood-smile" size={32} className="text-teal" />
             <p className="text-title-card text-navy">Nothing logged yet</p>
-            <p className="text-body text-text-secondary">
-              {tab === "bleeds"
-                ? "No bleeds — that's good news."
-                : "Tap the button below to add your first entry."}
-            </p>
+            {tab === "bleeds" && (
+              <p className="text-body text-text-secondary">No bleeds logged.</p>
+            )}
           </div>
         ) : (
           groups.map(([month, items]) => (
